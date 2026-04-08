@@ -16,7 +16,6 @@ const JUST_LLC_FEATURES = [
 ];
 
 const ELITE_FEATURES = [
-  "Everything in Just LLC",
   "US Mailing Address",
   "US Phone Number",
   "US Bank Account Setup (Mercury or Relay)",
