@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, type MutableRefObject } from "react";
 import { Link } from "wouter";
 import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star, Target, Zap, Lock, BadgeDollarSign, XCircle } from "lucide-react";
+import { Logo } from "@/components/Logo";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -101,9 +102,8 @@ export default function Home() {
       {/* 1. Navigation */}
       <header className={`sticky ${isScrolled ? 'top-0 shadow-sm' : 'top-0 sm:top-9'} z-40 bg-background/95 backdrop-blur-md transition-all duration-200 border-b border-border`}>
         <div className="container mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="font-heading font-bold text-xl md:text-2xl text-primary flex items-center gap-2">
-            <img src="/mascot.png" alt="Legal Nations" className="w-8 h-8 object-contain" />
-            <span className="font-bold text-primary">Legal</span><span className="font-normal text-primary">Nations</span>
+          <Link href="/" className="flex items-center">
+            <Logo variant="default" size="md" />
           </Link>
           
           <nav className="hidden md:flex items-center gap-8 font-medium text-sm text-foreground">
@@ -1050,9 +1050,8 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div className="space-y-6">
-              <div className="font-heading font-bold text-2xl text-white flex items-center gap-2">
-                <img src="/mascot.png" alt="Legal Nations" className="w-8 h-8 object-contain" />
-                <span className="font-bold">Legal</span><span className="font-normal">Nations</span>
+              <div>
+                <Logo variant="footer" size="md" />
               </div>
               <p className="text-sm leading-relaxed">The world's most affordable all-in-one company registration & compliance platform.</p>
               <div className="flex gap-4">
