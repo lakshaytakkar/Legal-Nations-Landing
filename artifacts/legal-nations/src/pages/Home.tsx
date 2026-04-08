@@ -46,18 +46,22 @@ export default function Home() {
   };
 
   const fadeUpVariant: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } }
   };
 
   const containerVariant: Variants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.1 } }
+    visible: { transition: { staggerChildren: 0.08 } }
   };
 
   const cardVariant: Variants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } }
+    hidden: { opacity: 0, y: 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1.0] as [number, number, number, number] }
+    }
   };
 
   const brandLogos = [
@@ -270,6 +274,67 @@ export default function Home() {
               </div>
               4.9/5 from 500+ Reviews
             </div>
+          </div>
+        </section>
+
+        {/* 3.5 Trusted by Founders Worldwide — Social Proof with Photos */}
+        <section className="bg-background py-24">
+          <div className="container mx-auto px-4 md:px-6">
+            <motion.div
+              className="text-center mb-16"
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
+            >
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">Trusted by Founders Worldwide</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Real founders, real results — from every corner of the globe.</p>
+            </motion.div>
+
+            <motion.div
+              className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto"
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
+            >
+              {[
+                {
+                  photo: "/images/india-founder.png",
+                  quote: "Registered my Wyoming LLC in under 24 hours. Incredible service.",
+                  name: "Rahul M.",
+                  detail: "E-commerce · India 🇮🇳",
+                  company: "Wyoming LLC"
+                },
+                {
+                  photo: "/images/founders-team.png",
+                  quote: "Best price I found anywhere. Team was responsive on WhatsApp.",
+                  name: "Sarah L.",
+                  detail: "SaaS Startup · UK 🇬🇧",
+                  company: "Delaware C-Corp"
+                },
+                {
+                  photo: "/images/team-support.png",
+                  quote: "Dubai Free Zone setup was seamless. Saved me thousands vs competitors.",
+                  name: "Ahmed K.",
+                  detail: "Trading Co · UAE 🇦🇪",
+                  company: "Dubai Free Zone"
+                },
+              ].map((testimonial) => (
+                <motion.div
+                  key={testimonial.name}
+                  variants={cardVariant}
+                  className="bg-card rounded-xl shadow-md border border-border flex flex-col items-center text-center p-8 hover:shadow-lg transition-shadow duration-300"
+                >
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-5 border-2 border-primary/20 shadow-sm">
+                    <img src={testimonial.photo} alt={testimonial.name} className="w-full h-full object-cover object-top" />
+                  </div>
+                  <div className="flex text-accent mb-3">
+                    <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
+                  </div>
+                  <p className="text-foreground italic mb-5 text-sm leading-relaxed">"{testimonial.quote}"</p>
+                  <div className="mt-auto">
+                    <div className="font-bold text-sm">{testimonial.name}</div>
+                    <div className="text-xs text-muted-foreground mt-1">{testimonial.detail}</div>
+                    <div className="inline-block mt-2 text-xs bg-secondary text-primary font-medium px-2 py-0.5 rounded-full">{testimonial.company}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </section>
 
@@ -644,7 +709,7 @@ export default function Home() {
                 </div>
                 <div className="flex-1 order-1 lg:order-2 w-full">
                   <div className="rounded-2xl overflow-hidden shadow-xl border border-border/50 bg-surface p-2">
-                    <img src="/images/formation-wizard.png" alt="Formation wizard UI" className="w-full h-auto rounded-xl border border-border" />
+                    <img src="/images/compliance-dashboard.png" alt="Formation wizard UI" className="w-full h-auto rounded-xl border border-border" />
                   </div>
                 </div>
               </div>
@@ -674,7 +739,7 @@ export default function Home() {
                 </div>
                 <div className="flex-1 order-1 lg:order-2 w-full">
                   <div className="rounded-2xl overflow-hidden shadow-xl border border-border/50 bg-surface p-2">
-                    <img src="/images/bookkeeping-dashboard.png" alt="Bookkeeping dashboard" className="w-full h-auto rounded-xl border border-border" />
+                    <img src="/images/hero-dashboard.png" alt="Bookkeeping dashboard" className="w-full h-auto rounded-xl border border-border" />
                   </div>
                 </div>
               </div>
@@ -683,7 +748,7 @@ export default function Home() {
               <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                 <div className="flex-1 w-full">
                   <div className="rounded-2xl overflow-hidden shadow-xl border border-border/50 bg-surface p-2">
-                    <img src="/images/virtual-mailbox.png" alt="Virtual mailbox interface" className="w-full h-auto rounded-xl border border-border" />
+                    <img src="/images/us-llc-document.png" alt="Virtual mailbox interface" className="w-full h-auto rounded-xl border border-border" />
                   </div>
                 </div>
                 <div className="flex-1">
@@ -866,6 +931,97 @@ export default function Home() {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
+            </div>
+          </div>
+        </section>
+
+        {/* 12.5 Section B: Our Team is With You Every Step */}
+        <section className="relative py-28 overflow-hidden">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/images/team-support.png')" }}
+          />
+          <div className="absolute inset-0 bg-[#1A1E3C]/80" />
+          <div className="relative z-10 container mx-auto px-4 md:px-6 text-center">
+            <motion.div
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
+            >
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
+                24/7 Global Support from Real Humans
+              </h2>
+              <p className="text-lg text-white/70 mb-12 max-w-xl mx-auto">
+                Every founder gets a dedicated account manager. We're here when you need us.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12"
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
+            >
+              {[
+                { icon: "💬", title: "Live Chat Support", desc: "Instant answers during business hours via our dashboard chat widget." },
+                { icon: "📱", title: "WhatsApp Direct Line", desc: "Message us on WhatsApp and get a response within minutes — no bots." },
+                { icon: "👤", title: "Dedicated Account Manager", desc: "A real person assigned to your account from day one." },
+              ].map((item) => (
+                <motion.div key={item.title} variants={cardVariant} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 text-left">
+                  <div className="text-3xl mb-3">{item.icon}</div>
+                  <h3 className="font-bold text-white mb-2">{item.title}</h3>
+                  <p className="text-white/70 text-sm">{item.desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <a
+              href="https://wa.me/918218229118?text=Hi%2C%20I%27m%20interested%20in%20company%20registration.%20Can%20you%20help%3F"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-bold px-8 py-4 rounded-full text-lg shadow-xl transition-all hover:scale-105"
+            >
+              <SiWhatsapp className="w-6 h-6" />
+              Chat with us on WhatsApp
+            </a>
+          </div>
+        </section>
+
+        {/* 12.7 Section C: Celebrate Your Incorporation */}
+        <section className="bg-background py-24">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+              <motion.div
+                className="flex-1"
+                initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
+              >
+                <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-6">
+                  Join thousands of founders building global businesses.
+                </h2>
+                <div className="grid grid-cols-3 gap-6 mb-8">
+                  {[
+                    { num: "2,500+", label: "Companies Registered" },
+                    { num: "50+", label: "Countries Served" },
+                    { num: "1", label: "Platform" },
+                  ].map((stat) => (
+                    <div key={stat.label} className="text-center">
+                      <div className="text-3xl md:text-4xl font-bold text-primary mb-1">{stat.num}</div>
+                      <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+                <Button className="bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-14 px-8 rounded-full shadow-lg">
+                  Start Your Company Today
+                </Button>
+              </motion.div>
+
+              <motion.div
+                className="flex-1 w-full max-w-md mx-auto lg:mx-0"
+                initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: "easeOut" }}
+              >
+                <img
+                  src="/images/founder-celebrating.png"
+                  alt="Founder celebrating company incorporation"
+                  className="w-full h-auto rounded-2xl shadow-2xl border border-border/50"
+                  style={{ transform: "rotate(2deg)" }}
+                />
+              </motion.div>
             </div>
           </div>
         </section>

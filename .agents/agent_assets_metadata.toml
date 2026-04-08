@@ -5,7 +5,7 @@ outputs = []
 id = "1qBX2nY92uE1d-1odTuGH"
 uri = "file://artifacts/legal-nations/public/images/hero-dashboard.png"
 type = "image"
-title = "Hero SaaS dashboard mockup"
+title = "hero dashboard macbook"
 
 [[generated]]
 id = "wCAQBHrlUC0hWCWX4peO4"
@@ -17,7 +17,7 @@ title = "Formation wizard UI mockup"
 id = "epFqyG-AMZ6xNOV5oyNTi"
 uri = "file://artifacts/legal-nations/public/images/compliance-dashboard.png"
 type = "image"
-title = "Compliance calendar dashboard"
+title = "compliance dashboard monitor"
 
 [[generated]]
 id = "GIbGKCfenmNWvokrifACg"
@@ -36,3 +36,39 @@ id = "z2HofMsQ-iRATUft1sN-Y"
 uri = "file://artifacts/legal-nations/public/mascot.png"
 type = "image"
 title = "generated_image"
+
+[[generated]]
+id = "9LIG1N0h7DxK2yaqcFqO3"
+uri = "file://artifacts/legal-nations/public/images/founders-team.png"
+type = "image"
+title = "founders team office"
+
+[[generated]]
+id = "W8drTn6zJoVHq4FkNXSqW"
+uri = "file://artifacts/legal-nations/public/images/india-founder.png"
+type = "image"
+title = "india founder video call"
+
+[[generated]]
+id = "08Oac5nhLAAEz4dSF-P69"
+uri = "file://artifacts/legal-nations/public/images/global-map.png"
+type = "image"
+title = "global map connection lines"
+
+[[generated]]
+id = "RK25Gzmu8OKETymgaayo1"
+uri = "file://artifacts/legal-nations/public/images/us-llc-document.png"
+type = "image"
+title = "us llc certificate desk"
+
+[[generated]]
+id = "uMnd6x4L3jeRCRn6kXgE3"
+uri = "file://artifacts/legal-nations/public/images/team-support.png"
+type = "image"
+title = "customer support team office"
+
+[[generated]]
+id = "xc4jWo0ME_lY-aqX7oSgC"
+uri = "file://artifacts/legal-nations/public/images/founder-celebrating.png"
+type = "image"
+title = "founder celebrating incorporation"
