@@ -206,7 +206,8 @@ export default function Home() {
                 Trusted by 2,500+ Founders Worldwide
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-foreground leading-[1.1] mb-6">
-                Register Your Company Anywhere. Manage Everything from One Dashboard.
+                Register Your Company Anywhere.{" "}
+                <span className="text-nowrap">Manage Everything from{" "}<span className="text-primary relative inline-block">One Dashboard<span className="absolute bottom-0 left-0 w-full h-[3px] bg-primary/30 rounded-full" /></span>.</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0">
                 From Delaware LLCs to Dubai Free Zones — formation, tax filing, compliance, and registered agent services. All-in-one. All affordable.
