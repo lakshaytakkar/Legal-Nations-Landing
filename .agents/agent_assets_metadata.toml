@@ -1,0 +1,32 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "1qBX2nY92uE1d-1odTuGH"
+uri = "file://artifacts/legal-nations/public/images/hero-dashboard.png"
+type = "image"
+title = "Hero SaaS dashboard mockup"
+
+[[generated]]
+id = "wCAQBHrlUC0hWCWX4peO4"
+uri = "file://artifacts/legal-nations/public/images/formation-wizard.png"
+type = "image"
+title = "Formation wizard UI mockup"
+
+[[generated]]
+id = "epFqyG-AMZ6xNOV5oyNTi"
+uri = "file://artifacts/legal-nations/public/images/compliance-dashboard.png"
+type = "image"
+title = "Compliance calendar dashboard"
+
+[[generated]]
+id = "GIbGKCfenmNWvokrifACg"
+uri = "file://artifacts/legal-nations/public/images/bookkeeping-dashboard.png"
+type = "image"
+title = "Bookkeeping dashboard mockup"
+
+[[generated]]
+id = "ki7LsqTNT_Dpj3P9w84Er"
+uri = "file://artifacts/legal-nations/public/images/virtual-mailbox.png"
+type = "image"
+title = "Virtual mailbox interface"
