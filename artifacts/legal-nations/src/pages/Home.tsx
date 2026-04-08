@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, type MutableRefObject } from "react";
 import { Link } from "wouter";
-import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star } from "lucide-react";
+import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Instagram, Shield, FileCheck, Building2, CreditCard, Globe, Star } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -869,10 +869,7 @@ export default function Home() {
               </div>
               <p className="text-sm leading-relaxed">The world's most affordable all-in-one company registration & compliance platform.</p>
               <div className="flex gap-4">
-                <a href="#" className="hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></a>
-                <a href="#" className="hover:text-white transition-colors"><Twitter className="w-5 h-5" /></a>
-                <a href="#" className="hover:text-white transition-colors"><Instagram className="w-5 h-5" /></a>
-                <a href="#" className="hover:text-white transition-colors"><Youtube className="w-5 h-5" /></a>
+                <a href="https://instagram.com/legal.nations" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Instagram className="w-5 h-5" /></a>
               </div>
             </div>
 
@@ -953,7 +950,7 @@ export default function Home() {
 
       {/* Floating Elements */}
       <a 
-        href="https://wa.me/918218229118?text=Hi%2C%20I%27m%20interested%20in%20company%20registration.%20Can%20you%20help%3F" 
+        href="https://wa.me/919306500349?text=Hi%2C%20I%27m%20interested%20in%20company%20registration.%20Can%20you%20help%3F" 
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-50"
