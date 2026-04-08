@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, type MutableRefObject } from "react";
 import { Link } from "wouter";
-import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Instagram, Shield, FileCheck, Building2, CreditCard, Globe, Star, Target, Zap, Lock, BadgeDollarSign, XCircle } from "lucide-react";
+import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star, Target, Zap, Lock, BadgeDollarSign, XCircle } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -93,7 +93,7 @@ export default function Home() {
       {/* 0. Announcement Bar */}
       <div className="bg-card text-foreground text-sm py-2 px-4 text-center font-medium sticky top-0 z-50 border-b border-border">
         <Target className="inline w-4 h-4 mr-1 text-accent" /> Limited Offer: Wyoming LLC Formation at $149 — Lowest Price Guaranteed <ArrowRight className="inline w-4 h-4 ml-1" />
-        <Link href="#pricing" className="ml-2 underline underline-offset-2 hover:text-primary transition-colors">
+        <Link href="/get-started" className="ml-2 underline underline-offset-2 hover:text-primary transition-colors">
           Claim Now
         </Link>
       </div>
@@ -167,8 +167,8 @@ export default function Home() {
           </nav>
           
           <div className="hidden md:block">
-            <Button className="bg-accent hover:bg-accent-hover text-accent-foreground border-none font-bold rounded-full px-6 shadow-md hover:shadow-lg transition-all" data-testid="button-nav-cta">
-              Get Started — Free Consultation
+            <Button className="bg-accent hover:bg-accent-hover text-accent-foreground border-none font-bold rounded-full px-6 shadow-md hover:shadow-lg transition-all" data-testid="button-nav-cta" asChild>
+              <Link href="/get-started">Get Started — Free Consultation</Link>
             </Button>
           </div>
 
@@ -188,7 +188,7 @@ export default function Home() {
             <a href="#countries" className="font-medium p-2 hover:bg-muted rounded" onClick={() => setMobileMenuOpen(false)}>Countries</a>
             <a href="#pricing" className="font-medium p-2 hover:bg-muted rounded" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
             <a href="#why-us" className="font-medium p-2 hover:bg-muted rounded" onClick={() => setMobileMenuOpen(false)}>Why Us</a>
-            <Button className="bg-accent hover:bg-accent-hover text-accent-foreground w-full mt-2">Get Started</Button>
+            <Button className="bg-accent hover:bg-accent-hover text-accent-foreground w-full mt-2" asChild><Link href="/get-started">Get Started</Link></Button>
           </div>
         )}
       </header>
@@ -212,8 +212,8 @@ export default function Home() {
                 From Delaware LLCs to Dubai Free Zones — formation, tax filing, compliance, and registered agent services. All-in-one. All affordable.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
-                <Button className="bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-14 px-8 rounded-full shadow-lg hover:shadow-xl transition-all w-full sm:w-auto" data-testid="hero-cta-start">
-                  Start Your Company — $149
+                <Button className="bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-14 px-8 rounded-full shadow-lg hover:shadow-xl transition-all w-full sm:w-auto" data-testid="hero-cta-start" asChild>
+                  <Link href="/get-started">Start Your Company — $149</Link>
                 </Button>
                 <Button variant="outline" className="border-primary text-primary hover:bg-secondary text-lg h-14 px-8 rounded-full w-full sm:w-auto" asChild data-testid="hero-cta-pricing">
                   <a href="#pricing">See Pricing</a>
@@ -339,7 +339,7 @@ export default function Home() {
         </section>
 
         {/* 4. How It Works */}
-        <section className="bg-background py-24">
+        <section id="how-it-works" className="bg-background py-24 scroll-mt-20">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               className="text-center mb-16"
@@ -416,9 +416,9 @@ export default function Home() {
                   <p className="text-sm text-muted-foreground mb-4">{country.type}</p>
                   <div className="mt-auto pt-4 border-t border-border flex items-center justify-between">
                     <div className="font-medium text-foreground">From <span className="font-bold text-primary">{country.price}</span></div>
-                    <a href="#" className="text-sm font-bold text-primary flex items-center group-hover:text-accent transition-colors">
+                    <Link href="/get-started" className="text-sm font-bold text-primary flex items-center group-hover:text-accent transition-colors">
                       View <ChevronRight className="w-4 h-4" />
-                    </a>
+                    </Link>
                   </div>
                 </motion.div>
               ))}
@@ -487,7 +487,7 @@ export default function Home() {
                   <div className="text-sm flex justify-between text-muted-foreground"><span>Annual Report</span> <span>Not required for LLCs</span></div>
                 </div>
 
-                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12">Get Delaware Package</Button>
+                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12" asChild><Link href="/get-started">Get Delaware Package</Link></Button>
               </div>
 
               {/* Wyoming Card */}
@@ -540,7 +540,7 @@ export default function Home() {
                   <div className="text-sm flex justify-between text-success font-medium"><span>State Income Tax</span> <span>$0</span></div>
                 </div>
 
-                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12">Get Wyoming Package</Button>
+                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12" asChild><Link href="/get-started">Get Wyoming Package</Link></Button>
               </div>
             </div>
 
@@ -574,8 +574,8 @@ export default function Home() {
                 </table>
               </div>
               <div className="mt-8 text-center">
-                <Button variant="outline" className="border-primary text-primary h-12 px-8 rounded-full">
-                  Still unsure? Talk to an Expert — Free
+                <Button variant="outline" className="border-primary text-primary h-12 px-8 rounded-full" asChild>
+                  <Link href="/get-started">Still unsure? Talk to an Expert — Free</Link>
                 </Button>
               </div>
             </div>
@@ -620,7 +620,7 @@ export default function Home() {
                     </ul>
                   </div>
                 </div>
-                <Button className="w-full bg-primary hover:bg-primary-light text-white h-12">Start Now</Button>
+                <Button className="w-full bg-primary hover:bg-primary-light text-white h-12" asChild><Link href="/get-started">Start Now</Link></Button>
               </div>
 
               {/* Professional */}
@@ -647,7 +647,7 @@ export default function Home() {
                     <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-muted-foreground shrink-0" /> Annual tax $299 add-on</li>
                   </ul>
                 </div>
-                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground h-14 text-lg font-bold shadow-md">Start Now</Button>
+                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground h-14 text-lg font-bold shadow-md" asChild><Link href="/get-started">Start Now</Link></Button>
               </div>
 
               {/* Enterprise */}
@@ -808,7 +808,7 @@ export default function Home() {
         </section>
 
         {/* 10. Stats + Testimonials */}
-        <section className="bg-background py-24">
+        <section id="testimonials" className="bg-background py-24 scroll-mt-20">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               className="text-center mb-16"
@@ -1033,12 +1033,12 @@ export default function Home() {
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-6">Ready to Start Your Global Business?</h2>
             <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">Join 2,500+ founders who chose Legal Nations for speed, affordability, and peace of mind.</p>
             <div className="flex flex-col items-center gap-4">
-              <Button className="bg-white hover:bg-gray-100 text-primary text-lg h-16 px-10 rounded-full shadow-2xl transition-transform hover:scale-105 w-full sm:w-auto font-bold">
-                Register Your Company Now — Starting at $149
+              <Button className="bg-white hover:bg-gray-100 text-primary text-lg h-16 px-10 rounded-full shadow-2xl transition-transform hover:scale-105 w-full sm:w-auto font-bold" asChild>
+                <Link href="/get-started">Register Your Company Now — Starting at $149</Link>
               </Button>
-              <a href="#" className="text-white/70 hover:text-white underline underline-offset-4 text-sm mt-2 transition-colors">
-                Or schedule a free 15-min consultation &rarr;
-              </a>
+              <Link href="/get-started" className="text-white/70 hover:text-white underline underline-offset-4 text-sm mt-2 transition-colors">
+                Or schedule a free 15-min consultation →
+              </Link>
             </div>
           </div>
         </section>
@@ -1055,45 +1055,48 @@ export default function Home() {
               </div>
               <p className="text-sm leading-relaxed">The world's most affordable all-in-one company registration & compliance platform.</p>
               <div className="flex gap-4">
-                <a href="https://instagram.com/legal.nations" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Instagram className="w-5 h-5" /></a>
+                <a href="https://linkedin.com/company/legal-nations" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></a>
+                <a href="https://twitter.com/legalnations" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Twitter className="w-5 h-5" /></a>
+                <a href="https://instagram.com/legalnations" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Instagram className="w-5 h-5" /></a>
+                <a href="https://youtube.com/@legalnations" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Youtube className="w-5 h-5" /></a>
               </div>
             </div>
 
             <div>
               <h4 className="text-white font-bold mb-6">Services</h4>
               <ul className="space-y-3 text-sm">
-                <li><a href="#" className="hover:text-primary-light transition-colors">US Company Formation</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">International Registration</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">Tax Filing & Compliance</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">Registered Agent Services</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">Virtual Business Address</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">Bookkeeping & Accounting</a></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors">US Company Formation</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors">International Registration</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors">Tax Filing & Compliance</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors">Registered Agent Services</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors">Virtual Business Address</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors">Bookkeeping & Accounting</Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-white font-bold mb-6">Countries</h4>
               <ul className="space-y-3 text-sm">
-                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="us" alt="USA" /> USA (Delaware & Wyoming)</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="gb" alt="UK" /> United Kingdom</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="sg" alt="Singapore" /> Singapore</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="ae" alt="UAE" /> Dubai / UAE</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="hk" alt="Hong Kong" /> Hong Kong</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="in" alt="India" /> India</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="ca" alt="Canada" /> Canada</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="au" alt="Australia" /> Australia</a></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="us" alt="USA" /> USA (Delaware & Wyoming)</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="gb" alt="UK" /> United Kingdom</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="sg" alt="Singapore" /> Singapore</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="ae" alt="UAE" /> Dubai / UAE</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="hk" alt="Hong Kong" /> Hong Kong</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="in" alt="India" /> India</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="ca" alt="Canada" /> Canada</Link></li>
+                <li><Link href="/get-started" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="au" alt="Australia" /> Australia</Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-white font-bold mb-6">Company</h4>
               <ul className="space-y-3 text-sm">
-                <li><a href="#" className="hover:text-primary-light transition-colors">About Us</a></li>
+                <li><a href="https://legalnations.in" target="_blank" rel="noopener noreferrer" className="hover:text-primary-light transition-colors">About Us</a></li>
                 <li><a href="#pricing" className="hover:text-primary-light transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">Terms of Service</a></li>
+                <li><a href="https://legalnations.in/blog" target="_blank" rel="noopener noreferrer" className="hover:text-primary-light transition-colors">Blog</a></li>
+                <li><a href="https://wa.me/918218229118" target="_blank" rel="noopener noreferrer" className="hover:text-primary-light transition-colors">Contact</a></li>
+                <li><Link href="/privacy" className="hover:text-primary-light transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="hover:text-primary-light transition-colors">Terms of Service</Link></li>
               </ul>
             </div>
           </div>
