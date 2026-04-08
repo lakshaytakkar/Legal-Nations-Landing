@@ -203,12 +203,11 @@ export default function Home() {
               className="flex-1 w-full relative"
               initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/50 bg-card transform rotate-1 hover:rotate-0 transition-transform duration-500">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent pointer-events-none z-10 rounded-2xl"></div>
+              <div className="transform rotate-1 hover:rotate-0 transition-transform duration-500">
                 <img 
                   src="/images/hero-dashboard.png" 
                   alt="Legal Nations SaaS Dashboard Mockup" 
-                  className="w-full h-auto object-cover relative z-0"
+                  className="w-full h-auto"
                 />
               </div>
               
