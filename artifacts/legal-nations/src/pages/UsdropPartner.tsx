@@ -2,9 +2,8 @@ import { useState, useRef } from "react";
 import { Link } from "wouter";
 import {
   CheckCircle2, XCircle, Shield, Star, Building2, BadgeCheck,
-  ShoppingCart, Phone, Rocket, ArrowDown
+  ShoppingCart, Phone, Rocket, ArrowDown, MessageCircle
 } from "lucide-react";
-import { SiWhatsapp as WhatsAppIcon } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 
 const JUST_LLC_FEATURES = [
@@ -114,7 +113,7 @@ export default function UsdropPartner() {
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm font-medium text-green-600 hover:text-green-700 transition-colors"
           >
-            <WhatsAppIcon className="w-4 h-4" />
+            <MessageCircle className="w-4 h-4" />
             Questions? Chat on WhatsApp
           </a>
         </div>
@@ -365,7 +364,7 @@ export default function UsdropPartner() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full px-6 py-3 transition-colors"
                   >
-                    <WhatsAppIcon className="w-4 h-4" />
+                    <MessageCircle className="w-4 h-4" />
                     Chat with us on WhatsApp
                   </a>
                 </div>
@@ -488,7 +487,7 @@ export default function UsdropPartner() {
               rel="noopener noreferrer"
               className="hover:text-green-600 transition-colors flex items-center gap-1"
             >
-              <WhatsAppIcon className="w-4 h-4" /> WhatsApp
+              <MessageCircle className="w-4 h-4" /> WhatsApp
             </a>
           </div>
         </div>
