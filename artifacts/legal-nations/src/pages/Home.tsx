@@ -321,7 +321,7 @@ export default function Home() {
                   <h3 className="text-xl font-heading font-bold mb-1">{country.name}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{country.type}</p>
                   <div className="mt-auto pt-4 border-t border-border flex items-center justify-between">
-                    <div className="font-mono font-medium text-foreground">From <span className="font-bold text-primary">{country.price}</span></div>
+                    <div className="font-medium text-foreground">From <span className="font-bold text-primary">{country.price}</span></div>
                     <a href="#" className="text-sm font-bold text-primary flex items-center group-hover:text-accent transition-colors">
                       View <ChevronRight className="w-4 h-4" />
                     </a>
@@ -352,7 +352,7 @@ export default function Home() {
                     <p className="text-primary font-medium">"The Gold Standard"</p>
                   </div>
                   <div className="text-right">
-                    <div className="font-mono text-3xl font-bold">$249</div>
+                    <div className="text-3xl font-bold">$249</div>
                     <div className="text-xs text-muted-foreground uppercase tracking-wide">One-Time</div>
                   </div>
                 </div>
@@ -405,7 +405,7 @@ export default function Home() {
                     <p className="text-accent-hover font-medium">"The Entrepreneur's Favorite"</p>
                   </div>
                   <div className="text-right">
-                    <div className="font-mono text-3xl font-bold">$149</div>
+                    <div className="text-3xl font-bold">$149</div>
                     <div className="text-xs text-muted-foreground uppercase tracking-wide">One-Time</div>
                   </div>
                 </div>
@@ -502,7 +502,7 @@ export default function Home() {
                 <div className="mb-8">
                   <h3 className="text-xl font-bold uppercase tracking-wider text-muted-foreground mb-2">Starter</h3>
                   <div className="flex items-baseline gap-1 mb-2">
-                    <span className="font-mono text-4xl font-bold">$149</span>
+                    <span className="text-4xl font-bold">$149</span>
                     <span className="text-muted-foreground">/one-time</span>
                   </div>
                   <p className="text-sm text-foreground font-medium">Best for: Solopreneurs</p>
@@ -537,7 +537,7 @@ export default function Home() {
                 <div className="mb-8 mt-2">
                   <h3 className="text-xl font-bold uppercase tracking-wider text-accent mb-2">Professional</h3>
                   <div className="flex items-baseline gap-1 mb-2">
-                    <span className="font-mono text-5xl font-bold text-foreground">$349</span>
+                    <span className="text-5xl font-bold text-foreground">$349</span>
                     <span className="text-muted-foreground">/one-time</span>
                   </div>
                   <p className="text-sm text-foreground font-medium">Best for: Growing businesses</p>
@@ -561,7 +561,7 @@ export default function Home() {
                 <div className="mb-8">
                   <h3 className="text-xl font-bold uppercase tracking-wider text-muted-foreground mb-2">Enterprise</h3>
                   <div className="flex items-baseline gap-1 mb-2">
-                    <span className="font-mono text-4xl font-bold">$799</span>
+                    <span className="text-4xl font-bold">$799</span>
                     <span className="text-muted-foreground">/one-time</span>
                   </div>
                   <p className="text-sm text-foreground font-medium">Best for: Multi-country operations</p>
@@ -584,13 +584,13 @@ export default function Home() {
             <div className="max-w-3xl mx-auto bg-card p-8 rounded-xl border border-border shadow-sm">
               <h4 className="font-heading font-bold text-lg mb-6 flex items-center gap-2"><ClipboardList className="w-5 h-5 text-primary" /> Optional Add-On Services</h4>
               <div className="grid sm:grid-cols-2 gap-y-4 gap-x-8 text-sm">
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Registered Agent Renewal</span> <span className="font-mono font-medium">$99/yr/state</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Virtual Mailbox</span> <span className="font-mono font-medium">$29/mo</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Annual Tax Filing (LLC)</span> <span className="font-mono font-medium">$299</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Annual Tax Filing (C-Corp)</span> <span className="font-mono font-medium">$499</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Bookkeeping</span> <span className="font-mono font-medium">$79/mo</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Trademark Filing</span> <span className="font-mono font-medium">$349</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2 sm:col-span-2"><span>Foreign Qualification</span> <span className="font-mono font-medium">$199 + state fees</span></div>
+                <div className="flex justify-between border-b border-border/50 pb-2"><span>Registered Agent Renewal</span> <span className="font-medium">$99/yr/state</span></div>
+                <div className="flex justify-between border-b border-border/50 pb-2"><span>Virtual Mailbox</span> <span className="font-medium">$29/mo</span></div>
+                <div className="flex justify-between border-b border-border/50 pb-2"><span>Annual Tax Filing (LLC)</span> <span className="font-medium">$299</span></div>
+                <div className="flex justify-between border-b border-border/50 pb-2"><span>Annual Tax Filing (C-Corp)</span> <span className="font-medium">$499</span></div>
+                <div className="flex justify-between border-b border-border/50 pb-2"><span>Bookkeeping</span> <span className="font-medium">$79/mo</span></div>
+                <div className="flex justify-between border-b border-border/50 pb-2"><span>Trademark Filing</span> <span className="font-medium">$349</span></div>
+                <div className="flex justify-between border-b border-border/50 pb-2 sm:col-span-2"><span>Foreign Qualification</span> <span className="font-medium">$199 + state fees</span></div>
               </div>
             </div>
           </div>
@@ -700,7 +700,7 @@ export default function Home() {
                   ].map((row, i) => (
                     <tr key={i} className="border-b border-border hover:bg-muted/30">
                       <td className="p-4 font-medium text-foreground">{row.f}</td>
-                      <td className="p-4 font-bold text-foreground bg-secondary/30 border-x border-border font-mono shadow-[inset_4px_0_0_0_#1E40AF]">{row.ln}</td>
+                      <td className="p-4 font-bold text-foreground bg-secondary/30 border-x border-border shadow-[inset_4px_0_0_0_#1E40AF]">{row.ln}</td>
                       <td className="p-4 text-muted-foreground">{row.c1}</td>
                       <td className="p-4 text-muted-foreground">{row.c2}</td>
                       <td className="p-4 text-muted-foreground">{row.c3}</td>
@@ -733,7 +733,7 @@ export default function Home() {
                   { num: "$149", label: "Starting Price" },
                 ].map((stat) => (
                   <motion.div key={stat.label} variants={cardVariant}>
-                    <div className="text-4xl md:text-5xl font-mono font-bold text-primary mb-2">{stat.num}</div>
+                    <div className="text-4xl md:text-5xl font-bold text-primary mb-2">{stat.num}</div>
                     <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide">{stat.label}</div>
                   </motion.div>
                 ))}

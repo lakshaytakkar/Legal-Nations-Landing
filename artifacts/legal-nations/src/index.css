@@ -67,8 +67,8 @@
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
   --font-sans: 'Inter', sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: 'Inter', monospace;
+  --font-serif: 'Inter', sans-serif;
+  --font-mono: 'Inter', sans-serif;
   --font-heading: 'Inter', sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
