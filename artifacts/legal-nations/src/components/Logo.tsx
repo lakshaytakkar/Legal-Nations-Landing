@@ -14,18 +14,9 @@ export function Logo({ variant = "default", size = "md" }: LogoProps) {
         alt="Legal Nations mascot"
         className={`${imgSize} object-contain flex-shrink-0`}
       />
-      <span className="leading-none tracking-tight" style={{ fontFamily: "inherit" }}>
-        <span
-          className={`font-extrabold ${isFooter ? "text-white" : "text-primary"}`}
-          style={{ letterSpacing: "-0.01em" }}
-        >
-          Legal
-        </span>
-        <span
-          className={`font-light ${isFooter ? "text-blue-200" : "text-primary/70"}`}
-          style={{ letterSpacing: "0.02em" }}
-        >
-          Nations
+      <span className="leading-none" style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 700 }}>
+        <span className={`text-2xl md:text-3xl ${isFooter ? "text-white" : "text-primary"}`}>
+          Legal Nations
         </span>
       </span>
     </span>

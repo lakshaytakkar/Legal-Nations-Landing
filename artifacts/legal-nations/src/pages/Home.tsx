@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, type MutableRefObject } from "react";
 import { Link } from "wouter";
-import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star, Target, Zap, Lock, BadgeDollarSign, XCircle } from "lucide-react";
+import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star, Target, XCircle } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
@@ -195,10 +195,10 @@ export default function Home() {
 
       <main className="flex-grow">
         {/* 2. Hero Section */}
-        <section className="bg-background pt-16 pb-24 md:pt-24 md:pb-32 overflow-hidden">
-          <div className="container mx-auto px-4 md:px-6 flex flex-col lg:flex-row items-center gap-12">
+        <section className="bg-background pt-16 pb-24 md:pt-24 md:pb-32">
+          <div className="container mx-auto px-4 md:px-6 flex flex-col lg:flex-row items-center gap-12 relative">
             <motion.div 
-              className="flex-1 max-w-2xl text-center lg:text-left"
+              className="flex-1 max-w-2xl text-center lg:text-left relative z-10"
               initial="hidden" animate="visible" variants={fadeUpVariant}
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary text-primary font-medium text-sm mb-6 border border-primary-light/20">
@@ -210,7 +210,12 @@ export default function Home() {
                 <span className="text-nowrap">Manage Everything from{" "}<span className="text-primary relative inline-block">One Dashboard<span className="absolute bottom-0 left-0 w-full h-[3px] bg-primary/30 rounded-full" /></span>.</span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-xl mx-auto lg:mx-0">
-                From Delaware LLCs to Dubai Free Zones — formation, tax filing, compliance, and registered agent services. All-in-one. All affordable.
+                Your US LLC. Filed &amp; Ready in{" "}
+                <span className="text-primary font-semibold relative inline-block">
+                  24 Hours
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary/40 rounded-full" />
+                </span>
+                . From anywhere in the world.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
                 <Button className="bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-14 px-8 rounded-full shadow-lg hover:shadow-xl transition-all w-full sm:w-auto" data-testid="hero-cta-start" asChild>
@@ -220,21 +225,26 @@ export default function Home() {
                   <a href="#pricing">See Pricing</a>
                 </Button>
               </div>
-              <div className="flex flex-wrap justify-center lg:justify-start gap-3">
-                <span className="rounded-full border border-primary/20 bg-secondary px-3 py-1.5 text-xs font-semibold text-primary flex items-center gap-1.5 shadow-sm">
-                  <Zap className="w-4 h-4 text-accent animate-pulse" /> 24hr Formation
-                </span>
-                <span className="rounded-full border border-primary/20 bg-secondary px-3 py-1.5 text-xs font-semibold text-primary flex items-center gap-1.5 shadow-sm">
-                  <Lock className="w-4 h-4 text-success" /> 100% Compliant
-                </span>
-                <span className="rounded-full border border-primary/20 bg-secondary px-3 py-1.5 text-xs font-semibold text-primary flex items-center gap-1.5 shadow-sm">
-                  <BadgeDollarSign className="w-4 h-4 text-primary" /> Lowest Price Guarantee
-                </span>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+                {[
+                  { icon: <Building2 className="w-3.5 h-3.5" />, label: "Company Formation" },
+                  { icon: <FileText className="w-3.5 h-3.5" />,  label: "Tax Filing" },
+                  { icon: <Shield className="w-3.5 h-3.5" />,    label: "Compliance" },
+                  { icon: <FileCheck className="w-3.5 h-3.5" />, label: "Registered Agent" },
+                  { icon: <Globe className="w-3.5 h-3.5" />,     label: "10+ Countries" },
+                ].map(({ icon, label }) => (
+                  <span
+                    key={label}
+                    className="rounded-full border border-primary/20 bg-secondary px-3 py-1.5 text-xs font-semibold text-primary flex items-center gap-1.5 shadow-sm"
+                  >
+                    {icon} {label}
+                  </span>
+                ))}
               </div>
             </motion.div>
             
             <motion.div 
-              className="flex-1 w-full relative"
+              className="flex-1 w-full relative z-0"
               initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
             >
               <div className="transform rotate-1 hover:rotate-0 transition-transform duration-500">
