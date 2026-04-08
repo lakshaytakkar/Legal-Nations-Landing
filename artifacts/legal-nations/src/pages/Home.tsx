@@ -53,15 +53,15 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-primary-light/30">
       {/* 0. Announcement Bar */}
-      <div className="bg-primary text-white text-sm py-2 px-4 text-center font-medium sticky top-0 z-50">
+      <div className="bg-card text-foreground text-sm py-2 px-4 text-center font-medium sticky top-0 z-50 border-b border-border">
         🎯 Limited Offer: Wyoming LLC Formation at $149 — Lowest Price Guaranteed <ArrowRight className="inline w-4 h-4 ml-1" />
-        <Link href="#pricing" className="ml-2 underline underline-offset-2 hover:text-accent transition-colors">
+        <Link href="#pricing" className="ml-2 underline underline-offset-2 hover:text-primary transition-colors">
           Claim Now
         </Link>
       </div>
 
       {/* 1. Navigation */}
-      <header className={`sticky ${isScrolled ? 'top-0 shadow-sm' : 'top-0 sm:top-9'} z-40 bg-white transition-all duration-200 border-b border-border`}>
+      <header className={`sticky ${isScrolled ? 'top-0 shadow-sm' : 'top-0 sm:top-9'} z-40 bg-background/95 backdrop-blur-md transition-all duration-200 border-b border-border`}>
         <div className="container mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
           <Link href="/" className="font-heading font-bold text-xl md:text-2xl text-primary flex items-center gap-2">
             <div className="w-8 h-8 rounded bg-primary text-white flex items-center justify-center">
@@ -82,7 +82,7 @@ export default function Home() {
               </button>
               {servicesOpen && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl border border-border shadow-xl py-2 z-50"
+                  className="absolute top-full left-0 mt-2 w-64 bg-card rounded-xl border border-border shadow-xl py-2 z-50"
                   onMouseEnter={() => openDropdown(setServicesOpen, servicesTimeout)}
                   onMouseLeave={() => closeDropdown(setServicesOpen, servicesTimeout)}
                 >
@@ -113,7 +113,7 @@ export default function Home() {
               </button>
               {countriesOpen && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl border border-border shadow-xl py-2 z-50"
+                  className="absolute top-full left-0 mt-2 w-56 bg-card rounded-xl border border-border shadow-xl py-2 z-50"
                   onMouseEnter={() => openDropdown(setCountriesOpen, countriesTimeout)}
                   onMouseLeave={() => closeDropdown(setCountriesOpen, countriesTimeout)}
                 >
@@ -140,7 +140,7 @@ export default function Home() {
           </nav>
           
           <div className="hidden md:block">
-            <Button className="bg-accent hover:bg-accent-hover text-white border-none font-bold rounded-full px-6 shadow-md hover:shadow-lg transition-all" data-testid="button-nav-cta">
+            <Button className="bg-accent hover:bg-accent-hover text-accent-foreground border-none font-bold rounded-full px-6 shadow-md hover:shadow-lg transition-all" data-testid="button-nav-cta">
               Get Started — Free Consultation
             </Button>
           </div>
@@ -156,19 +156,19 @@ export default function Home() {
         
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-b border-border px-4 py-4 flex flex-col gap-4 absolute w-full shadow-lg">
+          <div className="md:hidden bg-background border-b border-border px-4 py-4 flex flex-col gap-4 absolute w-full shadow-lg">
             <a href="#services" className="font-medium p-2 hover:bg-muted rounded" onClick={() => setMobileMenuOpen(false)}>Services</a>
             <a href="#countries" className="font-medium p-2 hover:bg-muted rounded" onClick={() => setMobileMenuOpen(false)}>Countries</a>
             <a href="#pricing" className="font-medium p-2 hover:bg-muted rounded" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
             <a href="#why-us" className="font-medium p-2 hover:bg-muted rounded" onClick={() => setMobileMenuOpen(false)}>Why Us</a>
-            <Button className="bg-accent hover:bg-accent-hover text-white w-full mt-2">Get Started</Button>
+            <Button className="bg-accent hover:bg-accent-hover text-accent-foreground w-full mt-2">Get Started</Button>
           </div>
         )}
       </header>
 
       <main className="flex-grow">
         {/* 2. Hero Section */}
-        <section className="bg-white pt-16 pb-24 md:pt-24 md:pb-32 overflow-hidden">
+        <section className="bg-background pt-16 pb-24 md:pt-24 md:pb-32 overflow-hidden">
           <div className="container mx-auto px-4 md:px-6 flex flex-col lg:flex-row items-center gap-12">
             <motion.div 
               className="flex-1 max-w-2xl text-center lg:text-left"
@@ -185,7 +185,7 @@ export default function Home() {
                 From Delaware LLCs to Dubai Free Zones — formation, tax filing, compliance, and registered agent services. All-in-one. All affordable.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
-                <Button className="bg-accent hover:bg-accent-hover text-white text-lg h-14 px-8 rounded-full shadow-lg hover:shadow-xl transition-all w-full sm:w-auto" data-testid="hero-cta-start">
+                <Button className="bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-14 px-8 rounded-full shadow-lg hover:shadow-xl transition-all w-full sm:w-auto" data-testid="hero-cta-start">
                   Start Your Company — $149
                 </Button>
                 <Button variant="outline" className="border-primary text-primary hover:bg-secondary text-lg h-14 px-8 rounded-full w-full sm:w-auto" asChild data-testid="hero-cta-pricing">
@@ -203,7 +203,7 @@ export default function Home() {
               className="flex-1 w-full relative"
               initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/50 bg-white transform rotate-1 hover:rotate-0 transition-transform duration-500">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/50 bg-card transform rotate-1 hover:rotate-0 transition-transform duration-500">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent pointer-events-none z-10 rounded-2xl"></div>
                 <img 
                   src="/images/hero-dashboard.png" 
@@ -247,7 +247,7 @@ export default function Home() {
         </section>
 
         {/* 4. How It Works */}
-        <section className="bg-white py-24">
+        <section className="bg-background py-24">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               className="text-center mb-16"
@@ -264,7 +264,7 @@ export default function Home() {
               {/* Desktop dashed line connecting cards */}
               <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 border-t-2 border-dashed border-border z-0"></div>
               
-              <motion.div variants={cardVariant} className="relative z-10 flex flex-col items-center text-center bg-white">
+              <motion.div variants={cardVariant} className="relative z-10 flex flex-col items-center text-center">
                 <div className="w-24 h-24 rounded-2xl bg-secondary text-primary flex items-center justify-center mb-6 shadow-sm border border-primary/10">
                   <ClipboardList className="w-10 h-10" />
                 </div>
@@ -272,7 +272,7 @@ export default function Home() {
                 <p className="text-muted-foreground">Select from 10+ countries. Pick LLC, C-Corp, Pvt Ltd, or Free Zone.</p>
               </motion.div>
 
-              <motion.div variants={cardVariant} className="relative z-10 flex flex-col items-center text-center bg-white">
+              <motion.div variants={cardVariant} className="relative z-10 flex flex-col items-center text-center">
                 <div className="w-24 h-24 rounded-2xl bg-secondary text-primary flex items-center justify-center mb-6 shadow-sm border border-primary/10">
                   <FileText className="w-10 h-10" />
                 </div>
@@ -280,7 +280,7 @@ export default function Home() {
                 <p className="text-muted-foreground">Our legal team files everything — formation docs, EIN, registered agent, compliance setup.</p>
               </motion.div>
 
-              <motion.div variants={cardVariant} className="relative z-10 flex flex-col items-center text-center bg-white">
+              <motion.div variants={cardVariant} className="relative z-10 flex flex-col items-center text-center">
                 <div className="w-24 h-24 rounded-2xl bg-secondary text-primary flex items-center justify-center mb-6 shadow-sm border border-primary/10">
                   <Rocket className="w-10 h-10" />
                 </div>
@@ -316,7 +316,7 @@ export default function Home() {
                 { flag: "🇨🇦", name: "Canada", type: "Corporation", price: "$399" },
                 { flag: "🇦🇺", name: "Australia", type: "Pty Ltd", price: "$699" },
               ].map((country, i) => (
-                <motion.div key={i} variants={cardVariant} className="bg-white rounded-xl p-6 border border-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+                <motion.div key={i} variants={cardVariant} className="bg-card rounded-xl p-6 border border-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col group">
                   <div className="text-5xl mb-4 group-hover:scale-110 transition-transform origin-left">{country.flag}</div>
                   <h3 className="text-xl font-heading font-bold mb-1">{country.name}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{country.type}</p>
@@ -333,7 +333,7 @@ export default function Home() {
         </section>
 
         {/* 6. USA Deep Dive (Delaware vs Wyoming) */}
-        <section className="bg-white py-24">
+        <section className="bg-background py-24">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">USA Company Formation — Delaware vs Wyoming</h2>
@@ -341,10 +341,10 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto relative mb-16">
-              <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white border-2 border-border rounded-full items-center justify-center font-bold text-muted-foreground z-10">VS</div>
+              <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-card border-2 border-border rounded-full items-center justify-center font-bold text-muted-foreground z-10">VS</div>
               
               {/* Delaware Card */}
-              <div className="bg-white rounded-2xl border-2 border-border p-8 shadow-lg relative overflow-hidden group hover:border-primary/50 transition-colors">
+              <div className="bg-card rounded-2xl border-2 border-border p-8 shadow-lg relative overflow-hidden group hover:border-primary/50 transition-colors">
                 <div className="absolute top-0 left-0 w-full h-2 bg-primary"></div>
                 <div className="flex justify-between items-start mb-6">
                   <div>
@@ -393,11 +393,11 @@ export default function Home() {
                   <div className="text-sm flex justify-between text-muted-foreground"><span>Annual Report</span> <span>Not required for LLCs</span></div>
                 </div>
 
-                <Button className="w-full bg-accent hover:bg-accent-hover text-white text-lg h-12">Get Delaware Package</Button>
+                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12">Get Delaware Package</Button>
               </div>
 
               {/* Wyoming Card */}
-              <div className="bg-white rounded-2xl border-2 border-border p-8 shadow-lg relative overflow-hidden group hover:border-primary/50 transition-colors">
+              <div className="bg-card rounded-2xl border-2 border-border p-8 shadow-lg relative overflow-hidden group hover:border-primary/50 transition-colors">
                 <div className="absolute top-0 left-0 w-full h-2 bg-accent"></div>
                 <div className="flex justify-between items-start mb-6">
                   <div>
@@ -410,7 +410,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className="bg-orange-50 rounded-lg p-3 text-sm text-foreground mb-6 font-medium border border-orange-100">
+                <div className="bg-secondary rounded-lg p-3 text-sm text-foreground mb-6 font-medium border border-border">
                   Best for: Solopreneurs, e-commerce, holding companies
                 </div>
 
@@ -446,13 +446,13 @@ export default function Home() {
                   <div className="text-sm flex justify-between text-success font-medium"><span>State Income Tax</span> <span>$0</span></div>
                 </div>
 
-                <Button className="w-full bg-accent hover:bg-accent-hover text-white text-lg h-12">Get Wyoming Package</Button>
+                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12">Get Wyoming Package</Button>
               </div>
             </div>
 
             <div className="max-w-4xl mx-auto">
               <div className="overflow-x-auto rounded-xl border border-border">
-                <table className="w-full text-left text-sm border-collapse bg-white">
+                <table className="w-full text-left text-sm border-collapse bg-card">
                   <thead className="bg-surface border-b border-border">
                     <tr>
                       <th className="p-4 font-bold">Feature</th>
@@ -498,7 +498,7 @@ export default function Home() {
 
             <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-end mb-16">
               {/* Starter */}
-              <div className="bg-white rounded-2xl border border-border p-8 shadow-sm flex flex-col h-full relative lg:order-1 order-2">
+              <div className="bg-card rounded-2xl border border-border p-8 shadow-sm flex flex-col h-full relative lg:order-1 order-2">
                 <div className="mb-8">
                   <h3 className="text-xl font-bold uppercase tracking-wider text-muted-foreground mb-2">Starter</h3>
                   <div className="flex items-baseline gap-1 mb-2">
@@ -530,8 +530,8 @@ export default function Home() {
               </div>
 
               {/* Professional */}
-              <div className="bg-white rounded-2xl border-2 border-accent p-8 shadow-xl flex flex-col h-full relative lg:-mt-6 lg:mb-0 z-10 lg:order-2 order-1">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent text-white font-bold px-4 py-1 rounded-full text-sm">
+              <div className="bg-card rounded-2xl border-2 border-accent p-8 shadow-xl flex flex-col h-full relative lg:-mt-6 lg:mb-0 z-10 lg:order-2 order-1">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent text-accent-foreground font-bold px-4 py-1 rounded-full text-sm">
                   Most Popular
                 </div>
                 <div className="mb-8 mt-2">
@@ -553,11 +553,11 @@ export default function Home() {
                     <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-muted-foreground shrink-0" /> Annual tax $299 add-on</li>
                   </ul>
                 </div>
-                <Button className="w-full bg-accent hover:bg-accent-hover text-white h-14 text-lg font-bold shadow-md">Start Now</Button>
+                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground h-14 text-lg font-bold shadow-md">Start Now</Button>
               </div>
 
               {/* Enterprise */}
-              <div className="bg-white rounded-2xl border border-border p-8 shadow-sm flex flex-col h-full relative lg:order-3 order-3">
+              <div className="bg-card rounded-2xl border border-border p-8 shadow-sm flex flex-col h-full relative lg:order-3 order-3">
                 <div className="mb-8">
                   <h3 className="text-xl font-bold uppercase tracking-wider text-muted-foreground mb-2">Enterprise</h3>
                   <div className="flex items-baseline gap-1 mb-2">
@@ -581,7 +581,7 @@ export default function Home() {
             </div>
 
             {/* Add-ons */}
-            <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl border border-border shadow-sm">
+            <div className="max-w-3xl mx-auto bg-card p-8 rounded-xl border border-border shadow-sm">
               <h4 className="font-heading font-bold text-lg mb-6 flex items-center gap-2"><ClipboardList className="w-5 h-5 text-primary" /> Optional Add-On Services</h4>
               <div className="grid sm:grid-cols-2 gap-y-4 gap-x-8 text-sm">
                 <div className="flex justify-between border-b border-border/50 pb-2"><span>Registered Agent Renewal</span> <span className="font-mono font-medium">$99/yr/state</span></div>
@@ -597,7 +597,7 @@ export default function Home() {
         </section>
 
         {/* 8. All-in-One Platform */}
-        <section id="services" className="bg-white py-24 scroll-mt-20">
+        <section id="services" className="bg-background py-24 scroll-mt-20">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-20">
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">Everything You Need. One Platform.</h2>
@@ -687,7 +687,7 @@ export default function Home() {
                     <th className="p-4 font-medium text-muted-foreground border-b-2 border-border">BookMyLLC</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white">
+                <tbody className="bg-card">
                   {[
                     { f: "LLC Formation", ln: "$149", c1: "$399", c2: "$299+", c3: "$500", c4: "~$200" },
                     { f: "EIN Included", ln: "✅", c1: "✅", c2: "Add-on", c3: "✅", c4: "✅" },
@@ -714,7 +714,7 @@ export default function Home() {
         </section>
 
         {/* 10. Stats + Testimonials */}
-        <section className="bg-white py-24">
+        <section className="bg-background py-24">
           <div className="container mx-auto px-4 md:px-6">
             <motion.div
               className="text-center mb-16"
@@ -780,7 +780,7 @@ export default function Home() {
         </section>
 
         {/* 12. FAQ Accordion */}
-        <section className="bg-white py-24">
+        <section className="bg-background py-24">
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-12">Got Questions? We've Got Answers.</h2>
@@ -840,13 +840,13 @@ export default function Home() {
         </section>
 
         {/* 13. Final CTA Banner */}
-        <section className="bg-primary py-24 relative overflow-hidden">
+        <section className="bg-card py-24 relative overflow-hidden border-y border-border">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
           <div className="container mx-auto px-4 text-center relative z-10">
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-6">Ready to Start Your Global Business?</h2>
             <p className="text-xl text-primary-subtle mb-10 max-w-2xl mx-auto">Join 2,500+ founders who chose Legal Nations for speed, affordability, and peace of mind.</p>
             <div className="flex flex-col items-center gap-4">
-              <Button className="bg-accent hover:bg-accent-hover text-white text-lg h-16 px-10 rounded-full shadow-2xl transition-transform hover:scale-105 w-full sm:w-auto">
+              <Button className="bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-16 px-10 rounded-full shadow-2xl transition-transform hover:scale-105 w-full sm:w-auto">
                 Register Your Company Now — Starting at $149
               </Button>
               <a href="#" className="text-primary-subtle hover:text-white underline underline-offset-4 text-sm mt-2 transition-colors">
@@ -858,7 +858,7 @@ export default function Home() {
       </main>
 
       {/* 14. Footer */}
-      <footer className="bg-[#0F172A] text-slate-300 pt-20 pb-8">
+      <footer className="bg-card text-foreground pt-20 pb-8">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div className="space-y-6">
@@ -917,27 +917,27 @@ export default function Home() {
           </div>
 
           <div className="border-t border-slate-800 pt-12 mb-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs text-slate-400">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs text-muted-foreground">
               <div>
-                <p className="font-bold text-slate-300 mb-2">🇮🇳 India Office</p>
+                <p className="font-bold text-foreground mb-2">🇮🇳 India Office</p>
                 <p>Legal Nations (Startup Squad Pvt. Ltd.)</p>
                 <p>WeWork, Cyber Hub, DLF Cyber City</p>
                 <p>Gurugram, Haryana 122002, India</p>
               </div>
               <div>
-                <p className="font-bold text-slate-300 mb-2">🇮🇳 India Office — South Delhi</p>
+                <p className="font-bold text-foreground mb-2">🇮🇳 India Office — South Delhi</p>
                 <p>Legal Nations</p>
                 <p>2nd Floor, M-62, Greater Kailash Part-II</p>
                 <p>New Delhi 110048, India</p>
               </div>
               <div>
-                <p className="font-bold text-slate-300 mb-2">🇺🇸 USA Office</p>
+                <p className="font-bold text-foreground mb-2">🇺🇸 USA Office</p>
                 <p>Legal Nations (Neom LLC)</p>
                 <p>1309 Coffeen Avenue, Suite 1200</p>
                 <p>Sheridan, WY 82801, USA</p>
               </div>
               <div>
-                <p className="font-bold text-slate-300 mb-2">🇺🇸 USA Office — Delaware</p>
+                <p className="font-bold text-foreground mb-2">🇺🇸 USA Office — Delaware</p>
                 <p>Legal Nations</p>
                 <p>8 The Green, Suite A</p>
                 <p>Dover, DE 19901, USA</p>
@@ -945,7 +945,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
             <p>© 2026 Legal Nations. A product of Startup Squad Pvt. Ltd. | All rights reserved.</p>
             <p>Built with ❤️ for founders everywhere.</p>
           </div>
@@ -967,7 +967,7 @@ export default function Home() {
       {isScrolled && (
         <button 
           onClick={scrollToTop}
-          className="fixed bottom-6 left-6 w-10 h-10 bg-white border border-border text-foreground rounded-full flex items-center justify-center shadow-lg hover:bg-muted transition-all z-50"
+          className="fixed bottom-6 left-6 w-10 h-10 bg-card border border-border text-foreground rounded-full flex items-center justify-center shadow-lg hover:bg-secondary transition-all z-50"
           aria-label="Scroll to top"
           data-testid="button-scroll-top"
         >
@@ -976,7 +976,7 @@ export default function Home() {
       )}
 
       {cookieConsent && (
-        <div className="fixed bottom-0 left-0 w-full bg-white border-t border-border p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-50 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="fixed bottom-0 left-0 w-full bg-card border-t border-border p-4 shadow-[0_-10px_40px_rgba(0,0,0,0.2)] z-50 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground text-center sm:text-left">We use cookies to improve your experience and for marketing. By continuing, you agree to our Privacy Policy.</p>
           <div className="flex gap-2 shrink-0">
             <Button variant="outline" size="sm" onClick={() => setCookieConsent(false)}>Decline</Button>
