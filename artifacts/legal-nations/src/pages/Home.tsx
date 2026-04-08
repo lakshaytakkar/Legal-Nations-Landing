@@ -53,7 +53,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-primary-light/30">
       {/* 0. Announcement Bar */}
-      <div className="bg-primary text-white text-sm py-2 px-4 text-center font-medium sticky top-0 z-50 hidden sm:block">
+      <div className="bg-primary text-white text-sm py-2 px-4 text-center font-medium sticky top-0 z-50">
         🎯 Limited Offer: Wyoming LLC Formation at $149 — Lowest Price Guaranteed <ArrowRight className="inline w-4 h-4 ml-1" />
         <Link href="#pricing" className="ml-2 underline underline-offset-2 hover:text-accent transition-colors">
           Claim Now
