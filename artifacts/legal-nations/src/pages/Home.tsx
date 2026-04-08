@@ -92,9 +92,9 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-primary-light/30">
       {/* 0. Announcement Bar */}
-      <div className="bg-card text-foreground text-sm py-2 px-4 text-center font-medium sticky top-0 z-50 border-b border-border">
-        <Target className="inline w-4 h-4 mr-1 text-accent" /> Limited Offer: Wyoming LLC Formation at $149 — Lowest Price Guaranteed <ArrowRight className="inline w-4 h-4 ml-1" />
-        <Link href="/get-started" className="ml-2 underline underline-offset-2 hover:text-primary transition-colors">
+      <div className="bg-primary text-white text-sm py-2.5 px-4 text-center font-medium sticky top-0 z-50">
+        <Target className="inline w-4 h-4 mr-1 text-white/80" /> Limited Offer: Wyoming LLC Formation at $149 — Lowest Price Guaranteed <ArrowRight className="inline w-4 h-4 ml-1 text-white/70" />
+        <Link href="#pricing" className="text-white font-bold underline underline-offset-2 hover:text-white/80 transition-colors ml-2">
           Claim Now
         </Link>
       </div>
@@ -834,25 +834,48 @@ export default function Home() {
                 ))}
               </motion.div>
 
-              <motion.div
-                className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto text-left"
-                initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
-              >
+              <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto text-left items-start">
                 {[
                   { quote: "Legal Nations helped me register my Wyoming LLC in under 24 hours. The dashboard is clean, the pricing is honest, and support was incredibly responsive.", name: "Rahul M.", title: "E-commerce Founder, India", countryCode: "in" },
                   { quote: "I compared 6 different services. Legal Nations was the most affordable AND the only one that offered multi-country support with a single dashboard.", name: "Sarah K.", title: "SaaS Founder, UK", countryCode: "gb" },
                   { quote: "From formation to EIN to bank account — everything was handled. I didn't have to chase a single document.", name: "Ahmed R.", title: "Consultant, UAE", countryCode: "ae" },
-                ].map((t) => (
-                  <motion.div key={t.name} variants={cardVariant} className="bg-surface p-8 rounded-xl border-l-4 border-primary shadow-sm">
-                    <div className="flex text-accent mb-4"><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/></div>
-                    <p className="text-foreground italic mb-6">"{t.quote}"</p>
-                    <div className="font-bold text-sm">{t.name}</div>
-                    <div className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
-                      <FlagImg code={t.countryCode} alt={t.title} /> {t.title}
+                ].map((t, i) => (
+                  <motion.div
+                    key={t.name}
+                    variants={cardVariant}
+                    className={`bg-card rounded-2xl p-8 shadow-md border border-border relative overflow-hidden ${
+                      i === 1 ? 'md:mt-8' : ''
+                    }`}
+                  >
+                    {/* Giant decorative quote mark */}
+                    <div className="absolute -top-2 -left-1 text-[8rem] leading-none text-primary/8 font-serif select-none pointer-events-none">"</div>
+
+                    {/* Stars */}
+                    <div className="flex text-amber-400 mb-4 relative z-10">
+                      {[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 fill-current"/>)}
+                    </div>
+
+                    {/* Quote text */}
+                    <p className="text-foreground text-[0.95rem] leading-relaxed mb-6 relative z-10">
+                      "{t.quote}"
+                    </p>
+
+                    {/* Author row */}
+                    <div className="flex items-center gap-3 pt-4 border-t border-border relative z-10">
+                      {/* Monogram avatar */}
+                      <div className="w-9 h-9 rounded-full bg-primary/10 text-primary font-bold text-sm flex items-center justify-center flex-shrink-0">
+                        {t.name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-bold text-sm text-foreground">{t.name}</div>
+                        <div className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                          <FlagImg code={t.countryCode} alt={t.title} /> {t.title}
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                 ))}
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </section>
