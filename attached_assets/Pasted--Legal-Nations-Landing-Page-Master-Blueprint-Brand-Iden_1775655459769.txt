@@ -1,0 +1,756 @@
+# Legal Nations — Landing Page Master Blueprint
+
+## Brand Identity & Design System
+
+### Brand Positioning
+**Tagline:** "One Platform. Every Country. Zero Compliance Stress."
+**Sub-tagline:** "Register, File, and Stay Compliant — Anywhere in the World."
+
+**Brand Promise:** Legal Nations is the world's most affordable all-in-one platform for global company registration, tax filing, and ongoing compliance. From Delaware to Dubai, Wyoming to Singapore — one dashboard handles everything so founders can focus on building.
+
+**Voice:** Authoritative but accessible. No legal jargon. Short punchy sentences. Data-backed claims. Trust through transparency.
+
+### Color System (Light Theme — Professional Blue)
+
+```
+--primary:        #1E40AF    (Deep Blue — buttons, headings, nav active)
+--primary-light:  #3B82F6    (Medium Blue — links, hover states)  
+--primary-subtle: #EFF6FF    (Ice Blue — section backgrounds, cards)
+--accent:         #F59E0B    (Amber Gold — CTAs, badges, pricing highlights)
+--accent-hover:   #D97706    (Dark Amber — CTA hover)
+--dark:           #0F172A    (Slate 900 — body text)
+--muted:          #64748B    (Slate 500 — secondary text)
+--border:         #E2E8F0    (Slate 200 — dividers, card borders)
+--surface:        #F8FAFC    (Slate 50 — alt section bg)
+--white:          #FFFFFF    (Cards, hero bg)
+--success:        #10B981    (Green — checkmarks, trust indicators)
+--danger:         #EF4444    (Red — comparison "competitors" column)
+```
+
+### Typography
+```
+Headings:    "Plus Jakarta Sans" (Google Fonts — geometric, modern, premium feel)
+Body:        "DM Sans" (Google Fonts — clean, highly readable)
+Mono/Data:   "JetBrains Mono" (for pricing/numbers)
+```
+
+### Flag Icons
+Use country flag emojis or `flagcdn.com` for crisp SVG flags throughout. Every country mention gets its flag beside it.
+
+---
+
+## Section-by-Section Layout
+
+### SECTION 0: Announcement Bar (Sticky Top)
+- Thin bar, `--primary` bg, white text
+- Copy: "🎯 Limited Offer: Wyoming LLC Formation at $149 — Lowest Price Guaranteed → [Claim Now]"
+- Scrolls away or stays fixed
+
+---
+
+### SECTION 1: Navigation
+**Layout:** Sticky, white bg, subtle bottom shadow on scroll
+
+| Logo (left) | Links (center) | CTA (right) |
+|---|---|---|
+| Legal Nations logo | Services ▾ · Countries ▾ · Pricing · Why Us · Resources | [Get Started — Free Consultation] amber button |
+
+**Services Mega Menu (on hover):**
+- Company Registration → USA, UK, Singapore, Dubai, Hong Kong, India
+- Tax Filing & Compliance → Annual Reports, Franchise Tax, Corporate Tax
+- Registered Agent → All 50 US States
+- EIN / Tax ID → Same-Day Processing
+- Virtual Business Address → US & Global
+- Bookkeeping & Accounting → Monthly / Annual
+
+**Countries Mega Menu:**
+Grid of 12+ country cards with flags + country name + "from $XX"
+
+---
+
+### SECTION 2: Hero Section
+**Layout:** Full-width, white bg, split layout — left text (60%), right image placeholder (40%)
+
+**Left Side:**
+```
+Badge:     "Trusted by 2,500+ Founders Worldwide"
+H1:        "Register Your Company Anywhere.
+            Manage Everything from One Dashboard."
+Subtitle:  "From Delaware LLCs to Dubai Free Zones — formation, tax filing,
+            compliance, and registered agent services. All-in-one. All affordable."
+CTA Row:   [Start Your Company — $149] amber    [See Pricing] outline blue
+Trust Row: "⚡ 24hr Formation  ·  🔒 100% Compliant  ·  💰 Lowest Price Guarantee"
+```
+
+**Right Side:**
+- IMAGE PLACEHOLDER: Dashboard mockup showing compliance tracker, documents, and multi-country flags
+- Prompt for NanoBanana: *"Professional SaaS dashboard UI mockup on laptop screen showing company compliance tracker with country flags (USA, Singapore, Dubai, UK), document icons, green checkmarks, clean blue-white interface, isometric view, soft shadow, transparent/white background, modern business illustration style"*
+
+---
+
+### SECTION 3: Logo Carousel — "Trusted By"
+**Layout:** Full-width, light gray `--surface` bg
+
+```
+Heading: "Helping Founders From Startups to Enterprises"
+```
+
+- Auto-scrolling infinite carousel (CSS only, no JS dependency)
+- 12-16 grayscale logos: show logos of payment partners, integration logos (Stripe, Mercury, Wise, QuickBooks, Xero, Razorpay), and "As Featured In" style media badges
+- Below logos: "⭐⭐⭐⭐⭐ 4.9/5 from 500+ Reviews" with Google/Trustpilot icons
+
+---
+
+### SECTION 4: "How It Works" — 3 Steps
+**Layout:** White bg, centered, 3-column cards
+
+```
+Heading:  "Your Company. Registered in 3 Simple Steps."
+```
+
+| Step 1 | Step 2 | Step 3 |
+|---|---|---|
+| 📋 **Choose Your Country & Package** | 📄 **We Handle All Paperwork** | 🚀 **You're Ready to Do Business** |
+| Select from 10+ countries. Pick LLC, C-Corp, Pvt Ltd, or Free Zone. Customize your package. | Our legal team files everything — formation docs, EIN, registered agent, compliance setup. | Get your incorporation certificate, tax ID, business address, and compliance dashboard. |
+
+Each card: icon at top, heading, 2-line description, subtle dashed connector between cards
+
+---
+
+### SECTION 5: Countries Grid — "Register Your Company In"
+**Layout:** `--surface` bg, 2-row grid of country cards
+
+```
+Heading:    "One Platform. 10+ Countries."
+Subheading: "Wherever your business needs to be, we'll get you set up."
+```
+
+**Country Cards (with flag images, not just icons):**
+
+| 🇺🇸 USA | 🇬🇧 United Kingdom | 🇸🇬 Singapore | 🇦🇪 Dubai / UAE |
+|---|---|---|---|
+| LLC & C-Corp | LTD Company | Pte Ltd | Free Zone & Mainland |
+| From **$149** | From **$299** | From **$499** | From **$1,299** |
+| [View Packages →] | [View Packages →] | [View Packages →] | [View Packages →] |
+
+| 🇭🇰 Hong Kong | 🇮🇳 India | 🇨🇦 Canada | 🇦🇺 Australia |
+|---|---|---|---|
+| Limited Company | Pvt Ltd / LLP / OPC | Corporation | Pty Ltd |
+| From **$599** | From **₹4,999** | From **$399** | From **$699** |
+| [View Packages →] | [View Packages →] | [View Packages →] | [View Packages →] |
+
+- Each card: country flag image (large, top), country name, entity types, starting price, CTA link
+- IMAGE PLACEHOLDER per card: Country landmark + flag blend
+- NanoBanana prompt: *"Flat illustration of [country landmark — e.g. Statue of Liberty / Burj Khalifa / Merlion] with national flag colors in background, modern vector style, clean minimal, business-themed, blue accent tones, white background"*
+
+---
+
+### SECTION 6: USA Deep Dive — Delaware vs Wyoming
+**Layout:** White bg, two side-by-side package cards with a "VS" badge between them
+
+```
+Heading:    "🇺🇸 USA Company Formation — Delaware vs Wyoming"
+Subheading: "Two of the most business-friendly states in America. 
+             Here's why founders worldwide choose them."
+```
+
+#### Delaware Package — "The Gold Standard"
+
+**Price: $249** (one-time) + state fees
+*"Best for: VC-funded startups, C-Corps, complex structures"*
+
+**What's Included:** ✅
+- ✅ LLC or C-Corp Formation
+- ✅ Delaware Certificate of Formation
+- ✅ EIN / Federal Tax ID (Same-Day)
+- ✅ Registered Agent (1st Year Free)
+- ✅ Operating Agreement / Bylaws
+- ✅ Banking Resolution
+- ✅ US Business Address (Virtual Mailbox)
+- ✅ Compliance Dashboard Access
+- ✅ Post-Formation Document Kit
+- ✅ Dedicated Account Manager
+
+**Why Delaware?**
+- 🏛️ Court of Chancery — specialized business court, no jury trials
+- 📜 Most developed body of corporate case law in the world
+- 🤝 Preferred by investors and VCs globally
+- 🔒 Strong privacy protections for officers/directors
+- ⚡ Same-day filing available
+- 🌍 No state income tax on out-of-state revenue
+
+**Annual Costs Breakdown:**
+- Franchise Tax: $300/yr (LLC)
+- Registered Agent: $99/yr (after Year 1)
+- Annual Report: Not required for LLCs
+
+[Get Delaware Package — $249] amber CTA
+
+---
+
+#### Wyoming Package — "The Entrepreneur's Favorite"
+
+**Price: $149** (one-time) + state fees
+*"Best for: Solopreneurs, e-commerce, holding companies, privacy-focused"*
+
+**What's Included:** ✅
+- ✅ LLC or C-Corp Formation
+- ✅ Wyoming Articles of Organization
+- ✅ EIN / Federal Tax ID (Same-Day)
+- ✅ Registered Agent (1st Year Free)
+- ✅ Operating Agreement / Bylaws
+- ✅ Banking Resolution
+- ✅ US Business Address (Virtual Mailbox)
+- ✅ Compliance Dashboard Access
+- ✅ Post-Formation Document Kit
+- ✅ Dedicated Account Manager
+
+**Why Wyoming?**
+- 💰 $0 State Income Tax — zero personal and corporate
+- 🛡️ Strongest asset protection laws (charging order protection)
+- 🔐 Anonymous LLC — no public disclosure of members
+- 📉 Lowest annual fees in the US ($60/yr minimum)
+- ⚡ Same-day online formation
+- 🏢 No requirement for operating agreement or in-state registered agent
+
+**Annual Costs Breakdown:**
+- Annual Report Tax: $60/yr minimum
+- Registered Agent: $99/yr (after Year 1)
+- State Income Tax: $0
+
+[Get Wyoming Package — $149] amber CTA
+
+---
+
+#### Below the packages — Comparison Table
+
+| Feature | Delaware | Wyoming |
+|---|---|---|
+| State Filing Fee | $110 | $100 |
+| State Income Tax | 0% (out-of-state) | 0% |
+| Annual Report Required | No (LLC) | Yes ($60 min) |
+| Franchise Tax | $300/yr | $0 |
+| Privacy Level | Medium | High (Anonymous LLC) |
+| VC / Investor Preference | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
+| Court of Chancery | Yes | No |
+| Best For | Startups, VC, C-Corps | Solopreneurs, E-com, Holdings |
+
+[Still unsure? Talk to an Expert — Free] blue outline CTA
+
+---
+
+### SECTION 7: Full Pricing Table — All Services
+**Layout:** `--surface` bg, 3 pricing tiers + add-ons
+
+```
+Heading:    "Transparent Pricing. No Hidden Fees. Ever."
+Subheading: "The world's most affordable company formation platform."
+```
+
+| | Starter | Professional | Enterprise |
+|---|---|---|---|
+| **Price** | **$149** /one-time | **$349** /one-time | **$799** /one-time |
+| Best For | Solopreneurs | Growing businesses | Multi-country operations |
+| Formation (LLC/Corp) | ✅ | ✅ | ✅ |
+| EIN / Tax ID | ✅ | ✅ | ✅ |
+| Registered Agent (1yr) | ✅ | ✅ | ✅ |
+| Operating Agreement | ✅ | ✅ | ✅ |
+| Virtual Business Address | ❌ | ✅ | ✅ |
+| Compliance Dashboard | Basic | Full | Full + Multi-entity |
+| Banking Assistance | ❌ | ✅ (Mercury, Wise) | ✅ (Priority) |
+| Bookkeeping | ❌ | ❌ | ✅ (Monthly) |
+| Tax Filing | ❌ | Annual ($299 add-on) | ✅ Included |
+| Dedicated Manager | ❌ | ✅ | ✅ (Senior) |
+| Countries | 1 | 1 | Up to 3 |
+| | [Start Now] | [Start Now] ⭐ Most Popular | [Contact Sales] |
+
+**Add-On Services:**
+- Registered Agent Renewal: $99/yr/state
+- Virtual Mailbox: $29/mo
+- Annual Tax Filing (LLC): $299
+- Annual Tax Filing (C-Corp): $499
+- Bookkeeping: $79/mo
+- Foreign Qualification: $199 + state fees
+- Trademark Filing: $349
+
+---
+
+### SECTION 8: All-in-One Platform Showcase
+**Layout:** White bg, alternating left-right feature blocks (like Firstbase)
+
+```
+Heading:    "Everything You Need. One Platform."
+Subheading: "Stop juggling 8 different tools. Legal Nations replaces them all."
+```
+
+**Feature Block 1: Company Formation**
+Left: Text — "Register your LLC, C-Corp, Pte Ltd, or Free Zone company in days, not weeks. We handle every document, every filing, every requirement."
+Right: IMAGE PLACEHOLDER — Formation flow UI mockup
+NanoBanana: *"Clean UI showing step-by-step company formation wizard with progress bar, form fields for company name and type, blue and white color scheme, modern SaaS interface, floating on gradient background"*
+
+**Feature Block 2: Compliance Autopilot**
+Right: Text — "Never miss a deadline. Annual reports, franchise tax, renewals — all tracked and filed automatically from your dashboard."
+Left: IMAGE PLACEHOLDER — Compliance calendar dashboard
+NanoBanana: *"SaaS dashboard showing compliance calendar with green checkmarks, upcoming deadline alerts, state-by-state compliance cards, clean blue interface, professional business software mockup"*
+
+**Feature Block 3: Tax Filing & Bookkeeping**
+Left: Text — "From monthly bookkeeping to annual tax returns — we keep your books clean and your filings on time. LLC, C-Corp, and international structures."
+Right: IMAGE PLACEHOLDER — Tax filing interface
+NanoBanana: *"Modern bookkeeping dashboard UI showing financial summary, tax filing status, pie chart of expenses, revenue graph, clean minimal blue-white design, professional SaaS mockup"*
+
+**Feature Block 4: Virtual Business Address & Mailroom**
+Right: Text — "Professional US business address. Mail scanned and forwarded. Essential for banking, compliance, and credibility."
+Left: IMAGE PLACEHOLDER — Mailroom interface
+NanoBanana: *"Virtual mailbox SaaS interface showing scanned mail items, address details, forwarding options, clean modern design, blue accents on white background"*
+
+---
+
+### SECTION 9: Competitor Comparison Table
+**Layout:** `--surface` bg, comparison table
+
+```
+Heading:    "Why Founders Choose Legal Nations Over Everyone Else"
+```
+
+| Feature | Legal Nations | Firstbase | LegalZoom | Stripe Atlas | BookMyLLC |
+|---|---|---|---|---|---|
+| LLC Formation | **$149** | $399 | $299+ | $500 | ~$200 |
+| EIN Included | ✅ | ✅ | Add-on | ✅ | ✅ |
+| Registered Agent (1yr) | **Free** | $149/yr | $299/yr | Included | Varies |
+| Virtual Address | **$29/mo** | $35/mo | N/A | N/A | N/A |
+| Multi-Country | **10+ Countries** | USA only | USA only | USA only | 10+ |
+| Compliance Dashboard | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Tax Filing | **From $299** | $1,799+ | Separate | N/A | Separate |
+| Dedicated Manager | ✅ | ❌ | ❌ | ❌ | ✅ |
+| Pricing Transparency | **⭐⭐⭐⭐⭐** | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
+
+- Legal Nations column highlighted with `--primary-subtle` bg and left border accent
+- Competitor columns slightly muted
+
+---
+
+### SECTION 10: Trust Section — Stats + Testimonials
+**Layout:** White bg
+
+```
+Heading: "Numbers That Speak Louder Than Words"
+```
+
+**Stats Row (4 columns):**
+| 2,500+ | 10+ | 24hr | $149 |
+|---|---|---|---|
+| Companies Formed | Countries Covered | Average Formation Time | Starting Price |
+
+**Testimonials (3 cards, carousel on mobile):**
+
+Card 1:
+> "Legal Nations helped me register my Wyoming LLC in under 24 hours. The dashboard is clean, the pricing is honest, and support was incredibly responsive."
+> — **Rahul M.**, E-commerce Founder, India 🇮🇳
+
+Card 2:
+> "I compared 6 different services. Legal Nations was the most affordable AND the only one that offered multi-country support with a single dashboard."
+> — **Sarah K.**, SaaS Founder, UK 🇬🇧
+
+Card 3:
+> "From formation to EIN to bank account — everything was handled. I didn't have to chase a single document."
+> — **Ahmed R.**, Consultant, UAE 🇦🇪
+
+---
+
+### SECTION 11: Trust Badges Row
+**Layout:** Centered row, `--surface` bg
+
+Badges:
+- 🔒 256-bit SSL Encrypted
+- ✅ IRS Authorized e-File Provider
+- 🏛️ Registered Agent in All 50 States
+- 💳 Secure Payments via Stripe & Razorpay
+- 🌍 Serving 45+ Countries
+- ⭐ 4.9/5 on Trustpilot
+
+---
+
+### SECTION 12: FAQ Accordion
+**Layout:** White bg, centered, max-width 800px
+
+```
+Heading: "Got Questions? We've Got Answers."
+```
+
+**FAQs:**
+
+1. **How long does it take to register a company?**
+   Most US formations are completed within 24-48 hours. International formations (Singapore, Dubai, UK) take 3-7 business days depending on jurisdiction.
+
+2. **Do I need to be a US citizen to form a US LLC?**
+   No. Anyone from any country can form a US LLC or C-Corp. You don't need a US address, SSN, or visa. We handle everything remotely.
+
+3. **What's the difference between Delaware and Wyoming?**
+   Delaware is preferred for VC-funded startups and complex corporate structures due to the Court of Chancery. Wyoming offers lower costs, stronger privacy, and $0 state income tax — ideal for solopreneurs and e-commerce.
+
+4. **Are there any hidden fees?**
+   Zero. Our pricing page shows exactly what you pay. State filing fees are passed through at cost with no markup.
+
+5. **Do you help with bank account opening?**
+   Yes. We assist with applications to Mercury, Wise, Relay, and other founder-friendly banks. Professional and Enterprise plans include priority banking support.
+
+6. **Can I form companies in multiple countries?**
+   Absolutely. Our Enterprise plan supports up to 3 countries with a unified compliance dashboard. Need more? Contact our team for custom plans.
+
+7. **What ongoing compliance do I need after formation?**
+   Depends on the state/country. We track everything for you — annual reports, franchise tax, registered agent renewals — and send reminders or auto-file on your behalf.
+
+8. **Is Legal Nations cheaper than Firstbase or LegalZoom?**
+   Yes. Our Wyoming LLC starts at $149 (Firstbase charges $399). We also offer multi-country support they don't. See our comparison table above.
+
+---
+
+### SECTION 13: Final CTA Banner
+**Layout:** Full-width, `--primary` bg, white text, centered
+
+```
+H2:       "Ready to Start Your Global Business?"
+Subtitle: "Join 2,500+ founders who chose Legal Nations for speed, 
+           affordability, and peace of mind."
+CTA:      [Register Your Company Now — Starting at $149] amber button, large
+Sub-link: "Or schedule a free 15-min consultation →"
+```
+
+---
+
+### SECTION 14: Footer
+**Layout:** Dark bg (`--dark`), 4-column grid + bottom bar
+
+**Column 1: Brand**
+- Legal Nations logo (white)
+- "The world's most affordable all-in-one company registration & compliance platform."
+- Social icons: LinkedIn, Twitter/X, Instagram, YouTube
+
+**Column 2: Services**
+- US Company Formation
+- International Registration
+- Tax Filing & Compliance
+- Registered Agent Services
+- Virtual Business Address
+- Bookkeeping & Accounting
+
+**Column 3: Countries**
+- 🇺🇸 USA (Delaware & Wyoming)
+- 🇬🇧 United Kingdom
+- 🇸🇬 Singapore
+- 🇦🇪 Dubai / UAE
+- 🇭🇰 Hong Kong
+- 🇮🇳 India
+- 🇨🇦 Canada
+- 🇦🇺 Australia
+
+**Column 4: Company**
+- About Us
+- Pricing
+- Blog
+- Contact
+- Privacy Policy
+- Terms of Service
+
+**Office Addresses (below columns):**
+
+🇮🇳 **India Office**
+Legal Nations (Startup Squad Pvt. Ltd.)
+WeWork, Cyber Hub, DLF Cyber City
+Gurugram, Haryana 122002, India
+
+🇮🇳 **India Office — South Delhi**
+Legal Nations
+2nd Floor, M-62, Greater Kailash Part-II
+New Delhi 110048, India
+
+🇺🇸 **USA Office**
+Legal Nations (Neom LLC)
+1309 Coffeen Avenue, Suite 1200
+Sheridan, WY 82801, USA
+
+🇺🇸 **USA Office — Delaware**
+Legal Nations
+8 The Green, Suite A
+Dover, DE 19901, USA
+
+**Bottom Bar:**
+© 2026 Legal Nations. A product of Startup Squad Pvt. Ltd. | All rights reserved.
+Built with ❤️ for founders everywhere.
+
+---
+
+## Internal Linking Strategy
+
+Every page should cross-link aggressively:
+
+| From Section | Links To |
+|---|---|
+| Hero CTA "See Pricing" | → #pricing |
+| Country cards | → /usa, /uk, /singapore, /dubai (individual pages) |
+| Delaware/Wyoming packages | → /usa/delaware, /usa/wyoming |
+| Feature blocks | → /services/compliance, /services/tax-filing, etc. |
+| FAQ answers | → relevant service/country pages |
+| Footer links | → all service and country pages |
+| Blog posts (future) | → service pages with contextual anchor text |
+| Pricing table add-ons | → individual add-on pages |
+
+**URL Structure:**
+```
+legalnations.com/                          (Landing page)
+legalnations.com/pricing                   (Full pricing)
+legalnations.com/usa                       (USA hub)
+legalnations.com/usa/delaware-llc          (Delaware deep page)
+legalnations.com/usa/wyoming-llc           (Wyoming deep page)
+legalnations.com/singapore                 (Singapore hub)
+legalnations.com/dubai                     (Dubai/UAE hub)
+legalnations.com/uk                        (UK hub)
+legalnations.com/services/compliance       (Service pages)
+legalnations.com/services/tax-filing
+legalnations.com/services/registered-agent
+legalnations.com/services/virtual-address
+legalnations.com/about
+legalnations.com/blog
+legalnations.com/contact
+```
+
+---
+
+## Image Placeholders Summary
+
+| Section | Image Needed | NanoBanana Prompt |
+|---|---|---|
+| Hero | Dashboard mockup on laptop | "Professional SaaS dashboard UI mockup on laptop screen showing company compliance tracker with country flags (USA, Singapore, Dubai, UK), document icons, green checkmarks, clean blue-white interface, isometric view, soft shadow, transparent background, modern business illustration" |
+| Countries Grid (×8) | Country landmark illustration | "Flat illustration of [Statue of Liberty / Big Ben / Merlion / Burj Khalifa / Victoria Harbour / India Gate / CN Tower / Sydney Opera House] with national flag colors in background, modern vector style, clean minimal, blue accent, white background" |
+| Feature 1 | Formation wizard UI | "Clean UI showing step-by-step company formation wizard with progress bar, form fields, blue-white color scheme, modern SaaS interface, floating on light background" |
+| Feature 2 | Compliance calendar | "SaaS dashboard showing compliance calendar with green checkmarks, deadline alerts, state-by-state cards, clean blue interface, professional mockup" |
+| Feature 3 | Tax/bookkeeping dash | "Modern bookkeeping dashboard UI showing financial summary, tax filing status, expense chart, revenue graph, blue-white design, SaaS mockup" |
+| Feature 4 | Virtual mailroom | "Virtual mailbox SaaS interface showing scanned mail items, address details, forwarding options, modern design, blue accents on white" |
+| About/Team (future) | Team photo | "Professional diverse team in modern office, laptops, whiteboards, startup vibes, natural lighting, candid work shot" |
+
+---
+
+## Phased Replit Prompts
+
+### Phase 1: Landing Page — Hero + Nav + CTA + Footer
+
+```
+PROMPT FOR REPLIT:
+
+Build a Legal Nations landing page using Next.js 14 (App Router) + TypeScript + 
+Tailwind CSS + shadcn/ui components. Use "Plus Jakarta Sans" for headings and 
+"DM Sans" for body text (Google Fonts).
+
+COLOR SYSTEM (set as Tailwind CSS variables):
+- Primary: #1E40AF (deep blue)
+- Primary Light: #3B82F6 
+- Primary Subtle: #EFF6FF (light blue bg)
+- Accent: #F59E0B (amber gold — all CTA buttons)
+- Accent Hover: #D97706
+- Dark: #0F172A (text)
+- Muted: #64748B (secondary text)
+- Surface: #F8FAFC (alt sections bg)
+
+SECTIONS TO BUILD (in order):
+
+1. ANNOUNCEMENT BAR — Thin strip at top, primary blue bg, white text: 
+   "🎯 Limited Offer: Wyoming LLC at $149 — Lowest Price Guaranteed → Claim Now"
+
+2. STICKY NAVIGATION — White bg, shadow on scroll. Logo left, links center 
+   (Services, Countries, Pricing, Why Us), amber CTA button right: 
+   "Get Started — Free Consultation". Mobile hamburger menu.
+
+3. HERO SECTION — Full width, white bg. Left side (60%): badge "Trusted by 
+   2,500+ Founders", H1 "Register Your Company Anywhere. Manage Everything 
+   from One Dashboard.", subtitle about Delaware to Dubai, two CTAs (amber 
+   "Start Your Company — $149" + outline blue "See Pricing"), trust row with 
+   3 small badges (24hr Formation, 100% Compliant, Lowest Price Guarantee). 
+   Right side (40%): placeholder gray box for dashboard mockup image.
+
+4. LOGO CAROUSEL — Surface bg, heading "Helping Founders From Startups to 
+   Enterprises", auto-scrolling infinite logo strip (use placeholder gray 
+   rectangles for now), 5-star rating badge below.
+
+5. FOOTER — Dark bg (#0F172A). 4-column grid: Brand+socials, Services links, 
+   Countries with flag emojis, Company links. Below: 4 office addresses 
+   (2 India: Gurugram Cyber Hub + GK-II Delhi, 2 USA: Sheridan WY + Dover DE). 
+   Bottom bar with copyright.
+
+DESIGN RULES:
+- No emojis in the actual rendered UI (use icons from lucide-react instead)
+- No popup animations
+- Professional, clean, high-trust aesthetic
+- Image placeholders should be rounded-lg gray boxes with "Image Placeholder" text
+- All CTAs use amber (#F59E0B) with white text, rounded-lg, bold
+- Generous whitespace between sections
+- Mobile responsive from the start
+```
+
+---
+
+### Phase 2: How It Works + Countries Grid + USA Deep Dive
+
+```
+PROMPT FOR REPLIT:
+
+Continue building the Legal Nations landing page. Add these sections BETWEEN 
+the logo carousel and the footer:
+
+1. HOW IT WORKS — White bg, centered heading "Your Company. Registered in 
+   3 Simple Steps." Three cards in a row: 
+   Step 1: "Choose Your Country & Package" (ClipboardList icon)
+   Step 2: "We Handle All Paperwork" (FileText icon) 
+   Step 3: "You're Ready to Do Business" (Rocket icon)
+   Each card: icon, heading, 2-line description. Dashed line connector between.
+
+2. COUNTRIES GRID — Surface bg (#F8FAFC). Heading: "One Platform. 10+ Countries." 
+   Grid of 8 country cards (2 rows × 4): USA, UK, Singapore, Dubai/UAE, 
+   Hong Kong, India, Canada, Australia. Each card: flag emoji (large), country 
+   name, entity types (LLC, Ltd, Pte Ltd etc.), "From $XX" price, "View Packages →" 
+   link. Cards have white bg, rounded-xl, hover shadow.
+
+3. USA DEEP DIVE — White bg. Heading: "🇺🇸 USA Company Formation — Delaware vs 
+   Wyoming". Two large side-by-side package cards with a "VS" badge between:
+
+   DELAWARE ($249): 10-item checklist (formation, EIN, registered agent 1yr free, 
+   operating agreement, banking resolution, US address, compliance dashboard, 
+   document kit, dedicated manager). "Why Delaware" section: 6 bullet points 
+   (Court of Chancery, case law, VC preference, privacy, same-day filing, 
+   no state tax on out-of-state). Annual costs mini-table.
+
+   WYOMING ($149): Same 10-item checklist. "Why Wyoming" section: 6 points 
+   ($0 tax, asset protection, anonymous LLC, lowest annual fees $60, same-day, 
+   no operating agreement requirement). Annual costs mini-table.
+
+   Below both: Comparison table (filing fee, income tax, annual report, 
+   franchise tax, privacy, investor preference, best for). 
+   Bottom CTA: "Still unsure? Talk to an Expert — Free"
+
+Use green checkmarks (Check icon from lucide-react) for all checklist items.
+Delaware card gets a subtle blue-100 bg. Wyoming card gets a subtle amber-50 bg.
+Price displayed large in "JetBrains Mono" font.
+```
+
+---
+
+### Phase 3: Pricing Table + All-in-One Features + Comparison
+
+```
+PROMPT FOR REPLIT:
+
+Add these sections to the Legal Nations landing page (after USA deep dive, 
+before footer):
+
+1. PRICING TABLE — Surface bg. Heading: "Transparent Pricing. No Hidden Fees."
+   3 tier cards: 
+   - Starter ($149): solopreneurs, formation + EIN + registered agent + 
+     operating agreement + compliance dashboard (basic)
+   - Professional ($349, "Most Popular" badge): + virtual address + full 
+     dashboard + banking assistance + dedicated manager + tax filing add-on
+   - Enterprise ($799): + bookkeeping included + tax filing included + 
+     up to 3 countries + senior manager
+   Show feature comparison rows with check/x marks.
+   Add-on services list below: agent renewal $99/yr, virtual mailbox $29/mo, 
+   tax filing $299-499, bookkeeping $79/mo, trademark $349.
+   Professional card should be slightly elevated/larger with amber border.
+
+2. ALL-IN-ONE PLATFORM — White bg. Heading: "Everything You Need. One Platform."
+   4 alternating feature blocks (text left / image right, then swap):
+   - Company Formation (with image placeholder)
+   - Compliance Autopilot (with image placeholder)
+   - Tax Filing & Bookkeeping (with image placeholder)  
+   - Virtual Business Address (with image placeholder)
+   Each block: heading, 2-3 line description, small feature bullets.
+
+3. COMPETITOR COMPARISON — Surface bg. Heading: "Why Founders Choose Legal 
+   Nations Over Everyone Else". Table comparing Legal Nations vs Firstbase vs 
+   LegalZoom vs Stripe Atlas vs BookMyLLC across: LLC price, EIN, registered 
+   agent, virtual address, multi-country, dashboard, tax filing, dedicated 
+   manager, transparency rating. Legal Nations column highlighted with 
+   primary-subtle bg and left blue border.
+
+Use the same design system, color vars, and typography from Phase 1.
+```
+
+---
+
+### Phase 4: Testimonials + Trust + FAQ + Final CTA
+
+```
+PROMPT FOR REPLIT:
+
+Add the final sections to Legal Nations landing page (before footer):
+
+1. STATS + TESTIMONIALS — White bg. Heading: "Numbers That Speak Louder 
+   Than Words". Stats row: 4 large numbers (2,500+ Companies, 10+ Countries, 
+   24hr Formation, $149 Starting). Below: 3 testimonial cards in a row with 
+   quote text, name, title, country flag. Cards have subtle left border in 
+   primary color.
+
+2. TRUST BADGES — Surface bg, centered row of 6 badges: SSL Encrypted, 
+   IRS Authorized, All 50 States Agent, Secure Payments, 45+ Countries, 
+   4.9/5 Rating. Each badge: icon + text, small size, grayscale style.
+
+3. FAQ ACCORDION — White bg, max-width 800px centered. Heading: "Got 
+   Questions? We've Got Answers." 8 accordion items using shadcn Accordion 
+   component. Questions cover: formation time, non-US citizens, DE vs WY, 
+   hidden fees, bank accounts, multi-country, ongoing compliance, 
+   price comparison.
+
+4. FINAL CTA BANNER — Full width, primary blue bg (#1E40AF), white text, 
+   centered. H2: "Ready to Start Your Global Business?" Subtitle about 
+   2,500+ founders. Large amber CTA button: "Register Your Company Now — 
+   Starting at $149". Below: smaller text link "Or schedule a free 
+   15-min consultation →"
+
+Ensure smooth scroll anchors work for all nav links (#pricing, #countries, 
+#why-us). Add scroll-to-top button. Ensure fully mobile responsive.
+```
+
+---
+
+### Phase 5: Polish, SEO, Performance
+
+```
+PROMPT FOR REPLIT:
+
+Polish the Legal Nations landing page:
+
+1. SEO: Add proper meta tags — title "Legal Nations | Register Your Company 
+   Anywhere — LLC, C-Corp, Global Formation from $149", description, 
+   Open Graph tags, canonical URL.
+
+2. PERFORMANCE: Lazy load all images. Add loading="lazy" to images. 
+   Ensure fonts load with display=swap.
+
+3. ANIMATIONS: Add subtle fade-in-up animations on scroll for each section 
+   using Intersection Observer (CSS only, no heavy libraries). Stagger card 
+   animations by 100ms each.
+
+4. WHATSAPP FLOATING BUTTON: Fixed bottom-right green WhatsApp icon button 
+   linking to wa.me/918218229118 with pre-filled message "Hi, I'm interested 
+   in company registration. Can you help?"
+
+5. COOKIE CONSENT: Simple bottom banner, minimal, with Accept/Decline.
+
+6. FAVICON: Add a simple LN monogram favicon placeholder.
+
+7. Review all responsive breakpoints — hero should stack vertically on mobile, 
+   country grid should be 2×4 on tablet and 1-column on mobile, pricing cards 
+   stack on mobile with Professional first.
+```
+
+---
+
+## Key Copywriting Principles Used
+
+1. **Headline Formula:** Benefit + Scope + Relief from pain
+2. **No paragraphs over 2 lines** — everything is scannable
+3. **Every section has a CTA** — no dead ends
+4. **Social proof embedded everywhere** — numbers, ratings, testimonials, logos
+5. **Competitor anchoring** — show our price next to theirs, always
+6. **Country flags everywhere** — visual trust + global credibility
+7. **Checklist format** — people love checking off what's included
+8. **Urgency via announcement bar** — limited offer framing
+9. **"From $XX" pricing** — low anchor point draws people in
+10. **Office addresses** — physical presence = trust, especially for legal services

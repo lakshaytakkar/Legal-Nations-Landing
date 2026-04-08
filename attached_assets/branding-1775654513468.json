@@ -1,0 +1,108 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "DM Sans",
+      "role": "body"
+    },
+    {
+      "family": "Halyard Display",
+      "role": "heading"
+    }
+  ],
+  "colors": {
+    "primary": "#EFA758",
+    "secondary": "#733AB2",
+    "accent": "#D67132",
+    "background": "#F8F6F4",
+    "textPrimary": "#D67132",
+    "link": "#D67132"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "DM Sans",
+      "heading": "Halyard Display"
+    },
+    "fontStacks": {
+      "heading": [
+        "halyard-display",
+        "sans-serif"
+      ],
+      "body": [
+        "DM Sans",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "DM Sans",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "57.001px",
+      "h2": "47.005px",
+      "body": "20px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "4px"
+  },
+  "components": {
+    "input": {
+      "background": "#FFFFFF",
+      "textColor": "#000000",
+      "borderColor": "#69727D",
+      "borderRadius": "4px",
+      "borderRadiusCorners": {
+        "topLeft": "4px",
+        "topRight": "4px",
+        "bottomRight": "4px",
+        "bottomLeft": "4px"
+      },
+      "shadow": "none"
+    }
+  },
+  "images": {
+    "logo": "https://www.bookmyllc.com/wp-content/uploads/2024/05/BookmyLLC_Logo_2024-e1725705033671.png",
+    "favicon": "https://www.bookmyllc.com/wp-content/uploads/2024/09/cropped-cropped-BookmyLLC_Logo_2024-e1725705033671-32x32.png",
+    "ogImage": "https://www.bookmyllc.com/wp-content/uploads/2024/05/cropped-BookmyLLC_Logo_2024-2-e1725705888750.png",
+    "logoHref": "https://www.bookmyllc.com",
+    "logoAlt": "www.bookmyllc.com"
+  },
+  "__llm_logo_reasoning": {
+    "selectedIndex": 0,
+    "reasoning": "Selected #0 because it is visible, located in the header, links to the homepage, and matches the brand name 'BookmyLLC'.",
+    "confidence": 0.95,
+    "source": "llm"
+  },
+  "personality": {
+    "tone": "professional",
+    "energy": "medium",
+    "targetAudience": "entrepreneurs and business owners looking to register companies in the USA"
+  },
+  "designSystem": {
+    "framework": "custom",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0,
+    "colors": 0.9,
+    "overall": 0.45
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": true,
+      "llmSucceeded": true,
+      "finalSource": "llm",
+      "rawLogoSelection": {
+        "selectedLogoIndex": 0,
+        "selectedLogoReasoning": "Selected #0 because it is visible, located in the header, links to the homepage, and matches the brand name 'BookmyLLC'.",
+        "confidence": 0.95
+      }
+    },
+    "buttonClassification": {
+      "llmCalled": false,
+      "llmSucceeded": false
+    }
+  }
+}

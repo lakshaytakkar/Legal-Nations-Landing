@@ -1,0 +1,138 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "Inter",
+      "role": "body"
+    },
+    {
+      "family": "Noigrotesk",
+      "role": "heading"
+    },
+    {
+      "family": "Arial",
+      "role": "unknown"
+    }
+  ],
+  "colors": {
+    "primary": "#F46E73",
+    "secondary": "#F501C4",
+    "accent": "#F46E73",
+    "background": "#FFFFFF",
+    "textPrimary": "#000000",
+    "link": "#030E24"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Inter",
+      "heading": "Noigrotesk"
+    },
+    "fontStacks": {
+      "heading": [
+        "Inter",
+        "Arial",
+        "sans-serif"
+      ],
+      "body": [
+        "Noigrotesk",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "Inter",
+        "Arial",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "48px",
+      "h2": "36px",
+      "body": "16px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "8px"
+  },
+  "components": {
+    "buttonPrimary": {
+      "background": "#F46E73",
+      "textColor": "#FFFFFF",
+      "borderRadius": "8px",
+      "borderRadiusCorners": {
+        "topLeft": "8px",
+        "topRight": "8px",
+        "bottomRight": "8px",
+        "bottomLeft": "8px"
+      },
+      "shadow": "none"
+    },
+    "buttonSecondary": {
+      "background": "#F2F4F7",
+      "textColor": "#000000",
+      "borderRadius": "0px",
+      "borderRadiusCorners": {
+        "topLeft": "0px",
+        "topRight": "0px",
+        "bottomRight": "0px",
+        "bottomLeft": "0px"
+      },
+      "shadow": "none"
+    }
+  },
+  "images": {
+    "logo": "File saved at: attached_assets/logo.svg",
+    "favicon": "File saved at: attached_assets/favicon.png",
+    "ogImage": "File saved at: attached_assets/ogImage.jpg",
+    "logoHref": "File saved at: attached_assets/logoHref.html",
+    "logoAlt": "Home Page"
+  },
+  "__llm_logo_reasoning": {
+    "selectedIndex": 0,
+    "reasoning": "Selected #0 because it is visible, located in the header, and links to the homepage, matching the brand 'Firstbase'.",
+    "confidence": 0.9,
+    "source": "llm"
+  },
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": 1,
+      "text": "Get a Live Demo",
+      "reasoning": "Button #4 'Get a Live Demo' uses the vibrant brand color #F46E73, indicating a strong call-to-action. It is likely the main CTA due to its action-oriented text and prominent color."
+    },
+    "secondary": {
+      "index": 3,
+      "text": "See Firstbase",
+      "reasoning": "Button #6 'See Firstbase' has a different background color (#F2F4F7) and serves as a secondary action with a more informational purpose."
+    },
+    "confidence": 0.95
+  },
+  "personality": {
+    "tone": "modern",
+    "energy": "medium",
+    "targetAudience": "business professionals and enterprises"
+  },
+  "designSystem": {
+    "framework": "custom",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0.95,
+    "colors": 0.9,
+    "overall": 0.925
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": true,
+      "llmSucceeded": true,
+      "finalSource": "llm",
+      "rawLogoSelection": {
+        "selectedLogoIndex": 0,
+        "selectedLogoReasoning": "Selected #0 because it is visible, located in the header, and links to the homepage, matching the brand 'Firstbase'.",
+        "confidence": 0.9
+      }
+    },
+    "buttonClassification": {
+      "llmCalled": true,
+      "llmSucceeded": true
+    }
+  }
+}
