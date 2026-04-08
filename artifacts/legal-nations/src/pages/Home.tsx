@@ -93,9 +93,9 @@ export default function Home() {
     <div className="min-h-screen flex flex-col font-sans selection:bg-primary-light/30">
       {/* 0. Announcement Bar */}
       <div className="bg-primary text-white text-sm py-2.5 px-4 text-center font-medium sticky top-0 z-50">
-        <Target className="inline w-4 h-4 mr-1 text-white/80" /> Limited Offer: Wyoming LLC Formation at $149 — Lowest Price Guaranteed <ArrowRight className="inline w-4 h-4 ml-1 text-white/70" />
-        <Link href="#pricing" className="text-white font-bold underline underline-offset-2 hover:text-white/80 transition-colors ml-2">
-          Claim Now
+        🤝 Exclusive for USDrop AI Members: 30% Off All LLC Packages — Code USDROP30
+        <Link href="/usdrop-llc" className="text-white font-bold underline underline-offset-2 hover:text-white/80 transition-colors ml-2">
+          Claim Now →
         </Link>
       </div>
 
