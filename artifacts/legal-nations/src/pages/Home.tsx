@@ -1,10 +1,20 @@
 import { useState, useEffect, useRef, type MutableRefObject } from "react";
 import { Link } from "wouter";
-import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Instagram, Shield, FileCheck, Building2, CreditCard, Globe, Star } from "lucide-react";
+import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Instagram, Shield, FileCheck, Building2, CreditCard, Globe, Star, Target, Zap, Lock, BadgeDollarSign, XCircle } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { motion, type Variants } from "framer-motion";
+
+function FlagImg({ code, alt }: { code: string; alt: string }) {
+  return (
+    <img
+      src={`https://flagcdn.com/24x18/${code}.png`}
+      alt={alt}
+      className="inline w-5 h-4 rounded-sm object-cover"
+    />
+  );
+}
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -50,11 +60,35 @@ export default function Home() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } }
   };
 
+  const brandLogos = [
+    { src: "https://cdn.brandfetch.io/id6TBcFPM/theme/dark/logo.svg", alt: "Stripe" },
+    { src: "https://cdn.brandfetch.io/idNFHGScJH/theme/dark/logo.svg", alt: "Mercury" },
+    { src: "https://cdn.brandfetch.io/id8lHILDf0/theme/dark/logo.svg", alt: "Wise" },
+    { src: "https://cdn.brandfetch.io/ideFuHN8-B/theme/light/logo.png", alt: "QuickBooks" },
+    { src: "https://cdn.brandfetch.io/id_h8KZiCz/theme/dark/logo.svg", alt: "Carta" },
+    { src: "https://cdn.brandfetch.io/idMwGkDCJU/theme/dark/logo.svg", alt: "Brex" },
+    { src: "https://cdn.brandfetch.io/idVfgxzNqD/theme/dark/logo.svg", alt: "HubSpot" },
+    { src: "https://cdn.brandfetch.io/idvHkHFNR8/theme/dark/logo.svg", alt: "Deel" },
+    { src: "https://cdn.brandfetch.io/idnrCPuv87/theme/dark/logo.svg", alt: "Notion" },
+    { src: "https://cdn.brandfetch.io/id6SRk_KFP/theme/dark/logo.svg", alt: "Slack" },
+  ];
+
+  const navCountries = [
+    { code: "us", label: "USA — Delaware & Wyoming" },
+    { code: "gb", label: "United Kingdom" },
+    { code: "sg", label: "Singapore" },
+    { code: "ae", label: "Dubai / UAE" },
+    { code: "hk", label: "Hong Kong" },
+    { code: "in", label: "India" },
+    { code: "ca", label: "Canada" },
+    { code: "au", label: "Australia" },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-primary-light/30">
       {/* 0. Announcement Bar */}
       <div className="bg-card text-foreground text-sm py-2 px-4 text-center font-medium sticky top-0 z-50 border-b border-border">
-        🎯 Limited Offer: Wyoming LLC Formation at $149 — Lowest Price Guaranteed <ArrowRight className="inline w-4 h-4 ml-1" />
+        <Target className="inline w-4 h-4 mr-1 text-accent" /> Limited Offer: Wyoming LLC Formation at $149 — Lowest Price Guaranteed <ArrowRight className="inline w-4 h-4 ml-1" />
         <Link href="#pricing" className="ml-2 underline underline-offset-2 hover:text-primary transition-colors">
           Claim Now
         </Link>
@@ -64,10 +98,8 @@ export default function Home() {
       <header className={`sticky ${isScrolled ? 'top-0 shadow-sm' : 'top-0 sm:top-9'} z-40 bg-background/95 backdrop-blur-md transition-all duration-200 border-b border-border`}>
         <div className="container mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
           <Link href="/" className="font-heading font-bold text-xl md:text-2xl text-primary flex items-center gap-2">
-            <div className="w-8 h-8 rounded bg-primary text-white flex items-center justify-center">
-              <Globe className="w-5 h-5" />
-            </div>
-            Legal Nations
+            <img src="/mascot.png" alt="Legal Nations" className="w-8 h-8 object-contain" />
+            <span className="font-bold text-primary">Legal</span><span className="font-normal text-primary">Nations</span>
           </Link>
           
           <nav className="hidden md:flex items-center gap-8 font-medium text-sm text-foreground">
@@ -117,18 +149,9 @@ export default function Home() {
                   onMouseEnter={() => openDropdown(setCountriesOpen, countriesTimeout)}
                   onMouseLeave={() => closeDropdown(setCountriesOpen, countriesTimeout)}
                 >
-                  {[
-                    { flag: "🇺🇸", label: "USA — Delaware & Wyoming" },
-                    { flag: "🇬🇧", label: "United Kingdom" },
-                    { flag: "🇸🇬", label: "Singapore" },
-                    { flag: "🇦🇪", label: "Dubai / UAE" },
-                    { flag: "🇭🇰", label: "Hong Kong" },
-                    { flag: "🇮🇳", label: "India" },
-                    { flag: "🇨🇦", label: "Canada" },
-                    { flag: "🇦🇺", label: "Australia" },
-                  ].map((item) => (
+                  {navCountries.map((item) => (
                     <a key={item.label} href="#countries" className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-secondary hover:text-primary transition-colors">
-                      <span>{item.flag}</span> {item.label}
+                      <FlagImg code={item.code} alt={item.label} /> {item.label}
                     </a>
                   ))}
                 </div>
@@ -192,10 +215,16 @@ export default function Home() {
                   <a href="#pricing">See Pricing</a>
                 </Button>
               </div>
-              <div className="flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-3 text-sm font-medium text-muted-foreground">
-                <span className="flex items-center gap-1"><span className="text-accent">⚡</span> 24hr Formation</span>
-                <span className="flex items-center gap-1"><span className="text-success">🔒</span> 100% Compliant</span>
-                <span className="flex items-center gap-1"><span className="text-primary">💰</span> Lowest Price Guarantee</span>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-3">
+                <span className="rounded-full border border-primary/20 bg-secondary px-3 py-1.5 text-xs font-semibold text-primary flex items-center gap-1.5 shadow-sm">
+                  <Zap className="w-4 h-4 text-accent animate-pulse" /> 24hr Formation
+                </span>
+                <span className="rounded-full border border-primary/20 bg-secondary px-3 py-1.5 text-xs font-semibold text-primary flex items-center gap-1.5 shadow-sm">
+                  <Lock className="w-4 h-4 text-success" /> 100% Compliant
+                </span>
+                <span className="rounded-full border border-primary/20 bg-secondary px-3 py-1.5 text-xs font-semibold text-primary flex items-center gap-1.5 shadow-sm">
+                  <BadgeDollarSign className="w-4 h-4 text-primary" /> Lowest Price Guarantee
+                </span>
               </div>
             </motion.div>
             
@@ -223,14 +252,13 @@ export default function Home() {
             <h2 className="text-sm font-bold text-muted-foreground tracking-widest uppercase mb-8">Helping Founders From Startups to Enterprises</h2>
             
             <div className="flex overflow-hidden relative max-w-5xl mx-auto mask-image-fade">
-              <div className="flex w-max animate-infinite-scroll space-x-12 items-center text-2xl font-heading font-bold text-muted-foreground/40 px-6">
-                <span>Stripe</span><span>Mercury</span><span>Wise</span><span>QuickBooks</span>
-                <span>Xero</span><span>Razorpay</span><span>Carta</span><span>Brex</span>
-                <span>Notion</span><span>Slack</span><span>HubSpot</span><span>Deel</span>
-                {/* Duplicated for smooth infinite scroll */}
-                <span aria-hidden="true">Stripe</span><span aria-hidden="true">Mercury</span>
-                <span aria-hidden="true">Wise</span><span aria-hidden="true">QuickBooks</span>
-                <span aria-hidden="true">Xero</span><span aria-hidden="true">Razorpay</span>
+              <div className="flex w-max animate-infinite-scroll space-x-12 items-center px-6">
+                {brandLogos.map((logo) => (
+                  <img key={logo.alt} src={logo.src} alt={logo.alt} className="h-7 w-auto grayscale opacity-60 hover:opacity-100 transition-opacity" />
+                ))}
+                {brandLogos.map((logo) => (
+                  <img key={`dup-${logo.alt}`} src={logo.src} alt={logo.alt} aria-hidden="true" className="h-7 w-auto grayscale opacity-60 hover:opacity-100 transition-opacity" />
+                ))}
               </div>
             </div>
             
@@ -306,17 +334,19 @@ export default function Home() {
               initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
             >
               {[
-                { flag: "🇺🇸", name: "USA", type: "LLC & C-Corp", price: "$149" },
-                { flag: "🇬🇧", name: "United Kingdom", type: "LTD Company", price: "$299" },
-                { flag: "🇸🇬", name: "Singapore", type: "Pte Ltd", price: "$499" },
-                { flag: "🇦🇪", name: "Dubai / UAE", type: "Free Zone & Mainland", price: "$1,299" },
-                { flag: "🇭🇰", name: "Hong Kong", type: "Limited Company", price: "$599" },
-                { flag: "🇮🇳", name: "India", type: "Pvt Ltd / LLP / OPC", price: "₹4,999" },
-                { flag: "🇨🇦", name: "Canada", type: "Corporation", price: "$399" },
-                { flag: "🇦🇺", name: "Australia", type: "Pty Ltd", price: "$699" },
+                { code: "us", name: "USA", type: "LLC & C-Corp", price: "$149" },
+                { code: "gb", name: "United Kingdom", type: "LTD Company", price: "$299" },
+                { code: "sg", name: "Singapore", type: "Pte Ltd", price: "$499" },
+                { code: "ae", name: "Dubai / UAE", type: "Free Zone & Mainland", price: "$1,299" },
+                { code: "hk", name: "Hong Kong", type: "Limited Company", price: "$599" },
+                { code: "in", name: "India", type: "Pvt Ltd / LLP / OPC", price: "₹4,999" },
+                { code: "ca", name: "Canada", type: "Corporation", price: "$399" },
+                { code: "au", name: "Australia", type: "Pty Ltd", price: "$699" },
               ].map((country, i) => (
                 <motion.div key={i} variants={cardVariant} className="bg-card rounded-xl p-6 border border-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col group">
-                  <div className="text-5xl mb-4 group-hover:scale-110 transition-transform origin-left">{country.flag}</div>
+                  <div className="mb-4 group-hover:scale-110 transition-transform origin-left">
+                    <img src={`https://flagcdn.com/48x36/${country.code}.png`} alt={country.name} className="w-12 h-9 rounded object-cover" />
+                  </div>
                   <h3 className="text-xl font-heading font-bold mb-1">{country.name}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{country.type}</p>
                   <div className="mt-auto pt-4 border-t border-border flex items-center justify-between">
@@ -466,7 +496,7 @@ export default function Home() {
                       { f: "Annual Report Required", d: "No (LLC)", w: "Yes ($60 min)" },
                       { f: "Franchise Tax", d: "$300/yr", w: "$0" },
                       { f: "Privacy Level", d: "Medium", w: "High (Anonymous LLC)" },
-                      { f: "VC / Investor Preference", d: "⭐⭐⭐⭐⭐", w: "⭐⭐⭐" },
+                      { f: "VC / Investor Preference", d: "★★★★★", w: "★★★" },
                       { f: "Best For", d: "Startups, VC, C-Corps", w: "Solopreneurs, E-com, Holdings" },
                     ].map((row, i) => (
                       <tr key={i} className="hover:bg-muted/50">
@@ -689,13 +719,13 @@ export default function Home() {
                 <tbody className="bg-card">
                   {[
                     { f: "LLC Formation", ln: "$149", c1: "$399", c2: "$299+", c3: "$500", c4: "~$200" },
-                    { f: "EIN Included", ln: "✅", c1: "✅", c2: "Add-on", c3: "✅", c4: "✅" },
+                    { f: "EIN Included", ln: <CheckCircle2 className="w-4 h-4 text-success" />, c1: <CheckCircle2 className="w-4 h-4 text-success" />, c2: "Add-on", c3: <CheckCircle2 className="w-4 h-4 text-success" />, c4: <CheckCircle2 className="w-4 h-4 text-success" /> },
                     { f: "Registered Agent (1yr)", ln: "Free", c1: "$149/yr", c2: "$299/yr", c3: "Included", c4: "Varies" },
                     { f: "Virtual Address", ln: "$29/mo", c1: "$35/mo", c2: "N/A", c3: "N/A", c4: "N/A" },
                     { f: "Multi-Country", ln: "10+ Countries", c1: "USA only", c2: "USA only", c3: "USA only", c4: "10+" },
-                    { f: "Compliance Dashboard", ln: "✅", c1: "✅", c2: "❌", c3: "❌", c4: "❌" },
+                    { f: "Compliance Dashboard", ln: <CheckCircle2 className="w-4 h-4 text-success" />, c1: <CheckCircle2 className="w-4 h-4 text-success" />, c2: <XCircle className="w-4 h-4 text-destructive" />, c3: <XCircle className="w-4 h-4 text-destructive" />, c4: <XCircle className="w-4 h-4 text-destructive" /> },
                     { f: "Tax Filing", ln: "From $299", c1: "$1,799+", c2: "Separate", c3: "N/A", c4: "Separate" },
-                    { f: "Dedicated Manager", ln: "✅", c1: "❌", c2: "❌", c3: "❌", c4: "✅" },
+                    { f: "Dedicated Manager", ln: <CheckCircle2 className="w-4 h-4 text-success" />, c1: <XCircle className="w-4 h-4 text-destructive" />, c2: <XCircle className="w-4 h-4 text-destructive" />, c3: <XCircle className="w-4 h-4 text-destructive" />, c4: <CheckCircle2 className="w-4 h-4 text-success" /> },
                   ].map((row, i) => (
                     <tr key={i} className="border-b border-border hover:bg-muted/30">
                       <td className="p-4 font-medium text-foreground">{row.f}</td>
@@ -743,15 +773,17 @@ export default function Home() {
                 initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
               >
                 {[
-                  { quote: "Legal Nations helped me register my Wyoming LLC in under 24 hours. The dashboard is clean, the pricing is honest, and support was incredibly responsive.", name: "Rahul M.", title: "E-commerce Founder, India 🇮🇳" },
-                  { quote: "I compared 6 different services. Legal Nations was the most affordable AND the only one that offered multi-country support with a single dashboard.", name: "Sarah K.", title: "SaaS Founder, UK 🇬🇧" },
-                  { quote: "From formation to EIN to bank account — everything was handled. I didn't have to chase a single document.", name: "Ahmed R.", title: "Consultant, UAE 🇦🇪" },
+                  { quote: "Legal Nations helped me register my Wyoming LLC in under 24 hours. The dashboard is clean, the pricing is honest, and support was incredibly responsive.", name: "Rahul M.", title: "E-commerce Founder, India", countryCode: "in" },
+                  { quote: "I compared 6 different services. Legal Nations was the most affordable AND the only one that offered multi-country support with a single dashboard.", name: "Sarah K.", title: "SaaS Founder, UK", countryCode: "gb" },
+                  { quote: "From formation to EIN to bank account — everything was handled. I didn't have to chase a single document.", name: "Ahmed R.", title: "Consultant, UAE", countryCode: "ae" },
                 ].map((t) => (
                   <motion.div key={t.name} variants={cardVariant} className="bg-surface p-8 rounded-xl border-l-4 border-primary shadow-sm">
                     <div className="flex text-accent mb-4"><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/></div>
                     <p className="text-foreground italic mb-6">"{t.quote}"</p>
                     <div className="font-bold text-sm">{t.name}</div>
-                    <div className="text-xs text-muted-foreground">{t.title}</div>
+                    <div className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                      <FlagImg code={t.countryCode} alt={t.title} /> {t.title}
+                    </div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -849,7 +881,7 @@ export default function Home() {
                 Register Your Company Now — Starting at $149
               </Button>
               <a href="#" className="text-white/70 hover:text-white underline underline-offset-4 text-sm mt-2 transition-colors">
-                Or schedule a free 15-min consultation →
+                Or schedule a free 15-min consultation &rarr;
               </a>
             </div>
           </div>
@@ -862,10 +894,8 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div className="space-y-6">
               <div className="font-heading font-bold text-2xl text-white flex items-center gap-2">
-                <div className="w-8 h-8 rounded bg-primary text-white flex items-center justify-center">
-                  <Globe className="w-5 h-5" />
-                </div>
-                Legal Nations
+                <img src="/mascot.png" alt="Legal Nations" className="w-8 h-8 object-contain" />
+                <span className="font-bold">Legal</span><span className="font-normal">Nations</span>
               </div>
               <p className="text-sm leading-relaxed">The world's most affordable all-in-one company registration & compliance platform.</p>
               <div className="flex gap-4">
@@ -888,14 +918,14 @@ export default function Home() {
             <div>
               <h4 className="text-white font-bold mb-6">Countries</h4>
               <ul className="space-y-3 text-sm">
-                <li><a href="#" className="hover:text-primary-light transition-colors">🇺🇸 USA (Delaware & Wyoming)</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">🇬🇧 United Kingdom</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">🇸🇬 Singapore</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">🇦🇪 Dubai / UAE</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">🇭🇰 Hong Kong</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">🇮🇳 India</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">🇨🇦 Canada</a></li>
-                <li><a href="#" className="hover:text-primary-light transition-colors">🇦🇺 Australia</a></li>
+                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="us" alt="USA" /> USA (Delaware & Wyoming)</a></li>
+                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="gb" alt="UK" /> United Kingdom</a></li>
+                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="sg" alt="Singapore" /> Singapore</a></li>
+                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="ae" alt="UAE" /> Dubai / UAE</a></li>
+                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="hk" alt="Hong Kong" /> Hong Kong</a></li>
+                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="in" alt="India" /> India</a></li>
+                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="ca" alt="Canada" /> Canada</a></li>
+                <li><a href="#" className="hover:text-primary-light transition-colors flex items-center gap-2"><FlagImg code="au" alt="Australia" /> Australia</a></li>
               </ul>
             </div>
 
@@ -915,25 +945,25 @@ export default function Home() {
           <div className="border-t border-slate-800 pt-12 mb-12">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs text-slate-400">
               <div>
-                <p className="font-bold text-slate-100 mb-2">🇮🇳 India Office</p>
+                <p className="font-bold text-slate-100 mb-2 flex items-center gap-1.5"><FlagImg code="in" alt="India" /> India Office</p>
                 <p>Legal Nations (Startup Squad Pvt. Ltd.)</p>
                 <p>WeWork, Cyber Hub, DLF Cyber City</p>
                 <p>Gurugram, Haryana 122002, India</p>
               </div>
               <div>
-                <p className="font-bold text-slate-100 mb-2">🇮🇳 India Office — South Delhi</p>
+                <p className="font-bold text-slate-100 mb-2 flex items-center gap-1.5"><FlagImg code="in" alt="India" /> India Office — South Delhi</p>
                 <p>Legal Nations</p>
                 <p>2nd Floor, M-62, Greater Kailash Part-II</p>
                 <p>New Delhi 110048, India</p>
               </div>
               <div>
-                <p className="font-bold text-slate-100 mb-2">🇺🇸 USA Office</p>
+                <p className="font-bold text-slate-100 mb-2 flex items-center gap-1.5"><FlagImg code="us" alt="USA" /> USA Office</p>
                 <p>Legal Nations (Neom LLC)</p>
                 <p>1309 Coffeen Avenue, Suite 1200</p>
                 <p>Sheridan, WY 82801, USA</p>
               </div>
               <div>
-                <p className="font-bold text-slate-100 mb-2">🇺🇸 USA Office — Delaware</p>
+                <p className="font-bold text-slate-100 mb-2 flex items-center gap-1.5"><FlagImg code="us" alt="USA" /> USA Office — Delaware</p>
                 <p>Legal Nations</p>
                 <p>8 The Green, Suite A</p>
                 <p>Dover, DE 19901, USA</p>
@@ -943,7 +973,7 @@ export default function Home() {
 
           <div className="border-t border-slate-700 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <p>© 2026 Legal Nations. A product of Startup Squad Pvt. Ltd. | All rights reserved.</p>
-            <p>Built with ❤️ for founders everywhere.</p>
+            <p>Built with care for founders everywhere.</p>
           </div>
         </div>
       </footer>

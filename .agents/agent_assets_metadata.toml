@@ -30,3 +30,9 @@ id = "ki7LsqTNT_Dpj3P9w84Er"
 uri = "file://artifacts/legal-nations/public/images/virtual-mailbox.png"
 type = "image"
 title = "Virtual mailbox interface"
+
+[[generated]]
+id = "z2HofMsQ-iRATUft1sN-Y"
+uri = "file://artifacts/legal-nations/public/mascot.png"
+type = "image"
+title = "generated_image"
