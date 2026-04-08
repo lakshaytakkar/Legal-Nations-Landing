@@ -1,15 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, type MutableRefObject } from "react";
 import { Link } from "wouter";
-import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star } from "lucide-react";
+import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cookieConsent, setCookieConsent] = useState(true);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [countriesOpen, setCountriesOpen] = useState(false);
+  const servicesTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const countriesTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,9 +27,27 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const fadeUpVariant = {
+  const openDropdown = (setter: (v: boolean) => void, timeoutRef: MutableRefObject<ReturnType<typeof setTimeout> | null>) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setter(true);
+  };
+  const closeDropdown = (setter: (v: boolean) => void, timeoutRef: MutableRefObject<ReturnType<typeof setTimeout> | null>) => {
+    timeoutRef.current = setTimeout(() => setter(false), 150);
+  };
+
+  const fadeUpVariant: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } }
+  };
+
+  const containerVariant: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.1 } }
+  };
+
+  const cardVariant: Variants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } }
   };
 
   return (
@@ -49,8 +71,70 @@ export default function Home() {
           </Link>
           
           <nav className="hidden md:flex items-center gap-8 font-medium text-sm text-foreground">
-            <a href="#services" className="hover:text-primary transition-colors">Services</a>
-            <a href="#countries" className="hover:text-primary transition-colors">Countries</a>
+            {/* Services dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => openDropdown(setServicesOpen, servicesTimeout)}
+              onMouseLeave={() => closeDropdown(setServicesOpen, servicesTimeout)}
+            >
+              <button className="flex items-center gap-1 hover:text-primary transition-colors" data-testid="nav-services">
+                Services <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`} />
+              </button>
+              {servicesOpen && (
+                <div
+                  className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl border border-border shadow-xl py-2 z-50"
+                  onMouseEnter={() => openDropdown(setServicesOpen, servicesTimeout)}
+                  onMouseLeave={() => closeDropdown(setServicesOpen, servicesTimeout)}
+                >
+                  {[
+                    { label: "US Company Formation", href: "#services" },
+                    { label: "International Registration", href: "#countries" },
+                    { label: "Tax Filing & Compliance", href: "#services" },
+                    { label: "Registered Agent", href: "#services" },
+                    { label: "Virtual Business Address", href: "#services" },
+                    { label: "Bookkeeping & Accounting", href: "#services" },
+                  ].map((item) => (
+                    <a key={item.label} href={item.href} className="block px-4 py-2.5 text-sm hover:bg-secondary hover:text-primary transition-colors">
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Countries dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => openDropdown(setCountriesOpen, countriesTimeout)}
+              onMouseLeave={() => closeDropdown(setCountriesOpen, countriesTimeout)}
+            >
+              <button className="flex items-center gap-1 hover:text-primary transition-colors" data-testid="nav-countries">
+                Countries <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${countriesOpen ? "rotate-180" : ""}`} />
+              </button>
+              {countriesOpen && (
+                <div
+                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl border border-border shadow-xl py-2 z-50"
+                  onMouseEnter={() => openDropdown(setCountriesOpen, countriesTimeout)}
+                  onMouseLeave={() => closeDropdown(setCountriesOpen, countriesTimeout)}
+                >
+                  {[
+                    { flag: "🇺🇸", label: "USA — Delaware & Wyoming" },
+                    { flag: "🇬🇧", label: "United Kingdom" },
+                    { flag: "🇸🇬", label: "Singapore" },
+                    { flag: "🇦🇪", label: "Dubai / UAE" },
+                    { flag: "🇭🇰", label: "Hong Kong" },
+                    { flag: "🇮🇳", label: "India" },
+                    { flag: "🇨🇦", label: "Canada" },
+                    { flag: "🇦🇺", label: "Australia" },
+                  ].map((item) => (
+                    <a key={item.label} href="#countries" className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-secondary hover:text-primary transition-colors">
+                      <span>{item.flag}</span> {item.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <a href="#pricing" className="hover:text-primary transition-colors">Pricing</a>
             <a href="#why-us" className="hover:text-primary transition-colors">Why Us</a>
           </nav>
@@ -165,51 +249,63 @@ export default function Home() {
         {/* 4. How It Works */}
         <section className="bg-white py-24">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
+            <motion.div
+              className="text-center mb-16"
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
+            >
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">Your Company. Registered in 3 Simple Steps.</h2>
               <div className="w-24 h-1 bg-accent mx-auto rounded-full"></div>
-            </div>
+            </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-12 relative max-w-5xl mx-auto">
+            <motion.div
+              className="grid md:grid-cols-3 gap-12 relative max-w-5xl mx-auto"
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
+            >
               {/* Desktop dashed line connecting cards */}
               <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 border-t-2 border-dashed border-border z-0"></div>
               
-              <div className="relative z-10 flex flex-col items-center text-center bg-white">
+              <motion.div variants={cardVariant} className="relative z-10 flex flex-col items-center text-center bg-white">
                 <div className="w-24 h-24 rounded-2xl bg-secondary text-primary flex items-center justify-center mb-6 shadow-sm border border-primary/10">
                   <ClipboardList className="w-10 h-10" />
                 </div>
                 <h3 className="text-xl font-heading font-bold mb-3">1. Choose Your Country & Package</h3>
                 <p className="text-muted-foreground">Select from 10+ countries. Pick LLC, C-Corp, Pvt Ltd, or Free Zone.</p>
-              </div>
+              </motion.div>
 
-              <div className="relative z-10 flex flex-col items-center text-center bg-white">
+              <motion.div variants={cardVariant} className="relative z-10 flex flex-col items-center text-center bg-white">
                 <div className="w-24 h-24 rounded-2xl bg-secondary text-primary flex items-center justify-center mb-6 shadow-sm border border-primary/10">
                   <FileText className="w-10 h-10" />
                 </div>
                 <h3 className="text-xl font-heading font-bold mb-3">2. We Handle All Paperwork</h3>
                 <p className="text-muted-foreground">Our legal team files everything — formation docs, EIN, registered agent, compliance setup.</p>
-              </div>
+              </motion.div>
 
-              <div className="relative z-10 flex flex-col items-center text-center bg-white">
+              <motion.div variants={cardVariant} className="relative z-10 flex flex-col items-center text-center bg-white">
                 <div className="w-24 h-24 rounded-2xl bg-secondary text-primary flex items-center justify-center mb-6 shadow-sm border border-primary/10">
                   <Rocket className="w-10 h-10" />
                 </div>
                 <h3 className="text-xl font-heading font-bold mb-3">3. You're Ready to Do Business</h3>
                 <p className="text-muted-foreground">Get your incorporation certificate, tax ID, business address, and compliance dashboard.</p>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
         {/* 5. Countries Grid */}
         <section id="countries" className="bg-surface py-24 scroll-mt-20 border-y border-border">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
+            <motion.div
+              className="text-center mb-16"
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
+            >
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">One Platform. 10+ Countries.</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Wherever your business needs to be, we'll get you set up.</p>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto"
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
+            >
               {[
                 { flag: "🇺🇸", name: "USA", type: "LLC & C-Corp", price: "$149" },
                 { flag: "🇬🇧", name: "United Kingdom", type: "LTD Company", price: "$299" },
@@ -220,7 +316,7 @@ export default function Home() {
                 { flag: "🇨🇦", name: "Canada", type: "Corporation", price: "$399" },
                 { flag: "🇦🇺", name: "Australia", type: "Pty Ltd", price: "$699" },
               ].map((country, i) => (
-                <div key={i} className="bg-white rounded-xl p-6 border border-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+                <motion.div key={i} variants={cardVariant} className="bg-white rounded-xl p-6 border border-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col group">
                   <div className="text-5xl mb-4 group-hover:scale-110 transition-transform origin-left">{country.flag}</div>
                   <h3 className="text-xl font-heading font-bold mb-1">{country.name}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{country.type}</p>
@@ -230,9 +326,9 @@ export default function Home() {
                       View <ChevronRight className="w-4 h-4" />
                     </a>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -620,49 +716,47 @@ export default function Home() {
         {/* 10. Stats + Testimonials */}
         <section className="bg-white py-24">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
+            <motion.div
+              className="text-center mb-16"
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
+            >
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-12">Numbers That Speak Louder Than Words</h2>
               
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mb-20">
-                <div>
-                  <div className="text-4xl md:text-5xl font-mono font-bold text-primary mb-2">2,500+</div>
-                  <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Companies Formed</div>
-                </div>
-                <div>
-                  <div className="text-4xl md:text-5xl font-mono font-bold text-primary mb-2">10+</div>
-                  <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Countries Covered</div>
-                </div>
-                <div>
-                  <div className="text-4xl md:text-5xl font-mono font-bold text-primary mb-2">24hr</div>
-                  <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Avg Formation Time</div>
-                </div>
-                <div>
-                  <div className="text-4xl md:text-5xl font-mono font-bold text-primary mb-2">$149</div>
-                  <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Starting Price</div>
-                </div>
-              </div>
+              <motion.div
+                className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto mb-20"
+                initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
+              >
+                {[
+                  { num: "2,500+", label: "Companies Formed" },
+                  { num: "10+", label: "Countries Covered" },
+                  { num: "24hr", label: "Avg Formation Time" },
+                  { num: "$149", label: "Starting Price" },
+                ].map((stat) => (
+                  <motion.div key={stat.label} variants={cardVariant}>
+                    <div className="text-4xl md:text-5xl font-mono font-bold text-primary mb-2">{stat.num}</div>
+                    <div className="text-sm font-medium text-muted-foreground uppercase tracking-wide">{stat.label}</div>
+                  </motion.div>
+                ))}
+              </motion.div>
 
-              <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto text-left">
-                <div className="bg-surface p-8 rounded-xl border-l-4 border-primary shadow-sm">
-                  <div className="flex text-accent mb-4"><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/></div>
-                  <p className="text-foreground italic mb-6">"Legal Nations helped me register my Wyoming LLC in under 24 hours. The dashboard is clean, the pricing is honest, and support was incredibly responsive."</p>
-                  <div className="font-bold text-sm">Rahul M.</div>
-                  <div className="text-xs text-muted-foreground">E-commerce Founder, India 🇮🇳</div>
-                </div>
-                <div className="bg-surface p-8 rounded-xl border-l-4 border-primary shadow-sm">
-                  <div className="flex text-accent mb-4"><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/></div>
-                  <p className="text-foreground italic mb-6">"I compared 6 different services. Legal Nations was the most affordable AND the only one that offered multi-country support with a single dashboard."</p>
-                  <div className="font-bold text-sm">Sarah K.</div>
-                  <div className="text-xs text-muted-foreground">SaaS Founder, UK 🇬🇧</div>
-                </div>
-                <div className="bg-surface p-8 rounded-xl border-l-4 border-primary shadow-sm">
-                  <div className="flex text-accent mb-4"><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/></div>
-                  <p className="text-foreground italic mb-6">"From formation to EIN to bank account — everything was handled. I didn't have to chase a single document."</p>
-                  <div className="font-bold text-sm">Ahmed R.</div>
-                  <div className="text-xs text-muted-foreground">Consultant, UAE 🇦🇪</div>
-                </div>
-              </div>
-            </div>
+              <motion.div
+                className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto text-left"
+                initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
+              >
+                {[
+                  { quote: "Legal Nations helped me register my Wyoming LLC in under 24 hours. The dashboard is clean, the pricing is honest, and support was incredibly responsive.", name: "Rahul M.", title: "E-commerce Founder, India 🇮🇳" },
+                  { quote: "I compared 6 different services. Legal Nations was the most affordable AND the only one that offered multi-country support with a single dashboard.", name: "Sarah K.", title: "SaaS Founder, UK 🇬🇧" },
+                  { quote: "From formation to EIN to bank account — everything was handled. I didn't have to chase a single document.", name: "Ahmed R.", title: "Consultant, UAE 🇦🇪" },
+                ].map((t) => (
+                  <motion.div key={t.name} variants={cardVariant} className="bg-surface p-8 rounded-xl border-l-4 border-primary shadow-sm">
+                    <div className="flex text-accent mb-4"><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/><Star className="w-4 h-4 fill-current"/></div>
+                    <p className="text-foreground italic mb-6">"{t.quote}"</p>
+                    <div className="font-bold text-sm">{t.name}</div>
+                    <div className="text-xs text-muted-foreground">{t.title}</div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
@@ -674,7 +768,13 @@ export default function Home() {
               <span className="flex items-center gap-2"><FileCheck className="w-5 h-5 text-primary" /> IRS Authorized e-File Provider</span>
               <span className="flex items-center gap-2"><Building2 className="w-5 h-5 text-foreground" /> Registered Agent in All 50 States</span>
               <span className="flex items-center gap-2"><CreditCard className="w-5 h-5 text-accent" /> Secure Payments</span>
-              <span className="flex items-center gap-2"><Globe className="w-5 h-5 text-primary-light" /> Serving 45+ Countries</span>
+              <span className="flex items-center gap-2"><Globe className="w-5 h-5 text-primary" /> Serving 45+ Countries</span>
+              <span className="flex items-center gap-2">
+                <span className="flex text-accent">
+                  <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
+                </span>
+                4.9/5 Rating
+              </span>
             </div>
           </div>
         </section>
