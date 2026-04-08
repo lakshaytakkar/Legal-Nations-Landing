@@ -840,16 +840,16 @@ export default function Home() {
         </section>
 
         {/* 13. Final CTA Banner */}
-        <section className="bg-card py-24 relative overflow-hidden border-y border-border">
+        <section className="bg-primary py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
           <div className="container mx-auto px-4 text-center relative z-10">
             <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-6">Ready to Start Your Global Business?</h2>
-            <p className="text-xl text-primary-subtle mb-10 max-w-2xl mx-auto">Join 2,500+ founders who chose Legal Nations for speed, affordability, and peace of mind.</p>
+            <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">Join 2,500+ founders who chose Legal Nations for speed, affordability, and peace of mind.</p>
             <div className="flex flex-col items-center gap-4">
-              <Button className="bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-16 px-10 rounded-full shadow-2xl transition-transform hover:scale-105 w-full sm:w-auto">
+              <Button className="bg-white hover:bg-gray-100 text-primary text-lg h-16 px-10 rounded-full shadow-2xl transition-transform hover:scale-105 w-full sm:w-auto font-bold">
                 Register Your Company Now — Starting at $149
               </Button>
-              <a href="#" className="text-primary-subtle hover:text-white underline underline-offset-4 text-sm mt-2 transition-colors">
+              <a href="#" className="text-white/70 hover:text-white underline underline-offset-4 text-sm mt-2 transition-colors">
                 Or schedule a free 15-min consultation →
               </a>
             </div>
@@ -858,7 +858,7 @@ export default function Home() {
       </main>
 
       {/* 14. Footer */}
-      <footer className="bg-card text-foreground pt-20 pb-8">
+      <footer className="bg-[#1A1E3C] text-slate-300 pt-20 pb-8">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div className="space-y-6">
@@ -917,27 +917,27 @@ export default function Home() {
           </div>
 
           <div className="border-t border-slate-800 pt-12 mb-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs text-muted-foreground">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-xs text-slate-400">
               <div>
-                <p className="font-bold text-foreground mb-2">🇮🇳 India Office</p>
+                <p className="font-bold text-slate-100 mb-2">🇮🇳 India Office</p>
                 <p>Legal Nations (Startup Squad Pvt. Ltd.)</p>
                 <p>WeWork, Cyber Hub, DLF Cyber City</p>
                 <p>Gurugram, Haryana 122002, India</p>
               </div>
               <div>
-                <p className="font-bold text-foreground mb-2">🇮🇳 India Office — South Delhi</p>
+                <p className="font-bold text-slate-100 mb-2">🇮🇳 India Office — South Delhi</p>
                 <p>Legal Nations</p>
                 <p>2nd Floor, M-62, Greater Kailash Part-II</p>
                 <p>New Delhi 110048, India</p>
               </div>
               <div>
-                <p className="font-bold text-foreground mb-2">🇺🇸 USA Office</p>
+                <p className="font-bold text-slate-100 mb-2">🇺🇸 USA Office</p>
                 <p>Legal Nations (Neom LLC)</p>
                 <p>1309 Coffeen Avenue, Suite 1200</p>
                 <p>Sheridan, WY 82801, USA</p>
               </div>
               <div>
-                <p className="font-bold text-foreground mb-2">🇺🇸 USA Office — Delaware</p>
+                <p className="font-bold text-slate-100 mb-2">🇺🇸 USA Office — Delaware</p>
                 <p>Legal Nations</p>
                 <p>8 The Green, Suite A</p>
                 <p>Dover, DE 19901, USA</p>
@@ -945,7 +945,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+          <div className="border-t border-slate-700 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <p>© 2026 Legal Nations. A product of Startup Squad Pvt. Ltd. | All rights reserved.</p>
             <p>Built with ❤️ for founders everywhere.</p>
           </div>

@@ -43,11 +43,11 @@
   --color-success: hsl(var(--success));
   --color-success-foreground: hsl(var(--success-foreground));
 
-  /* Firstbase-derived semantic tokens */
-  --color-surface: hsl(239 41% 9%);         /* #0D0E1F — dark card surface */
-  --color-primary-light: hsl(240 77% 88%);  /* lighter purple */
-  --color-primary-subtle: hsl(240 77% 70%); /* deeper purple for text */
-  --color-accent-hover: hsl(240 7% 85%);    /* slightly darker than #EDEDEF */
+  /* Brand semantic tokens — light blue theme */
+  --color-surface: hsl(232 60% 97%);         /* very light blue tint for sections */
+  --color-primary-light: hsl(232 80% 68%);   /* lighter blue for hover/soft states */
+  --color-primary-subtle: hsl(232 55% 65%);  /* muted blue for secondary text */
+  --color-accent-hover: hsl(232 75% 44%);    /* darker blue for hover states */
 
   --color-chart-1: hsl(var(--chart-1));
   --color-chart-2: hsl(var(--chart-2));
@@ -77,91 +77,82 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* Firstbase Dark Design System */
+/* Light Blue Design System */
 :root {
-  --button-outline: rgba(237, 237, 239, 0.15);
-  --badge-outline: rgba(237, 237, 239, 0.08);
+  --button-outline: rgba(0, 0, 0, 0.10);
+  --badge-outline: rgba(0, 0, 0, 0.05);
 
-  --opaque-button-border-intensity: 8;
+  --opaque-button-border-intensity: -8;
 
-  --elevate-1: rgba(255, 255, 255, 0.03);
-  --elevate-2: rgba(255, 255, 255, 0.06);
+  --elevate-1: rgba(0, 0, 0, 0.03);
+  --elevate-2: rgba(0, 0, 0, 0.07);
 
-  /* Firstbase palette
-     #020314 → background (very dark navy)
-     #0D0E1F → card (dark navy card)
-     #232440 → secondary (lighter navy)
-     #EDEDEF → accent / primary CTA (near-white)
-     #A9A9F2 → primary / purple accent
-     #161618 → accent-foreground (dark text on light CTA)
+  /* Primary blue: slightly darker than image swatch (~#4F6AEB → #3347D4)
+     HSL: 232 72% 52%
   */
 
-  --background: 235 83% 4%;        /* #020314 */
-  --foreground: 240 7% 94%;        /* #EDEDEF */
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
 
-  --border: 238 30% 24%;           /* subtle dark border */
+  --border: 220 13% 91%;
 
-  --card: 239 41% 9%;              /* #0D0E1F */
-  --card-foreground: 240 7% 94%;   /* #EDEDEF */
-  --card-border: 238 30% 24%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --card-border: 220 13% 91%;
 
-  --sidebar: 239 41% 9%;
-  --sidebar-foreground: 240 7% 94%;
-  --sidebar-border: 238 30% 24%;
-  --sidebar-primary: 240 77% 81%;
-  --sidebar-primary-foreground: 235 83% 4%;
-  --sidebar-accent: 238 30% 19%;
-  --sidebar-accent-foreground: 240 7% 94%;
-  --sidebar-ring: 240 77% 81%;
+  --sidebar: 232 60% 97%;
+  --sidebar-foreground: 222 47% 11%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-primary: 232 72% 52%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 232 60% 95%;
+  --sidebar-accent-foreground: 232 72% 35%;
+  --sidebar-ring: 232 72% 52%;
 
-  --popover: 239 41% 9%;
-  --popover-foreground: 240 7% 94%;
-  --popover-border: 238 30% 24%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --popover-border: 220 13% 91%;
 
-  /* Primary = purple accent #A9A9F2 */
-  --primary: 240 77% 81%;
-  --primary-foreground: 235 83% 4%;
+  --primary: 232 72% 52%;
+  --primary-foreground: 0 0% 100%;
 
-  /* Secondary = dark navy #232440 */
-  --secondary: 238 30% 19%;
-  --secondary-foreground: 240 7% 94%;
+  --secondary: 232 60% 95%;
+  --secondary-foreground: 232 72% 35%;
 
-  /* Muted = same as card bg */
-  --muted: 239 41% 9%;
-  --muted-foreground: 240 7% 60%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
 
-  /* Accent = near-white CTA button #EDEDEF */
-  --accent: 240 7% 94%;
-  --accent-foreground: 240 5% 9%;  /* #161618 dark text on light CTA */
+  --accent: 232 72% 52%;
+  --accent-foreground: 0 0% 100%;
 
-  --destructive: 0 72% 51%;
-  --destructive-foreground: 0 0% 98%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
 
   --success: 160 84% 39%;
   --success-foreground: 0 0% 100%;
 
-  --input: 238 30% 24%;
-  --ring: 240 77% 81%;
+  --input: 220 13% 91%;
+  --ring: 232 72% 52%;
 
-  --chart-1: 240 77% 81%;
-  --chart-2: 239 73% 66%;
-  --chart-3: 240 50% 55%;
+  --chart-1: 232 72% 52%;
+  --chart-2: 232 65% 65%;
+  --chart-3: 197 37% 44%;
   --chart-4: 43 74% 66%;
   --chart-5: 27 87% 67%;
 
   --app-font-sans: 'Inter', sans-serif;
-  --app-font-serif: Georgia, serif;
-  --app-font-mono: 'Inter', monospace;
+  --app-font-serif: 'Inter', sans-serif;
+  --app-font-mono: 'Inter', sans-serif;
   --radius: .5rem;
 
-  --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.4);
-  --shadow-xs:  0px 1px 3px 0px rgba(0,0,0,0.5);
-  --shadow-sm:  0px 2px 4px 0px rgba(0,0,0,0.5);
-  --shadow:     0px 2px 8px 0px rgba(0,0,0,0.5);
-  --shadow-md:  0px 4px 12px 0px rgba(0,0,0,0.6);
-  --shadow-lg:  0px 8px 24px 0px rgba(0,0,0,0.6);
-  --shadow-xl:  0px 16px 40px 0px rgba(0,0,0,0.7);
-  --shadow-2xl: 0px 24px 64px 0px rgba(0,0,0,0.8);
+  --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.04);
+  --shadow-xs:  0px 1px 3px 0px rgba(0,0,0,0.06);
+  --shadow-sm:  0px 2px 4px 0px rgba(0,0,0,0.06), 0px 1px 2px 0px rgba(0,0,0,0.04);
+  --shadow:     0px 2px 8px 0px rgba(0,0,0,0.08);
+  --shadow-md:  0px 4px 12px 0px rgba(0,0,0,0.08), 0px 2px 4px 0px rgba(0,0,0,0.04);
+  --shadow-lg:  0px 8px 24px 0px rgba(0,0,0,0.10), 0px 4px 8px 0px rgba(0,0,0,0.06);
+  --shadow-xl:  0px 16px 40px 0px rgba(0,0,0,0.12), 0px 8px 16px 0px rgba(0,0,0,0.06);
+  --shadow-2xl: 0px 24px 64px 0px rgba(0,0,0,0.15);
 
   --tracking-normal: -0.01em;
   --spacing: 0.25rem;
