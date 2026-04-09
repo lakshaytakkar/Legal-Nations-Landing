@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,9 +9,12 @@ import {
   Platform,
   Linking,
   KeyboardAvoidingView,
+  Modal,
+  FlatList,
 } from "react-native";
 import * as Haptics from "expo-haptics";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
 
@@ -34,6 +37,16 @@ const JURISDICTION_OPTIONS = [
   { value: "dubai-uae", label: "🇦🇪  Dubai / UAE Free Zone" },
   { value: "india", label: "🇮🇳  India" },
   { value: "other", label: "🌍  Other country" },
+];
+
+const COUNTRY_CODES = [
+  { code: "+91", flag: "🇮🇳", name: "India" },
+  { code: "+1", flag: "🇺🇸", name: "USA / Canada" },
+  { code: "+44", flag: "🇬🇧", name: "United Kingdom" },
+  { code: "+65", flag: "🇸🇬", name: "Singapore" },
+  { code: "+971", flag: "🇦🇪", name: "UAE" },
+  { code: "+61", flag: "🇦🇺", name: "Australia" },
+  { code: "+852", flag: "🇭🇰", name: "Hong Kong" },
 ];
 
 type FormData = {
@@ -75,7 +88,6 @@ function RadioCard({
           styles.radioDot,
           {
             borderColor: selected ? colors.primary : colors.mutedForeground,
-            backgroundColor: "transparent",
           },
         ]}
       >
@@ -98,11 +110,16 @@ function RadioCard({
 export default function GetStartedScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const isWeb = Platform.OS === "web";
+  const params = useLocalSearchParams<{ entityType?: string }>();
 
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [phonePrefix, setPhonePrefix] = useState("+91");
+  const [showCodePicker, setShowCodePicker] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     entityType: "",
     jurisdiction: "",
@@ -112,6 +129,12 @@ export default function GetStartedScreen() {
     company: "",
   });
   const [errors, setErrors] = useState<Errors>({});
+
+  useEffect(() => {
+    if (params.entityType) {
+      setFormData((prev) => ({ ...prev, entityType: params.entityType! }));
+    }
+  }, [params.entityType]);
 
   const update = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -133,6 +156,7 @@ export default function GetStartedScreen() {
   const goBack = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setStep((s) => Math.max(s - 1, 0));
+    setSubmitError(null);
   };
 
   const validateContact = (): boolean => {
@@ -151,29 +175,37 @@ export default function GetStartedScreen() {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       return;
     }
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setSubmitting(true);
+    setSubmitError(null);
     try {
       const domain = process.env.EXPO_PUBLIC_DOMAIN ?? "localhost";
       const res = await fetch(`https://${domain}/api/leads`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, phone: `${phonePrefix}${formData.phone}` }),
       });
-      if (!res.ok) throw new Error("API error");
-    } catch {
-      console.log("Lead submitted (fallback):", formData);
-    } finally {
-      setSubmitting(false);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       setSubmitted(true);
+    } catch (err) {
+      console.error("Lead submission failed:", err);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      setSubmitError(
+        "Something went wrong. Please try again or reach us on WhatsApp."
+      );
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const reset = () => {
+  const resetForm = () => {
     setSubmitted(false);
     setStep(0);
+    setSubmitError(null);
     setFormData({ entityType: "", jurisdiction: "", name: "", email: "", phone: "", company: "" });
     setErrors({});
+    setPhonePrefix("+91");
   };
 
   if (submitted) {
@@ -199,13 +231,13 @@ export default function GetStartedScreen() {
           <View style={[styles.summaryCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
             {entityLabel ? (
               <View style={styles.summaryRow}>
-                <Text style={[styles.summaryLabel, { color: colors.mutedForeground }]}>Entity Type</Text>
+                <Text style={[styles.summaryLabel, { color: colors.mutedForeground }]}>Entity</Text>
                 <Text style={[styles.summaryValue, { color: colors.foreground }]}>{entityLabel}</Text>
               </View>
             ) : null}
             {jurisLabel ? (
               <View style={styles.summaryRow}>
-                <Text style={[styles.summaryLabel, { color: colors.mutedForeground }]}>Jurisdiction</Text>
+                <Text style={[styles.summaryLabel, { color: colors.mutedForeground }]}>Location</Text>
                 <Text style={[styles.summaryValue, { color: colors.foreground }]}>{jurisLabel}</Text>
               </View>
             ) : null}
@@ -220,7 +252,9 @@ export default function GetStartedScreen() {
             </View>
             <View style={styles.summaryRow}>
               <Text style={[styles.summaryLabel, { color: colors.mutedForeground }]}>Phone</Text>
-              <Text style={[styles.summaryValue, { color: colors.foreground }]}>{formData.phone}</Text>
+              <Text style={[styles.summaryValue, { color: colors.foreground }]}>
+                {phonePrefix} {formData.phone}
+              </Text>
             </View>
           </View>
 
@@ -238,9 +272,14 @@ export default function GetStartedScreen() {
 
           <TouchableOpacity
             style={[styles.ghostBtn, { borderColor: colors.border }]}
-            onPress={reset}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              resetForm();
+              router.navigate("/(tabs)/");
+            }}
+            testID="back-home-btn"
           >
-            <Text style={[styles.ghostBtnText, { color: colors.mutedForeground }]}>Start Over</Text>
+            <Text style={[styles.ghostBtnText, { color: colors.mutedForeground }]}>Back to Home</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
@@ -248,275 +287,348 @@ export default function GetStartedScreen() {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: colors.background }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: isWeb ? 34 + 84 : 100 }}
+    <>
+      <KeyboardAvoidingView
+        style={{ flex: 1, backgroundColor: colors.background }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        {isWeb && <View style={{ height: 67 }} />}
-        <View style={[styles.container, { paddingTop: isWeb ? 24 : insets.top + 16 }]}>
-          {/* Step Indicator */}
-          <View style={styles.stepIndicator}>
-            {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
-              <React.Fragment key={i}>
-                <View style={styles.stepItem}>
-                  <View
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: isWeb ? 34 + 84 : 100 }}
+        >
+          {isWeb && <View style={{ height: 67 }} />}
+          <View style={[styles.container, { paddingTop: isWeb ? 24 : insets.top + 16 }]}>
+            {/* Step Indicator */}
+            <View style={styles.stepIndicator}>
+              {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
+                <React.Fragment key={i}>
+                  <View style={styles.stepItem}>
+                    <View
+                      style={[
+                        styles.stepCircle,
+                        { backgroundColor: i <= step ? colors.primary : colors.muted },
+                      ]}
+                    >
+                      {i < step ? (
+                        <Feather name="check" size={16} color="#fff" />
+                      ) : (
+                        <Text
+                          style={{
+                            color: i === step ? "#fff" : colors.mutedForeground,
+                            fontFamily: "Inter_700Bold",
+                            fontSize: 14,
+                          }}
+                        >
+                          {i + 1}
+                        </Text>
+                      )}
+                    </View>
+                    <Text
+                      style={[
+                        styles.stepLabel,
+                        { color: i === step ? colors.primary : colors.mutedForeground },
+                      ]}
+                    >
+                      {STEP_LABELS[i]}
+                    </Text>
+                  </View>
+                  {i < TOTAL_STEPS - 1 && (
+                    <View
+                      style={[
+                        styles.stepLine,
+                        { backgroundColor: i < step ? colors.primary : colors.border },
+                      ]}
+                    />
+                  )}
+                </React.Fragment>
+              ))}
+            </View>
+
+            {/* Step Title */}
+            <Text style={[styles.stepTitle, { color: colors.foreground }]}>
+              {step === 0
+                ? "What type of company?"
+                : step === 1
+                ? "Where do you want to register?"
+                : "How should we reach you?"}
+            </Text>
+
+            {/* Step 1: Entity */}
+            {step === 0 && (
+              <View style={styles.optionsList}>
+                {ENTITY_OPTIONS.map((opt) => (
+                  <RadioCard
+                    key={opt.value}
+                    label={opt.label}
+                    selected={formData.entityType === opt.value}
+                    onPress={() => {
+                      Haptics.selectionAsync();
+                      update("entityType", opt.value);
+                    }}
+                  />
+                ))}
+              </View>
+            )}
+
+            {/* Step 2: Jurisdiction */}
+            {step === 1 && (
+              <View style={styles.optionsList}>
+                {JURISDICTION_OPTIONS.map((opt) => (
+                  <RadioCard
+                    key={opt.value}
+                    label={opt.label}
+                    selected={formData.jurisdiction === opt.value}
+                    onPress={() => {
+                      Haptics.selectionAsync();
+                      update("jurisdiction", opt.value);
+                    }}
+                  />
+                ))}
+              </View>
+            )}
+
+            {/* Step 3: Contact */}
+            {step === 2 && (
+              <View style={styles.contactForm}>
+                {/* Name */}
+                <View>
+                  <Text style={[styles.fieldLabel, { color: colors.foreground }]}>
+                    Full Name <Text style={{ color: colors.destructive }}>*</Text>
+                  </Text>
+                  <TextInput
                     style={[
-                      styles.stepCircle,
+                      styles.input,
                       {
-                        backgroundColor: i <= step ? colors.primary : colors.muted,
+                        backgroundColor: colors.card,
+                        borderColor: errors.name ? colors.destructive : colors.border,
+                        color: colors.foreground,
                       },
                     ]}
-                  >
-                    {i < step ? (
-                      <Feather name="check" size={16} color="#fff" />
-                    ) : (
-                      <Text
-                        style={{
-                          color: i === step ? "#fff" : colors.mutedForeground,
-                          fontFamily: "Inter_700Bold",
-                          fontSize: 14,
-                        }}
-                      >
-                        {i + 1}
+                    placeholder="Your full name"
+                    placeholderTextColor={colors.mutedForeground}
+                    value={formData.name}
+                    onChangeText={(v) => update("name", v)}
+                    autoCapitalize="words"
+                    testID="name-input"
+                  />
+                  {errors.name && (
+                    <Text style={[styles.errorText, { color: colors.destructive }]}>
+                      {errors.name}
+                    </Text>
+                  )}
+                </View>
+
+                {/* Email */}
+                <View>
+                  <Text style={[styles.fieldLabel, { color: colors.foreground }]}>
+                    Email <Text style={{ color: colors.destructive }}>*</Text>
+                  </Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      {
+                        backgroundColor: colors.card,
+                        borderColor: errors.email ? colors.destructive : colors.border,
+                        color: colors.foreground,
+                      },
+                    ]}
+                    placeholder="you@example.com"
+                    placeholderTextColor={colors.mutedForeground}
+                    value={formData.email}
+                    onChangeText={(v) => update("email", v)}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    testID="email-input"
+                  />
+                  {errors.email && (
+                    <Text style={[styles.errorText, { color: colors.destructive }]}>
+                      {errors.email}
+                    </Text>
+                  )}
+                </View>
+
+                {/* Phone with country code */}
+                <View>
+                  <Text style={[styles.fieldLabel, { color: colors.foreground }]}>
+                    WhatsApp / Phone <Text style={{ color: colors.destructive }}>*</Text>
+                  </Text>
+                  <View style={[
+                    styles.phoneRow,
+                    { borderColor: errors.phone ? colors.destructive : colors.border },
+                  ]}>
+                    <TouchableOpacity
+                      style={[styles.codePickerBtn, { backgroundColor: colors.secondary, borderRightColor: colors.border }]}
+                      onPress={() => setShowCodePicker(true)}
+                      testID="code-picker-btn"
+                    >
+                      <Text style={[styles.codeText, { color: colors.foreground }]}>
+                        {COUNTRY_CODES.find((c) => c.code === phonePrefix)?.flag ?? "🇮🇳"}
+                        {"  "}{phonePrefix}
                       </Text>
-                    )}
+                      <Feather name="chevron-down" size={14} color={colors.mutedForeground} />
+                    </TouchableOpacity>
+                    <TextInput
+                      style={[
+                        styles.phoneInput,
+                        {
+                          backgroundColor: colors.card,
+                          color: colors.foreground,
+                        },
+                      ]}
+                      placeholder="99999 99999"
+                      placeholderTextColor={colors.mutedForeground}
+                      value={formData.phone}
+                      onChangeText={(v) => update("phone", v)}
+                      keyboardType="phone-pad"
+                      testID="phone-input"
+                    />
                   </View>
+                  {errors.phone && (
+                    <Text style={[styles.errorText, { color: colors.destructive }]}>
+                      {errors.phone}
+                    </Text>
+                  )}
+                </View>
+
+                {/* Company */}
+                <View>
+                  <Text style={[styles.fieldLabel, { color: colors.foreground }]}>
+                    Company Name{" "}
+                    <Text style={[styles.optionalLabel, { color: colors.mutedForeground }]}>
+                      (optional)
+                    </Text>
+                  </Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      {
+                        backgroundColor: colors.card,
+                        borderColor: colors.border,
+                        color: colors.foreground,
+                      },
+                    ]}
+                    placeholder="Your desired company name"
+                    placeholderTextColor={colors.mutedForeground}
+                    value={formData.company}
+                    onChangeText={(v) => update("company", v)}
+                    testID="company-input"
+                  />
+                </View>
+
+                {/* API error */}
+                {submitError && (
+                  <View style={[styles.errorBanner, { backgroundColor: "#FEF2F2", borderColor: "#FECACA" }]}>
+                    <Feather name="alert-circle" size={16} color="#DC2626" />
+                    <Text style={[styles.errorBannerText, { color: "#DC2626" }]}>{submitError}</Text>
+                  </View>
+                )}
+              </View>
+            )}
+
+            {/* Navigation Buttons */}
+            <View style={styles.navButtons}>
+              {step > 0 && (
+                <TouchableOpacity
+                  style={[styles.backBtn, { borderColor: colors.border }]}
+                  onPress={goBack}
+                  testID="back-btn"
+                >
+                  <Feather name="arrow-left" size={18} color={colors.foreground} />
+                  <Text style={[styles.backBtnText, { color: colors.foreground }]}>Back</Text>
+                </TouchableOpacity>
+              )}
+              {step < TOTAL_STEPS - 1 ? (
+                <TouchableOpacity
+                  style={[
+                    styles.nextBtn,
+                    {
+                      backgroundColor: canNext ? colors.primary : colors.muted,
+                      flex: step > 0 ? 1 : undefined,
+                      width: step === 0 ? "100%" : undefined,
+                    },
+                  ]}
+                  onPress={goNext}
+                  disabled={!canNext}
+                  testID="next-btn"
+                >
                   <Text
                     style={[
-                      styles.stepLabel,
-                      { color: i === step ? colors.primary : colors.mutedForeground },
+                      styles.nextBtnText,
+                      { color: canNext ? "#fff" : colors.mutedForeground },
                     ]}
                   >
-                    {STEP_LABELS[i]}
+                    Continue
                   </Text>
-                </View>
-                {i < TOTAL_STEPS - 1 && (
-                  <View
-                    style={[
-                      styles.stepLine,
-                      { backgroundColor: i < step ? colors.primary : colors.border },
-                    ]}
-                  />
-                )}
-              </React.Fragment>
-            ))}
-          </View>
-
-          {/* Step Title */}
-          <Text style={[styles.stepTitle, { color: colors.foreground }]}>
-            {step === 0
-              ? "What type of company?"
-              : step === 1
-              ? "Where do you want to register?"
-              : "How should we reach you?"}
-          </Text>
-
-          {/* Step 1: Entity */}
-          {step === 0 && (
-            <View style={styles.optionsList}>
-              {ENTITY_OPTIONS.map((opt) => (
-                <RadioCard
-                  key={opt.value}
-                  label={opt.label}
-                  selected={formData.entityType === opt.value}
-                  onPress={() => {
-                    Haptics.selectionAsync();
-                    update("entityType", opt.value);
-                  }}
-                />
-              ))}
+                  <Feather name="arrow-right" size={18} color={canNext ? "#fff" : colors.mutedForeground} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={[styles.nextBtn, { backgroundColor: colors.primary, flex: 1 }]}
+                  onPress={handleSubmit}
+                  disabled={submitting}
+                  testID="submit-btn"
+                >
+                  <Text style={[styles.nextBtnText, { color: "#fff" }]}>
+                    {submitting ? "Submitting..." : "Get My Free Consultation"}
+                  </Text>
+                  {!submitting && <Feather name="arrow-right" size={18} color="#fff" />}
+                </TouchableOpacity>
+              )}
             </View>
-          )}
 
-          {/* Step 2: Jurisdiction */}
-          {step === 1 && (
-            <View style={styles.optionsList}>
-              {JURISDICTION_OPTIONS.map((opt) => (
-                <RadioCard
-                  key={opt.value}
-                  label={opt.label}
-                  selected={formData.jurisdiction === opt.value}
-                  onPress={() => {
-                    Haptics.selectionAsync();
-                    update("jurisdiction", opt.value);
-                  }}
-                />
-              ))}
-            </View>
-          )}
-
-          {/* Step 3: Contact */}
-          {step === 2 && (
-            <View style={styles.contactForm}>
-              <View>
-                <Text style={[styles.fieldLabel, { color: colors.foreground }]}>
-                  Full Name <Text style={{ color: colors.destructive }}>*</Text>
-                </Text>
-                <TextInput
-                  style={[
-                    styles.input,
-                    {
-                      backgroundColor: colors.card,
-                      borderColor: errors.name ? colors.destructive : colors.border,
-                      color: colors.foreground,
-                    },
-                  ]}
-                  placeholder="Your full name"
-                  placeholderTextColor={colors.mutedForeground}
-                  value={formData.name}
-                  onChangeText={(v) => update("name", v)}
-                  autoCapitalize="words"
-                  testID="name-input"
-                />
-                {errors.name && (
-                  <Text style={[styles.errorText, { color: colors.destructive }]}>
-                    {errors.name}
-                  </Text>
-                )}
-              </View>
-
-              <View>
-                <Text style={[styles.fieldLabel, { color: colors.foreground }]}>
-                  Email <Text style={{ color: colors.destructive }}>*</Text>
-                </Text>
-                <TextInput
-                  style={[
-                    styles.input,
-                    {
-                      backgroundColor: colors.card,
-                      borderColor: errors.email ? colors.destructive : colors.border,
-                      color: colors.foreground,
-                    },
-                  ]}
-                  placeholder="you@example.com"
-                  placeholderTextColor={colors.mutedForeground}
-                  value={formData.email}
-                  onChangeText={(v) => update("email", v)}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  testID="email-input"
-                />
-                {errors.email && (
-                  <Text style={[styles.errorText, { color: colors.destructive }]}>
-                    {errors.email}
-                  </Text>
-                )}
-              </View>
-
-              <View>
-                <Text style={[styles.fieldLabel, { color: colors.foreground }]}>
-                  WhatsApp / Phone <Text style={{ color: colors.destructive }}>*</Text>
-                </Text>
-                <TextInput
-                  style={[
-                    styles.input,
-                    {
-                      backgroundColor: colors.card,
-                      borderColor: errors.phone ? colors.destructive : colors.border,
-                      color: colors.foreground,
-                    },
-                  ]}
-                  placeholder="+91 9999999999"
-                  placeholderTextColor={colors.mutedForeground}
-                  value={formData.phone}
-                  onChangeText={(v) => update("phone", v)}
-                  keyboardType="phone-pad"
-                  testID="phone-input"
-                />
-                {errors.phone && (
-                  <Text style={[styles.errorText, { color: colors.destructive }]}>
-                    {errors.phone}
-                  </Text>
-                )}
-              </View>
-
-              <View>
-                <Text style={[styles.fieldLabel, { color: colors.foreground }]}>
-                  Company Name{" "}
-                  <Text style={[styles.optionalLabel, { color: colors.mutedForeground }]}>
-                    (optional)
-                  </Text>
-                </Text>
-                <TextInput
-                  style={[
-                    styles.input,
-                    {
-                      backgroundColor: colors.card,
-                      borderColor: colors.border,
-                      color: colors.foreground,
-                    },
-                  ]}
-                  placeholder="Your desired company name"
-                  placeholderTextColor={colors.mutedForeground}
-                  value={formData.company}
-                  onChangeText={(v) => update("company", v)}
-                  testID="company-input"
-                />
-              </View>
-            </View>
-          )}
-
-          {/* Navigation Buttons */}
-          <View style={styles.navButtons}>
-            {step > 0 && (
-              <TouchableOpacity
-                style={[styles.backBtn, { borderColor: colors.border }]}
-                onPress={goBack}
-                testID="back-btn"
-              >
-                <Feather name="arrow-left" size={18} color={colors.foreground} />
-                <Text style={[styles.backBtnText, { color: colors.foreground }]}>Back</Text>
-              </TouchableOpacity>
+            {step === 0 && (
+              <Text style={[styles.signInNote, { color: colors.mutedForeground }]}>
+                No credit card required. Free consultation.
+              </Text>
             )}
-            {step < TOTAL_STEPS - 1 ? (
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+
+      {/* Country Code Picker Modal */}
+      <Modal
+        visible={showCodePicker}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setShowCodePicker(false)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setShowCodePicker(false)}
+        />
+        <View style={[styles.pickerSheet, { backgroundColor: colors.background, borderTopColor: colors.border }]}>
+          <View style={[styles.pickerHandle, { backgroundColor: colors.border }]} />
+          <Text style={[styles.pickerTitle, { color: colors.foreground }]}>Select Country Code</Text>
+          <FlatList
+            data={COUNTRY_CODES}
+            keyExtractor={(item) => item.code + item.name}
+            renderItem={({ item }) => (
               <TouchableOpacity
                 style={[
-                  styles.nextBtn,
-                  { backgroundColor: canNext ? colors.primary : colors.muted, flex: step > 0 ? 1 : undefined, width: step === 0 ? "100%" : undefined },
+                  styles.pickerItem,
+                  { backgroundColor: phonePrefix === item.code ? colors.secondary : "transparent" },
                 ]}
-                onPress={goNext}
-                disabled={!canNext}
-                testID="next-btn"
+                onPress={() => {
+                  Haptics.selectionAsync();
+                  setPhonePrefix(item.code);
+                  setShowCodePicker(false);
+                }}
               >
-                <Text
-                  style={[
-                    styles.nextBtnText,
-                    { color: canNext ? "#fff" : colors.mutedForeground },
-                  ]}
-                >
-                  Continue
-                </Text>
-                <Feather name="arrow-right" size={18} color={canNext ? "#fff" : colors.mutedForeground} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={[styles.nextBtn, { backgroundColor: colors.primary, flex: 1 }]}
-                onPress={handleSubmit}
-                disabled={submitting}
-                testID="submit-btn"
-              >
-                <Text style={[styles.nextBtnText, { color: "#fff" }]}>
-                  {submitting ? "Submitting..." : "Get My Free Consultation"}
-                </Text>
-                {!submitting && <Feather name="arrow-right" size={18} color="#fff" />}
+                <Text style={styles.pickerFlag}>{item.flag}</Text>
+                <Text style={[styles.pickerName, { color: colors.foreground }]}>{item.name}</Text>
+                <Text style={[styles.pickerCode, { color: colors.primary }]}>{item.code}</Text>
+                {phonePrefix === item.code && (
+                  <Feather name="check" size={16} color={colors.primary} />
+                )}
               </TouchableOpacity>
             )}
-          </View>
-
-          {step === 0 && (
-            <Text style={[styles.signInNote, { color: colors.mutedForeground }]}>
-              No credit card required. Free consultation.
-            </Text>
-          )}
+          />
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </Modal>
+    </>
   );
 }
 
@@ -612,10 +724,48 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Inter_400Regular",
   },
+  phoneRow: {
+    flexDirection: "row",
+    height: 54,
+    borderRadius: 14,
+    borderWidth: 1.5,
+    overflow: "hidden",
+  },
+  codePickerBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 12,
+    borderRightWidth: 1,
+  },
+  codeText: {
+    fontSize: 15,
+    fontFamily: "Inter_600SemiBold",
+  },
+  phoneInput: {
+    flex: 1,
+    paddingHorizontal: 14,
+    fontSize: 16,
+    fontFamily: "Inter_400Regular",
+  },
   errorText: {
     fontSize: 12,
     fontFamily: "Inter_400Regular",
     marginTop: 4,
+  },
+  errorBanner: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  errorBannerText: {
+    fontSize: 13,
+    fontFamily: "Inter_500Medium",
+    flex: 1,
+    lineHeight: 18,
   },
   navButtons: {
     flexDirection: "row",
@@ -726,5 +876,51 @@ const styles = StyleSheet.create({
   ghostBtnText: {
     fontSize: 15,
     fontFamily: "Inter_500Medium",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "#00000055",
+  },
+  pickerSheet: {
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    borderTopWidth: 1,
+    paddingBottom: 40,
+    maxHeight: "70%",
+  },
+  pickerHandle: {
+    width: 36,
+    height: 4,
+    borderRadius: 2,
+    alignSelf: "center",
+    marginTop: 10,
+    marginBottom: 8,
+  },
+  pickerTitle: {
+    fontSize: 17,
+    fontFamily: "Inter_700Bold",
+    textAlign: "center",
+    marginBottom: 12,
+    paddingHorizontal: 20,
+  },
+  pickerItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    gap: 12,
+  },
+  pickerFlag: {
+    fontSize: 24,
+  },
+  pickerName: {
+    flex: 1,
+    fontSize: 15,
+    fontFamily: "Inter_500Medium",
+  },
+  pickerCode: {
+    fontSize: 15,
+    fontFamily: "Inter_700Bold",
+    marginRight: 8,
   },
 });

@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Platform,
   Dimensions,
+  LayoutChangeEvent,
 } from "react-native";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
@@ -53,6 +54,8 @@ export default function HomeScreen() {
   const router = useRouter();
   const isWeb = Platform.OS === "web";
   const topPad = isWeb ? 67 : insets.top;
+  const scrollRef = useRef<ScrollView>(null);
+  const pricingY = useRef(0);
 
   const openWhatsApp = () => {
     hapticPress(() =>
@@ -60,9 +63,15 @@ export default function HomeScreen() {
     );
   };
 
+  const scrollToPricing = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    scrollRef.current?.scrollTo({ y: pricingY.current, animated: true });
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <ScrollView
+        ref={scrollRef}
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}
         style={{ flex: 1 }}
@@ -124,10 +133,10 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={[styles.secondaryCTA, { borderColor: colors.border }]}
-            onPress={() => hapticPress(() => router.navigate("/(tabs)/usdrop"))}
+            onPress={scrollToPricing}
           >
             <Text style={[styles.secondaryCTAText, { color: colors.primary }]}>
-              USDrop 30% Off Deal
+              See Pricing
             </Text>
           </TouchableOpacity>
         </View>
@@ -215,7 +224,10 @@ export default function HomeScreen() {
         </View>
 
         {/* Pricing Teaser */}
-        <View style={[styles.section, { paddingHorizontal: 20 }]}>
+        <View
+          style={[styles.section, { paddingHorizontal: 20 }]}
+          onLayout={(e: LayoutChangeEvent) => { pricingY.current = e.nativeEvent.layout.y; }}
+        >
           <Text style={[styles.sectionTitle, { color: colors.foreground }]}>USA Pricing Plans</Text>
           <View style={styles.plansRow}>
             {PLANS.map((p) => (

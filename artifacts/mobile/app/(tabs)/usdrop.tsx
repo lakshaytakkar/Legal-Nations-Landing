@@ -57,7 +57,13 @@ export default function UsdropScreen() {
   const router = useRouter();
   const isWeb = Platform.OS === "web";
 
-  const goGetStarted = () => hapticPress(() => router.navigate("/(tabs)/get-started"));
+  const goGetStartedLLC = () =>
+    hapticPress(() =>
+      router.navigate({
+        pathname: "/(tabs)/get-started",
+        params: { entityType: "llc" },
+      } as any)
+    );
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -81,7 +87,7 @@ export default function UsdropScreen() {
             </View>
           </View>
 
-          {/* Badge */}
+          {/* Discount badge */}
           <View style={[styles.discountBadge, { backgroundColor: "#FEF3C7", borderColor: "#F59E0B33" }]}>
             <Text style={styles.discountEmoji}>🎉</Text>
             <Text style={[styles.discountText, { color: "#92400E" }]}>
@@ -102,7 +108,7 @@ export default function UsdropScreen() {
         {/* Before/After */}
         <View style={[styles.section, { paddingHorizontal: 20 }]}>
           <View style={styles.comparisonRow}>
-            <View style={[styles.compCard, styles.compCardBad, { backgroundColor: "#FEF2F2", borderColor: "#FECACA" }]}>
+            <View style={[styles.compCard, { backgroundColor: "#FEF2F2", borderColor: "#FECACA" }]}>
               <Text style={[styles.compTitle, { color: "#DC2626" }]}>Without US LLC</Text>
               {[
                 "Rejected by Amazon",
@@ -179,7 +185,7 @@ export default function UsdropScreen() {
             ))}
             <TouchableOpacity
               style={[styles.planCTA, { backgroundColor: colors.primary }]}
-              onPress={goGetStarted}
+              onPress={goGetStartedLLC}
               testID="usdrop-just-llc-cta"
             >
               <Text style={[styles.planCTAText, { color: "#fff" }]}>Get Just LLC — ₹39,000</Text>
@@ -187,7 +193,7 @@ export default function UsdropScreen() {
           </View>
 
           {/* Elite */}
-          <View style={[styles.priceCard, styles.eliteCard, { backgroundColor: colors.primary, borderColor: colors.primary }]}>
+          <View style={[styles.priceCard, { backgroundColor: colors.primary, borderColor: colors.primary }]}>
             <View style={[styles.popularBadge, { backgroundColor: "#fff3" }]}>
               <Text style={{ color: "#fff", fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 0.5 }}>
                 MOST POPULAR
@@ -212,7 +218,7 @@ export default function UsdropScreen() {
             ))}
             <TouchableOpacity
               style={[styles.planCTA, { backgroundColor: "#fff" }]}
-              onPress={goGetStarted}
+              onPress={goGetStartedLLC}
               testID="usdrop-elite-cta"
             >
               <Text style={[styles.planCTAText, { color: colors.primary }]}>Get Elite LLC — ₹69,000</Text>
@@ -223,7 +229,7 @@ export default function UsdropScreen() {
         {/* How It Works */}
         <View style={[styles.section, { paddingHorizontal: 20 }]}>
           <Text style={[styles.sectionTitle, { color: colors.foreground }]}>How It Works</Text>
-          {HOW_IT_WORKS.map((s, i) => (
+          {HOW_IT_WORKS.map((s) => (
             <View key={s.step} style={styles.howRow}>
               <View style={[styles.stepCircle, { backgroundColor: colors.primary }]}>
                 <Text style={{ color: "#fff", fontFamily: "Inter_700Bold", fontSize: 15 }}>{s.step}</Text>
@@ -232,9 +238,6 @@ export default function UsdropScreen() {
                 <Text style={[styles.howTitle, { color: colors.foreground }]}>{s.title}</Text>
                 <Text style={[styles.howDesc, { color: colors.mutedForeground }]}>{s.desc}</Text>
               </View>
-              {i < HOW_IT_WORKS.length - 1 && (
-                <View style={[styles.connector, { backgroundColor: colors.border, position: "absolute", left: 19, top: 52, height: 30 }]} />
-              )}
             </View>
           ))}
         </View>
@@ -242,8 +245,14 @@ export default function UsdropScreen() {
         {/* Final CTA */}
         <View style={[styles.section, { paddingHorizontal: 20 }]}>
           <TouchableOpacity
-            style={[styles.finalCTA, { backgroundColor: colors.primary }]}
-            onPress={() => hapticPress(() => Linking.openURL("https://wa.me/919306500349?text=Hi%2C%20I%27m%20a%20USDrop%20member%20and%20want%20to%20register%20my%20LLC"))}
+            style={[styles.finalCTA, { backgroundColor: "#25D366" }]}
+            onPress={() =>
+              hapticPress(() =>
+                Linking.openURL(
+                  "https://wa.me/919306500349?text=Hi%2C%20I%27m%20a%20USDrop%20member%20and%20want%20to%20register%20my%20LLC"
+                )
+              )
+            }
           >
             <Feather name="message-circle" size={20} color="#fff" />
             <Text style={[styles.planCTAText, { color: "#fff" }]}>Chat on WhatsApp</Text>
@@ -326,7 +335,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: 8,
   },
-  compCardBad: {},
   compTitle: {
     fontSize: 14,
     fontFamily: "Inter_700Bold",
@@ -379,7 +387,6 @@ const styles = StyleSheet.create({
     gap: 12,
     marginBottom: 14,
   },
-  eliteCard: {},
   popularBadge: {
     alignSelf: "flex-start",
     paddingHorizontal: 10,
@@ -447,10 +454,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-  },
-  connector: {
-    width: 2,
-    left: 19,
   },
   howTitle: {
     fontSize: 16,
