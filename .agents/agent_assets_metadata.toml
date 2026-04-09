@@ -72,3 +72,9 @@ id = "xc4jWo0ME_lY-aqX7oSgC"
 uri = "file://artifacts/legal-nations/public/images/founder-celebrating.png"
 type = "image"
 title = "founder celebrating incorporation"
+
+[[generated]]
+id = "pDt1oZp0eUqIkQ-TbohwS"
+uri = "file://artifacts/mobile/assets/images/icon.png"
+type = "image"
+title = "legal-nations-app-icon"
