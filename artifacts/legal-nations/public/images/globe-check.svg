@@ -1,0 +1,26 @@
+<svg viewBox="0 0 80 72" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <clipPath id="gc">
+      <circle cx="34" cy="38" r="27"/>
+    </clipPath>
+  </defs>
+  <g stroke="#0056d2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Globe outer circle -->
+    <circle cx="34" cy="38" r="27" stroke-width="3.5"/>
+    <!-- Clipped interior globe lines -->
+    <g clip-path="url(#gc)" stroke-width="3">
+      <!-- Equatorial horizontal ring -->
+      <ellipse cx="34" cy="38" rx="27" ry="10"/>
+      <!-- Top latitude arc -->
+      <path d="M 9,25 Q 34,21 59,25"/>
+      <!-- Bottom latitude arc -->
+      <path d="M 9,51 Q 34,55 59,51"/>
+      <!-- Left meridian arc -->
+      <path d="M 34,11 Q 11,38 34,65"/>
+      <!-- Right meridian arc -->
+      <path d="M 34,11 Q 57,38 34,65"/>
+    </g>
+    <!-- Checkmark swoosh from globe upper-right -->
+    <polyline points="52,17 62,30 77,6" stroke-width="4.5"/>
+  </g>
+</svg>
