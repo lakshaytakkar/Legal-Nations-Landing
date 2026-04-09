@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, type MutableRefObject } from "react";
 import { Link } from "wouter";
-import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star, Target, XCircle } from "lucide-react";
+import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star, Target, XCircle, Mail, Calculator, BookOpen, Tag, MapPin, RefreshCw } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
@@ -17,8 +17,307 @@ function FlagImg({ code, alt }: { code: string; alt: string }) {
   );
 }
 
+type PlanTier = {
+  name: string;
+  price: string;
+  bestFor: string;
+  includes: string[];
+  notIncluded?: string[];
+  popular?: boolean;
+};
+
+type CountryPricing = {
+  country: string;
+  flag: string;
+  flagCode: string;
+  currency: string;
+  entityType: string;
+  tiers: PlanTier[];
+};
+
+const COUNTRY_PRICING: CountryPricing[] = [
+  {
+    country: "USA",
+    flag: "🇺🇸",
+    flagCode: "us",
+    currency: "$",
+    entityType: "LLC",
+    tiers: [
+      {
+        name: "Starter",
+        price: "$149",
+        bestFor: "Solopreneurs",
+        includes: ["LLC Formation", "EIN", "Registered Agent (1yr)", "Operating Agreement", "Basic Compliance Dashboard", "1 Country"],
+        notIncluded: ["Virtual Address", "Banking Assistance", "Bookkeeping & Tax"],
+      },
+      {
+        name: "Professional",
+        price: "$349",
+        bestFor: "Growing businesses",
+        includes: ["Everything in Starter", "Virtual Business Address", "Full Compliance Dashboard", "Banking Assistance (Mercury, Wise)", "Dedicated Manager"],
+        popular: true,
+      },
+      {
+        name: "Enterprise",
+        price: "$799",
+        bestFor: "Multi-country operations",
+        includes: ["Everything in Professional", "Bookkeeping (Monthly)", "Tax Filing Included", "Senior Dedicated Manager", "Up to 3 Countries"],
+      },
+    ],
+  },
+  {
+    country: "United Kingdom",
+    flag: "🇬🇧",
+    flagCode: "gb",
+    currency: "£",
+    entityType: "Ltd",
+    tiers: [
+      {
+        name: "Basic",
+        price: "£149",
+        bestFor: "New founders",
+        includes: ["Companies House Filing", "Registered Address (1yr)", "Articles of Association", "Basic Compliance Dashboard"],
+        notIncluded: ["Annual Confirmation Filing", "VAT Registration Assist", "Annual Accounts & Tax Returns"],
+      },
+      {
+        name: "Growth",
+        price: "£299",
+        bestFor: "Growing UK businesses",
+        includes: ["Everything in Basic", "Annual Confirmation Statement", "VAT Registration Assist", "Dedicated Manager"],
+        popular: true,
+      },
+      {
+        name: "Full Service",
+        price: "£649",
+        bestFor: "Established companies",
+        includes: ["Everything in Growth", "Annual Accounts Preparation", "Corporation Tax Returns", "Senior Dedicated Manager"],
+      },
+    ],
+  },
+  {
+    country: "Singapore",
+    flag: "🇸🇬",
+    flagCode: "sg",
+    currency: "S$",
+    entityType: "Pte Ltd",
+    tiers: [
+      {
+        name: "Basic",
+        price: "S$699",
+        bestFor: "New entrepreneurs",
+        includes: ["ACRA Incorporation", "Company Secretary (1yr)", "Registered Address (1yr)", "Bizfile Profile"],
+        notIncluded: ["Bank Account Setup", "AGM Support", "GST Registration"],
+      },
+      {
+        name: "Growth",
+        price: "S$1,299",
+        bestFor: "Growing businesses",
+        includes: ["Everything in Basic", "Bank Account Setup", "AGM Support", "Annual Bizfile Filing", "Dedicated Manager"],
+        popular: true,
+      },
+      {
+        name: "Premium",
+        price: "S$2,199",
+        bestFor: "Scaling companies",
+        includes: ["Everything in Growth", "GST Registration", "Employment Pass Assist", "Annual Filing & Compliance", "Senior Dedicated Manager"],
+      },
+    ],
+  },
+  {
+    country: "UAE",
+    flag: "🇦🇪",
+    flagCode: "ae",
+    currency: "AED",
+    entityType: "Free Zone",
+    tiers: [
+      {
+        name: "Starter",
+        price: "AED 5,499",
+        bestFor: "Solo founders",
+        includes: ["Trade License (1yr)", "Registered Address", "0 Investor Visas", "Compliance Dashboard"],
+        notIncluded: ["Investor Visa", "Bank Account Setup", "VAT Registration"],
+      },
+      {
+        name: "Business",
+        price: "AED 8,999",
+        bestFor: "Small businesses",
+        includes: ["Everything in Starter", "1 Investor Visa", "Bank Account Setup", "Dedicated Manager"],
+        popular: true,
+      },
+      {
+        name: "Premium",
+        price: "AED 14,999",
+        bestFor: "Growing operations",
+        includes: ["Everything in Business", "3 Investor Visas", "VAT Registration", "Compliance Support", "Senior Dedicated Manager"],
+      },
+    ],
+  },
+  {
+    country: "India",
+    flag: "🇮🇳",
+    flagCode: "in",
+    currency: "₹",
+    entityType: "Pvt Ltd",
+    tiers: [
+      {
+        name: "Basic",
+        price: "₹9,999",
+        bestFor: "Startups",
+        includes: ["MCA Filing", "DSC + DIN (×2)", "MOA & AOA Drafting", "Compliance Dashboard"],
+        notIncluded: ["GST Registration", "Trademark Filing", "Annual ROC Filing"],
+      },
+      {
+        name: "Growth",
+        price: "₹19,999",
+        bestFor: "Growing companies",
+        includes: ["Everything in Basic", "GST Registration", "Trademark Filing", "Dedicated CA"],
+        popular: true,
+      },
+      {
+        name: "Full Service",
+        price: "₹34,999",
+        bestFor: "Established businesses",
+        includes: ["Everything in Growth", "Annual ROC Filing", "Income Tax Returns", "Dedicated Senior CA"],
+      },
+    ],
+  },
+  {
+    country: "Canada",
+    flag: "🇨🇦",
+    flagCode: "ca",
+    currency: "CAD $",
+    entityType: "Inc",
+    tiers: [
+      {
+        name: "Basic",
+        price: "CAD $299",
+        bestFor: "New businesses",
+        includes: ["Federal/Provincial Incorporation", "NUANS Name Search", "Articles of Incorporation", "Compliance Dashboard"],
+        notIncluded: ["Business Number", "GST/HST Registration", "Annual Filing"],
+      },
+      {
+        name: "Growth",
+        price: "CAD $599",
+        bestFor: "Growing companies",
+        includes: ["Everything in Basic", "Business Number (BN)", "GST/HST Registration", "Bank Account Assist", "Dedicated Manager"],
+        popular: true,
+      },
+      {
+        name: "Premium",
+        price: "CAD $1,099",
+        bestFor: "Established companies",
+        includes: ["Everything in Growth", "Annual Filing & Compliance", "Tax Advisory", "Senior Dedicated Manager"],
+      },
+    ],
+  },
+  {
+    country: "Australia",
+    flag: "🇦🇺",
+    flagCode: "au",
+    currency: "A$",
+    entityType: "Pty Ltd",
+    tiers: [
+      {
+        name: "Basic",
+        price: "A$499",
+        bestFor: "New businesses",
+        includes: ["ASIC Registration", "ABN + ACN", "Company Constitution", "Compliance Dashboard"],
+        notIncluded: ["Bank Account Assist", "Compliance Calendar", "GST/BAS Filing"],
+      },
+      {
+        name: "Growth",
+        price: "A$899",
+        bestFor: "Growing businesses",
+        includes: ["Everything in Basic", "Bank Account Assist", "Compliance Calendar", "Dedicated Manager"],
+        popular: true,
+      },
+      {
+        name: "Premium",
+        price: "A$1,499",
+        bestFor: "Established companies",
+        includes: ["Everything in Growth", "Annual ASIC Review", "GST Registration", "BAS Filing Support", "Senior Dedicated Manager"],
+      },
+    ],
+  },
+  {
+    country: "Hong Kong",
+    flag: "🇭🇰",
+    flagCode: "hk",
+    currency: "HK$",
+    entityType: "Ltd",
+    tiers: [
+      {
+        name: "Basic",
+        price: "HK$2,999",
+        bestFor: "New founders",
+        includes: ["Incorporation Filing", "Company Secretary (1yr)", "Business Registration (BR)", "Compliance Dashboard"],
+        notIncluded: ["Bank Account Setup", "Profit Tax Registration", "Annual Return Filing"],
+      },
+      {
+        name: "Growth",
+        price: "HK$5,499",
+        bestFor: "Growing businesses",
+        includes: ["Everything in Basic", "Bank Account Setup", "Profit Tax Registration", "Dedicated Manager"],
+        popular: true,
+      },
+      {
+        name: "Premium",
+        price: "HK$9,999",
+        bestFor: "Established companies",
+        includes: ["Everything in Growth", "Annual Return Filing", "Audit Support", "Virtual Office", "Senior Dedicated Manager"],
+      },
+    ],
+  },
+];
+
+const ADD_ONS = [
+  {
+    icon: RefreshCw,
+    name: "Registered Agent Renewal",
+    price: "$99/yr per state",
+    description: "Keep your registered agent active for another year to stay compliant with state requirements.",
+  },
+  {
+    icon: Mail,
+    name: "Virtual Mailbox",
+    price: "$29/mo",
+    description: "Professional US business address with mail scanning and digital forwarding included.",
+  },
+  {
+    icon: Calculator,
+    name: "Annual Tax Filing (LLC)",
+    price: "$299",
+    description: "Complete federal and state annual tax return preparation and filing for your LLC.",
+  },
+  {
+    icon: FileText,
+    name: "Annual Tax Filing (C-Corp)",
+    price: "$499",
+    description: "Comprehensive corporate tax return preparation and filing for your C-Corporation.",
+  },
+  {
+    icon: BookOpen,
+    name: "Bookkeeping (Monthly)",
+    price: "$79/mo",
+    description: "Ongoing monthly bookkeeping to keep your financials clean, organized, and audit-ready.",
+  },
+  {
+    icon: Tag,
+    name: "Trademark Filing",
+    price: "$349",
+    description: "Protect your brand name and logo with a USPTO trademark application prepared by experts.",
+  },
+  {
+    icon: MapPin,
+    name: "Foreign Qualification",
+    price: "$199 + state fees",
+    description: "Register your existing company to legally operate in an additional US state.",
+  },
+];
+
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cookieConsent, setCookieConsent] = useState(true);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -605,106 +904,136 @@ export default function Home() {
         {/* 7. Pricing Table */}
         <section id="pricing" className="bg-surface py-24 scroll-mt-20 border-y border-border">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">Transparent Pricing. No Hidden Fees. Ever.</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">The world's most affordable company formation platform.</p>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-end mb-16">
-              {/* Starter */}
-              <div className="bg-card rounded-2xl border border-border p-8 shadow-sm flex flex-col h-full relative lg:order-1 order-2">
-                <div className="mb-8">
-                  <h3 className="text-xl font-bold uppercase tracking-wider text-muted-foreground mb-2">Starter</h3>
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-4xl font-bold">$149</span>
-                    <span className="text-muted-foreground">/one-time</span>
-                  </div>
-                  <p className="text-sm text-foreground font-medium">Best for: Solopreneurs</p>
-                </div>
-                
-                <div className="flex-grow space-y-4 mb-8">
-                  <p className="font-bold text-sm">Includes:</p>
-                  <ul className="space-y-3 text-sm">
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-success shrink-0" /> Formation</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-success shrink-0" /> EIN</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-success shrink-0" /> Registered Agent (1yr)</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-success shrink-0" /> Operating Agreement</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-success shrink-0" /> Basic Compliance Dashboard</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-success shrink-0" /> 1 Country</li>
-                  </ul>
-                  <div className="pt-4 mt-4 border-t border-border text-muted-foreground">
-                    <ul className="space-y-3 text-sm opacity-60">
-                      <li className="flex items-start gap-2"><X className="w-5 h-5 shrink-0" /> Virtual Address</li>
-                      <li className="flex items-start gap-2"><X className="w-5 h-5 shrink-0" /> Banking</li>
-                      <li className="flex items-start gap-2"><X className="w-5 h-5 shrink-0" /> Bookkeeping & Tax</li>
-                    </ul>
-                  </div>
-                </div>
-                <Button className="w-full bg-primary hover:bg-primary-light text-white h-12" asChild><Link href="/get-started">Start Now</Link></Button>
+            {/* Country Switcher */}
+            <div className="mb-12">
+              <p className="text-center text-sm font-medium text-muted-foreground mb-4 uppercase tracking-wider">Select your country</p>
+              <div className="flex flex-nowrap gap-2 overflow-x-auto pb-2 max-w-4xl mx-auto scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+                {COUNTRY_PRICING.map((cp, idx) => (
+                  <button
+                    key={cp.country}
+                    onClick={() => setSelectedCountry(idx)}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-medium transition-all duration-200 shrink-0 ${
+                      selectedCountry === idx
+                        ? "bg-primary text-white border-primary shadow-md scale-105"
+                        : "bg-card text-foreground border-border hover:border-primary hover:text-primary"
+                    }`}
+                  >
+                    <FlagImg code={cp.flagCode} alt={cp.country} />
+                    <span>{cp.country}</span>
+                  </button>
+                ))}
               </div>
-
-              {/* Professional */}
-              <div className="bg-card rounded-2xl border-2 border-accent p-8 shadow-xl flex flex-col h-full relative lg:-mt-6 lg:mb-0 z-10 lg:order-2 order-1">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent text-accent-foreground font-bold px-4 py-1 rounded-full text-sm">
-                  Most Popular
-                </div>
-                <div className="mb-8 mt-2">
-                  <h3 className="text-xl font-bold uppercase tracking-wider text-accent mb-2">Professional</h3>
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-5xl font-bold text-foreground">$349</span>
-                    <span className="text-muted-foreground">/one-time</span>
-                  </div>
-                  <p className="text-sm text-foreground font-medium">Best for: Growing businesses</p>
-                </div>
-                
-                <div className="flex-grow space-y-4 mb-8">
-                  <p className="font-bold text-sm">Everything in Starter, plus:</p>
-                  <ul className="space-y-3 text-sm">
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-accent shrink-0" /> Virtual Business Address</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-accent shrink-0" /> Full Compliance Dashboard</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-accent shrink-0" /> Banking Assistance (Mercury, Wise)</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-accent shrink-0" /> Dedicated Manager</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-muted-foreground shrink-0" /> Annual tax $299 add-on</li>
-                  </ul>
-                </div>
-                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground h-14 text-lg font-bold shadow-md" asChild><Link href="/get-started">Start Now</Link></Button>
-              </div>
-
-              {/* Enterprise */}
-              <div className="bg-card rounded-2xl border border-border p-8 shadow-sm flex flex-col h-full relative lg:order-3 order-3">
-                <div className="mb-8">
-                  <h3 className="text-xl font-bold uppercase tracking-wider text-muted-foreground mb-2">Enterprise</h3>
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-4xl font-bold">$799</span>
-                    <span className="text-muted-foreground">/one-time</span>
-                  </div>
-                  <p className="text-sm text-foreground font-medium">Best for: Multi-country operations</p>
-                </div>
-                
-                <div className="flex-grow space-y-4 mb-8">
-                  <p className="font-bold text-sm">Everything in Professional, plus:</p>
-                  <ul className="space-y-3 text-sm">
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-primary shrink-0" /> Bookkeeping (Monthly)</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-primary shrink-0" /> Tax Filing Included</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-primary shrink-0" /> Senior Dedicated Manager</li>
-                    <li className="flex items-start gap-2"><CheckCircle2 className="w-5 h-5 text-primary shrink-0" /> Up to 3 Countries</li>
-                  </ul>
-                </div>
-                <Button variant="outline" className="w-full border-border hover:bg-muted h-12">Contact Sales</Button>
-              </div>
+              <p className="text-center text-xs text-muted-foreground mt-3">
+                {COUNTRY_PRICING[selectedCountry].entityType} formation · prices in {COUNTRY_PRICING[selectedCountry].currency}
+              </p>
             </div>
 
-            {/* Add-ons */}
-            <div className="max-w-3xl mx-auto bg-card p-8 rounded-xl border border-border shadow-sm">
-              <h4 className="font-heading font-bold text-lg mb-6 flex items-center gap-2"><ClipboardList className="w-5 h-5 text-primary" /> Optional Add-On Services</h4>
-              <div className="grid sm:grid-cols-2 gap-y-4 gap-x-8 text-sm">
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Registered Agent Renewal</span> <span className="font-medium">$99/yr/state</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Virtual Mailbox</span> <span className="font-medium">$29/mo</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Annual Tax Filing (LLC)</span> <span className="font-medium">$299</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Annual Tax Filing (C-Corp)</span> <span className="font-medium">$499</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Bookkeeping</span> <span className="font-medium">$79/mo</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2"><span>Trademark Filing</span> <span className="font-medium">$349</span></div>
-                <div className="flex justify-between border-b border-border/50 pb-2 sm:col-span-2"><span>Foreign Qualification</span> <span className="font-medium">$199 + state fees</span></div>
+            {/* Plan Cards */}
+            <div className={`grid gap-8 max-w-6xl mx-auto items-end mb-16 ${COUNTRY_PRICING[selectedCountry].tiers.length === 2 ? "lg:grid-cols-2 max-w-3xl" : "lg:grid-cols-3"}`}>
+              {COUNTRY_PRICING[selectedCountry].tiers.map((tier, tierIdx) => {
+                const isPopular = tier.popular;
+                const checkColor = isPopular ? "text-accent" : tierIdx === COUNTRY_PRICING[selectedCountry].tiers.length - 1 ? "text-primary" : "text-success";
+                return (
+                  <div
+                    key={tier.name}
+                    className={`rounded-2xl p-8 flex flex-col h-full relative ${
+                      isPopular
+                        ? "bg-card border-2 border-accent shadow-xl lg:-mt-6 z-10"
+                        : "bg-card border border-border shadow-sm"
+                    }`}
+                  >
+                    {isPopular && (
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent text-accent-foreground font-bold px-4 py-1 rounded-full text-sm">
+                        Most Popular
+                      </div>
+                    )}
+                    <div className={`mb-8 ${isPopular ? "mt-2" : ""}`}>
+                      <h3 className={`text-xl font-bold uppercase tracking-wider mb-2 ${isPopular ? "text-accent" : "text-muted-foreground"}`}>
+                        {tier.name}
+                      </h3>
+                      <div className="flex items-baseline gap-1 mb-2">
+                        <span className={`font-bold ${isPopular ? "text-5xl text-foreground" : "text-4xl"}`}>{tier.price}</span>
+                        <span className="text-muted-foreground">/one-time</span>
+                      </div>
+                      <p className="text-sm text-foreground font-medium">Best for: {tier.bestFor}</p>
+                    </div>
+
+                    <div className="flex-grow space-y-4 mb-8">
+                      <p className="font-bold text-sm">Includes:</p>
+                      <ul className="space-y-3 text-sm">
+                        {tier.includes.map((item) => (
+                          <li key={item} className="flex items-start gap-2">
+                            <CheckCircle2 className={`w-5 h-5 shrink-0 ${checkColor}`} />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      {tier.notIncluded && tier.notIncluded.length > 0 && (
+                        <div className="pt-4 mt-4 border-t border-border text-muted-foreground">
+                          <ul className="space-y-3 text-sm opacity-60">
+                            {tier.notIncluded.map((item) => (
+                              <li key={item} className="flex items-start gap-2">
+                                <X className="w-5 h-5 shrink-0" />
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+
+                    {isPopular ? (
+                      <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground h-14 text-lg font-bold shadow-md" asChild>
+                        <Link href="/get-started">Start Now</Link>
+                      </Button>
+                    ) : tierIdx === COUNTRY_PRICING[selectedCountry].tiers.length - 1 ? (
+                      <Button variant="outline" className="w-full border-border hover:bg-muted h-12" asChild>
+                        <Link href="/get-started">Contact Sales</Link>
+                      </Button>
+                    ) : (
+                      <Button className="w-full bg-primary hover:bg-primary-light text-white h-12" asChild>
+                        <Link href="/get-started">Start Now</Link>
+                      </Button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Add-on Tiles */}
+            <div className="max-w-4xl mx-auto">
+              <h4 className="font-heading font-bold text-xl mb-2 flex items-center gap-2 justify-center">
+                <ClipboardList className="w-5 h-5 text-primary" /> Optional Add-On Services
+              </h4>
+              <p className="text-center text-sm text-muted-foreground mb-8">Enhance your plan with any of these services — all priced in USD</p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {ADD_ONS.map((addon) => {
+                  const Icon = addon.icon;
+                  return (
+                    <div key={addon.name} className="bg-card rounded-xl border border-border p-6 flex flex-col gap-3 shadow-sm hover:shadow-md hover:border-primary/40 transition-all">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                            <Icon className="w-5 h-5 text-primary" />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-sm leading-tight">{addon.name}</p>
+                            <p className="text-primary font-bold text-sm">{addon.price}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{addon.description}</p>
+                      <Button size="sm" className="w-full mt-1 bg-primary hover:bg-primary-light text-white" asChild>
+                        <Link href="/get-started">Add to Plan</Link>
+                      </Button>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
