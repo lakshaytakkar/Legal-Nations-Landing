@@ -66,16 +66,14 @@ export default function Home() {
   };
 
   const brandLogos = [
-    { src: "https://cdn.brandfetch.io/id6TBcFPM/theme/dark/logo.svg", alt: "Stripe" },
-    { src: "https://cdn.brandfetch.io/idNFHGScJH/theme/dark/logo.svg", alt: "Mercury" },
-    { src: "https://cdn.brandfetch.io/id8lHILDf0/theme/dark/logo.svg", alt: "Wise" },
-    { src: "https://cdn.brandfetch.io/ideFuHN8-B/theme/light/logo.png", alt: "QuickBooks" },
-    { src: "https://cdn.brandfetch.io/id_h8KZiCz/theme/dark/logo.svg", alt: "Carta" },
-    { src: "https://cdn.brandfetch.io/idMwGkDCJU/theme/dark/logo.svg", alt: "Brex" },
-    { src: "https://cdn.brandfetch.io/idVfgxzNqD/theme/dark/logo.svg", alt: "HubSpot" },
-    { src: "https://cdn.brandfetch.io/idvHkHFNR8/theme/dark/logo.svg", alt: "Deel" },
-    { src: "https://cdn.brandfetch.io/idnrCPuv87/theme/dark/logo.svg", alt: "Notion" },
-    { src: "https://cdn.brandfetch.io/id6SRk_KFP/theme/dark/logo.svg", alt: "Slack" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg", alt: "Amazon" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopify_logo_2018.svg", alt: "Shopify" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg", alt: "eBay" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg", alt: "Stripe" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg", alt: "PayPal" },
+    { src: "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg", alt: "TikTok" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/5/56/Wise_logo.svg", alt: "Wise" },
+    { src: "https://upload.wikimedia.org/wikipedia/commons/1/14/Walmart_Spark.svg", alt: "Walmart" },
   ];
 
   const navCountries = [
