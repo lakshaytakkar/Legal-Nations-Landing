@@ -17,6 +17,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
+import { RadioCard } from "@/components/RadioCard";
 
 const TOTAL_STEPS = 3;
 const STEP_LABELS = ["Company Type", "Jurisdiction", "Contact Info"];
@@ -59,53 +60,6 @@ type FormData = {
 };
 
 type Errors = Partial<Record<keyof FormData, string>>;
-
-function RadioCard({
-  label,
-  selected,
-  onPress,
-}: {
-  label: string;
-  selected: boolean;
-  onPress: () => void;
-}) {
-  const colors = useColors();
-  return (
-    <TouchableOpacity
-      style={[
-        styles.radioCard,
-        {
-          backgroundColor: selected ? colors.secondary : colors.card,
-          borderColor: selected ? colors.primary : colors.border,
-          borderWidth: selected ? 2 : 1.5,
-        },
-      ]}
-      onPress={onPress}
-      testID={`radio-${label}`}
-    >
-      <View
-        style={[
-          styles.radioDot,
-          {
-            borderColor: selected ? colors.primary : colors.mutedForeground,
-          },
-        ]}
-      >
-        {selected && (
-          <View style={[styles.radioFill, { backgroundColor: colors.primary }]} />
-        )}
-      </View>
-      <Text
-        style={[
-          styles.radioLabel,
-          { color: selected ? colors.primary : colors.foreground },
-        ]}
-      >
-        {label}
-      </Text>
-    </TouchableOpacity>
-  );
-}
 
 export default function GetStartedScreen() {
   const colors = useColors();
@@ -179,8 +133,8 @@ export default function GetStartedScreen() {
     setSubmitting(true);
     setSubmitError(null);
     try {
-      const domain = process.env.EXPO_PUBLIC_DOMAIN ?? "localhost";
-      const res = await fetch(`https://${domain}/api/leads`, {
+      const apiBase = (process.env.EXPO_PUBLIC_API_URL ?? "").replace(/\/$/, "");
+      const res = await fetch(`${apiBase}/api/leads`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, phone: `${phonePrefix}${formData.phone}` }),
@@ -275,7 +229,7 @@ export default function GetStartedScreen() {
             onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               resetForm();
-              router.navigate("/(tabs)/");
+              router.navigate("/");
             }}
             testID="back-home-btn"
           >
@@ -675,34 +629,6 @@ const styles = StyleSheet.create({
   },
   optionsList: {
     gap: 10,
-  },
-  radioCard: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 14,
-    paddingHorizontal: 18,
-    paddingVertical: 18,
-    borderRadius: 16,
-  },
-  radioDot: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    borderWidth: 2,
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 0,
-  },
-  radioFill: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-  },
-  radioLabel: {
-    fontSize: 16,
-    fontFamily: "Inter_600SemiBold",
-    flex: 1,
-    lineHeight: 22,
   },
   contactForm: {
     gap: 18,

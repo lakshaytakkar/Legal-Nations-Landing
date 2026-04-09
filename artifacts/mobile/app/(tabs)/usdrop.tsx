@@ -58,12 +58,7 @@ export default function UsdropScreen() {
   const isWeb = Platform.OS === "web";
 
   const goGetStartedLLC = () =>
-    hapticPress(() =>
-      router.navigate({
-        pathname: "/(tabs)/get-started",
-        params: { entityType: "llc" },
-      } as any)
-    );
+    hapticPress(() => router.navigate("/(tabs)/get-started?entityType=llc"));
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
