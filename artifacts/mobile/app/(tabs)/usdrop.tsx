@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   planCTA: {
-    height: 44,
+    height: 52,
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
