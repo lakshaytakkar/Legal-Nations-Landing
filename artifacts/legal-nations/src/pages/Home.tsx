@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, type MutableRefObject } from "react";
 import { Link } from "wouter";
-import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star, Target, XCircle, Mail, Calculator, BookOpen, Tag, MapPin, RefreshCw } from "lucide-react";
+import { Menu, X, ArrowRight, CheckCircle2, ChevronRight, ChevronDown, ClipboardList, FileText, Rocket, Linkedin, Twitter, Instagram, Youtube, Shield, FileCheck, Building2, CreditCard, Globe, Star, Target, XCircle, Mail, Calculator, BookOpen, Tag, MapPin, RefreshCw, MessageCircle, Phone, UserCircle } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
@@ -1222,17 +1222,22 @@ export default function Home() {
         </section>
 
         {/* 11. Trust Badges */}
-        <section className="bg-surface py-12 border-y border-border">
+        <section className="bg-surface py-4 border-y border-border">
           <div className="container mx-auto px-4">
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-6 text-sm font-medium text-muted-foreground items-center">
-              <span className="flex items-center gap-2"><Shield className="w-5 h-5 text-success" /> 256-bit SSL Encrypted</span>
-              <span className="flex items-center gap-2"><FileCheck className="w-5 h-5 text-primary" /> IRS Authorized e-File Provider</span>
-              <span className="flex items-center gap-2"><Building2 className="w-5 h-5 text-foreground" /> Registered Agent in All 50 States</span>
-              <span className="flex items-center gap-2"><CreditCard className="w-5 h-5 text-accent" /> Secure Payments</span>
-              <span className="flex items-center gap-2"><Globe className="w-5 h-5 text-primary" /> Serving 45+ Countries</span>
-              <span className="flex items-center gap-2">
+            <div className="flex flex-wrap justify-center gap-2 items-center">
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-xs font-medium text-muted-foreground"><Shield className="w-4 h-4 text-success" /> 256-bit SSL Encrypted</span>
+              <span className="hidden sm:block w-px h-4 bg-border" />
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-xs font-medium text-muted-foreground"><FileCheck className="w-4 h-4 text-primary" /> IRS Authorized e-File Provider</span>
+              <span className="hidden sm:block w-px h-4 bg-border" />
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-xs font-medium text-muted-foreground"><Building2 className="w-4 h-4 text-foreground" /> Registered Agent in All 50 States</span>
+              <span className="hidden sm:block w-px h-4 bg-border" />
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-xs font-medium text-muted-foreground"><CreditCard className="w-4 h-4 text-accent" /> Secure Payments</span>
+              <span className="hidden sm:block w-px h-4 bg-border" />
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-xs font-medium text-muted-foreground"><Globe className="w-4 h-4 text-primary" /> Serving 45+ Countries</span>
+              <span className="hidden sm:block w-px h-4 bg-border" />
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background text-xs font-medium text-muted-foreground">
                 <span className="flex text-accent">
-                  <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
+                  <Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" /><Star className="w-3 h-3 fill-current" />
                 </span>
                 4.9/5 Rating
               </span>
@@ -1301,50 +1306,58 @@ export default function Home() {
         </section>
 
         {/* 12.5 Section B: Our Team is With You Every Step */}
-        <section className="relative py-28 overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/images/team-support.png')" }}
-          />
-          <div className="absolute inset-0 bg-[#1A1E3C]/80" />
-          <div className="relative z-10 container mx-auto px-4 md:px-6 text-center">
+        <section className="py-12" style={{ backgroundColor: '#1A1E3C' }}>
+          <div className="container mx-auto px-4 md:px-6">
             <motion.div
+              className="flex flex-col md:flex-row items-center gap-8 md:gap-12"
               initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
             >
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
-                24/7 Global Support from Real Humans
-              </h2>
-              <p className="text-lg text-white/70 mb-12 max-w-xl mx-auto">
-                Every founder gets a dedicated account manager. We're here when you need us.
-              </p>
-            </motion.div>
+              <div className="flex-shrink-0">
+                <img
+                  src="/images/team-support.png"
+                  alt="Support team"
+                  className="w-20 h-20 rounded-full object-cover border-2 border-white/20 shadow-lg"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = 'none';
+                    const fallback = target.nextElementSibling as HTMLElement;
+                    if (fallback) fallback.style.display = 'flex';
+                  }}
+                />
+                <div className="w-20 h-20 rounded-full border-2 border-white/20 bg-white/10 items-center justify-center hidden">
+                  <UserCircle className="w-10 h-10 text-white/60" />
+                </div>
+              </div>
 
-            <motion.div
-              className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12"
-              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
-            >
-              {[
-                { icon: "💬", title: "Live Chat Support", desc: "Instant answers during business hours via our dashboard chat widget." },
-                { icon: "📱", title: "WhatsApp Direct Line", desc: "Message us on WhatsApp and get a response within minutes — no bots." },
-                { icon: "👤", title: "Dedicated Account Manager", desc: "A real person assigned to your account from day one." },
-              ].map((item) => (
-                <motion.div key={item.title} variants={cardVariant} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20 text-left">
-                  <div className="text-3xl mb-3">{item.icon}</div>
-                  <h3 className="font-bold text-white mb-2">{item.title}</h3>
-                  <p className="text-white/70 text-sm">{item.desc}</p>
-                </motion.div>
-              ))}
+              <div className="flex-1 text-center md:text-left">
+                <h2 className="text-xl md:text-2xl font-heading font-bold text-white mb-1">
+                  24/7 Global Support from Real Humans
+                </h2>
+                <p className="text-sm text-white/60 mb-4">
+                  Every founder gets a dedicated account manager. We're here when you need us.
+                </p>
+                <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-5">
+                  {[
+                    { Icon: MessageCircle, label: "Live Chat Support" },
+                    { Icon: Phone, label: "WhatsApp Direct Line" },
+                    { Icon: UserCircle, label: "Dedicated Account Manager" },
+                  ].map(({ Icon, label }) => (
+                    <span key={label} className="flex items-center gap-1.5 text-xs text-white/70">
+                      <Icon className="w-3.5 h-3.5 text-white/50" /> {label}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href="https://wa.me/918218229118?text=Hi%2C%20I%27m%20interested%20in%20company%20registration.%20Can%20you%20help%3F"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-semibold px-5 py-2.5 rounded-full text-sm shadow-lg transition-all hover:scale-105"
+                >
+                  <SiWhatsapp className="w-4 h-4" />
+                  Chat with us on WhatsApp
+                </a>
+              </div>
             </motion.div>
-
-            <a
-              href="https://wa.me/918218229118?text=Hi%2C%20I%27m%20interested%20in%20company%20registration.%20Can%20you%20help%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5a] text-white font-bold px-8 py-4 rounded-full text-lg shadow-xl transition-all hover:scale-105"
-            >
-              <SiWhatsapp className="w-6 h-6" />
-              Chat with us on WhatsApp
-            </a>
           </div>
         </section>
 
