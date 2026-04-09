@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link } from "wouter";
 import {
   CheckCircle2, XCircle, Shield, Star, Building2, BadgeCheck,
-  ShoppingCart, Phone, Rocket, ArrowDown, MessageCircle, X, User, Mail, PhoneCall
+  ShoppingCart, Phone, Rocket, ArrowDown, MessageCircle, X, User, Mail, PhoneCall,
+  Landmark, CreditCard, ShieldCheck, Globe, FileText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -44,12 +45,43 @@ const TRUST = [
 const PLATFORMS = [
   { name: "Amazon",  src: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
   { name: "Shopify", src: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Shopify_logo_2018.svg" },
-  { name: "Walmart", src: "https://upload.wikimedia.org/wikipedia/commons/1/14/Walmart_Spark.svg" },
   { name: "eBay",    src: "https://upload.wikimedia.org/wikipedia/commons/1/1b/EBay_logo.svg" },
   { name: "TikTok",  src: "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" },
   { name: "Stripe",  src: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" },
   { name: "PayPal",  src: "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" },
-  { name: "Mercury", src: "https://cdn.brandfetch.io/idNFHGScJH/theme/dark/logo.svg" },
+];
+
+const LLC_BENEFITS = [
+  {
+    icon: <ShoppingCart className="w-6 h-6" />,
+    title: "Marketplace Approvals",
+    desc: "Get your LLC approved on Amazon, eBay, TikTok Shop, and Shopify as a verified US business entity.",
+  },
+  {
+    icon: <Landmark className="w-6 h-6" />,
+    title: "US Business Bank Account",
+    desc: "Open a real US bank account with Mercury or Relay to receive payouts directly from marketplaces.",
+  },
+  {
+    icon: <CreditCard className="w-6 h-6" />,
+    title: "Payment Gateway Access",
+    desc: "Unlock Stripe, PayPal, and other US payment gateways that reject non-US businesses.",
+  },
+  {
+    icon: <ShieldCheck className="w-6 h-6" />,
+    title: "Personal Asset Protection",
+    desc: "Separate your personal finances from your business — your personal assets stay protected from any liability.",
+  },
+  {
+    icon: <Globe className="w-6 h-6" />,
+    title: "US Business Credibility",
+    desc: "A registered US LLC gives suppliers, partners, and customers the confidence to do business with you.",
+  },
+  {
+    icon: <FileText className="w-6 h-6" />,
+    title: "Tax Benefits & Compliance",
+    desc: "Get your EIN, stay compliant with US tax law, and take advantage of favorable pass-through tax treatment.",
+  },
 ];
 
 const STEPS = [
@@ -229,6 +261,30 @@ export default function UsdropPartner() {
                   className="h-7 object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
                   loading="lazy"
                 />
+              ))}
+              <span className="text-sm font-semibold text-muted-foreground/70">+ more</span>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 2b. LLC Benefits ── */}
+        <section className="py-20 bg-secondary/20">
+          <div className="container mx-auto px-4 md:px-6 max-w-5xl text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+              Why Every Dropshipper Needs a US LLC
+            </h2>
+            <p className="text-muted-foreground text-lg mb-12 max-w-2xl mx-auto">
+              A US LLC isn't just paperwork — it's the key that unlocks every major marketplace, payment gateway, and bank account you need to run a serious dropshipping business.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {LLC_BENEFITS.map(({ icon, title, desc }) => (
+                <div key={title} className="bg-card border border-border rounded-2xl p-6 text-left shadow-sm hover:shadow-md transition-shadow">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
+                    {icon}
+                  </div>
+                  <h3 className="font-semibold text-base mb-2 text-foreground">{title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                </div>
               ))}
             </div>
           </div>
