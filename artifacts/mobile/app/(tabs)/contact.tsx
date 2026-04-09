@@ -12,6 +12,7 @@ import * as Haptics from "expo-haptics";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 function hapticPress(fn: () => void) {
   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);

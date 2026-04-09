@@ -78,3 +78,9 @@ id = "pDt1oZp0eUqIkQ-TbohwS"
 uri = "file://artifacts/mobile/assets/images/icon.png"
 type = "image"
 title = "legal-nations-app-icon"
+
+[[generated]]
+id = "c3AMzP69inkBVtL7YctQw"
+uri = "file://artifacts/mobile/assets/images/usdrop-logo.png"
+type = "image"
+title = "usdrop-logo"

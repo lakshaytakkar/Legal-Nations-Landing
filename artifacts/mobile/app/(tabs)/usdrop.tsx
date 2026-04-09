@@ -6,13 +6,15 @@ import {
   TouchableOpacity,
   StyleSheet,
   Platform,
-  Linking,
+  Image,
 } from "react-native";
 import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { SectionHeader } from "@/components/SectionHeader";
 
 function hapticPress(fn: () => void) {
   Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -20,18 +22,18 @@ function hapticPress(fn: () => void) {
 }
 
 const LLC_BENEFITS = [
-  { icon: "shopping-cart" as const, title: "Marketplace Approvals", desc: "Sell on Amazon, Shopify & eBay as a verified business" },
-  { icon: "credit-card" as const, title: "US Bank Account", desc: "Open Mercury or Relay bank account easily" },
-  { icon: "dollar-sign" as const, title: "Payment Gateway Access", desc: "Accept Stripe, PayPal, and Wise payments globally" },
-  { icon: "shield" as const, title: "Asset Protection", desc: "Keep personal assets separate from business liability" },
-  { icon: "globe" as const, title: "US Business Credibility", desc: "Build trust with global buyers and platforms" },
-  { icon: "file-text" as const, title: "Tax Benefits", desc: "Wyoming LLC = no state income tax, streamlined filing" },
+  { icon: "shopping-cart" as const, title: "Marketplace Approvals", desc: "Sell on Amazon, Shopify & eBay" },
+  { icon: "credit-card" as const, title: "US Bank Account", desc: "Mercury or Relay, easy setup" },
+  { icon: "dollar-sign" as const, title: "Payment Gateways", desc: "Stripe, PayPal, Wise globally" },
+  { icon: "shield" as const, title: "Asset Protection", desc: "Personal assets fully separated" },
+  { icon: "globe" as const, title: "US Credibility", desc: "Build trust with global buyers" },
+  { icon: "file-text" as const, title: "Tax Benefits", desc: "No state income tax in Wyoming" },
 ];
 
 const JUST_LLC_FEATURES = [
   "Wyoming LLC Formation",
   "EIN / Tax ID Number",
-  "Registered Agent (1 year)",
+  "Registered Agent (1 yr)",
   "Operating Agreement",
   "Expert Setup Call",
 ];
@@ -46,9 +48,9 @@ const ELITE_FEATURES = [
 ];
 
 const HOW_IT_WORKS = [
-  { step: "1", title: "Pick Your Package", desc: "Choose Just LLC or Elite — both include formation and EIN" },
-  { step: "2", title: "Expert Calls You in 24h", desc: "Our specialist walks you through the full process" },
-  { step: "3", title: "Start Selling Globally", desc: "Company ready, bank set up, start growing your business" },
+  { step: "1", title: "Pick Your Package", desc: "Just LLC or Elite — both include formation and EIN" },
+  { step: "2", title: "Expert Calls in 24h", desc: "Our specialist walks you through everything" },
+  { step: "3", title: "Start Selling Globally", desc: "Company ready, bank set up, grow your business" },
 ];
 
 export default function UsdropScreen() {
@@ -71,15 +73,18 @@ export default function UsdropScreen() {
 
         {/* Hero */}
         <View style={[styles.hero, { paddingTop: isWeb ? 24 : insets.top + 20 }]}>
-          {/* Co-brand */}
+          {/* Co-brand logo row */}
           <View style={styles.coBrand}>
-            <View style={[styles.brandPill, { backgroundColor: colors.secondary, borderColor: colors.border }]}>
-              <Text style={[styles.brandPillText, { color: colors.primary }]}>USDrop AI</Text>
-            </View>
+            <Image
+              source={require("../../assets/images/usdrop-logo.png")}
+              style={styles.usdropLogo}
+              resizeMode="contain"
+            />
+            <Text style={[styles.coBrandText, { color: colors.mutedForeground }]}>USDrop AI</Text>
             <Text style={[styles.coBrandX, { color: colors.mutedForeground }]}>×</Text>
-            <View style={[styles.brandPill, { backgroundColor: colors.secondary, borderColor: colors.border }]}>
-              <Text style={[styles.brandPillText, { color: colors.primary }]}>Legal Nations</Text>
-            </View>
+            <Text style={[styles.coBrandLegal, { color: colors.foreground }]}>
+              Legal<Text style={{ color: colors.primary }}>Nations</Text>
+            </Text>
           </View>
 
           {/* Discount badge */}
@@ -109,10 +114,10 @@ export default function UsdropScreen() {
                 "Rejected by Amazon",
                 "Stripe not available",
                 "No business credibility",
-                "Limited payment options",
+                "Limited payments",
               ].map((item) => (
                 <View key={item} style={styles.compRow}>
-                  <Feather name="x" size={13} color="#DC2626" />
+                  <Feather name="x" size={12} color="#DC2626" />
                   <Text style={[styles.compItem, { color: "#7F1D1D" }]}>{item}</Text>
                 </View>
               ))}
@@ -126,7 +131,7 @@ export default function UsdropScreen() {
                 "All platforms unlocked",
               ].map((item) => (
                 <View key={item} style={styles.compRow}>
-                  <Feather name="check" size={13} color={colors.primary} />
+                  <Feather name="check" size={12} color={colors.primary} />
                   <Text style={[styles.compItem, { color: colors.foreground }]}>{item}</Text>
                 </View>
               ))}
@@ -135,18 +140,16 @@ export default function UsdropScreen() {
         </View>
 
         {/* Benefits */}
-        <View style={[styles.section, { paddingHorizontal: 20 }]}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-            Why Every Dropshipper Needs a US LLC
-          </Text>
-          <View style={styles.benefitsGrid}>
+        <View style={styles.section}>
+          <SectionHeader title="Why Every Dropshipper Needs a US LLC" />
+          <View style={[styles.benefitsGrid, { paddingHorizontal: 20 }]}>
             {LLC_BENEFITS.map((b) => (
               <View
                 key={b.title}
                 style={[styles.benefitCard, { backgroundColor: colors.card, borderColor: colors.border }]}
               >
                 <View style={[styles.benefitIcon, { backgroundColor: colors.secondary }]}>
-                  <Feather name={b.icon} size={20} color={colors.primary} />
+                  <Feather name={b.icon} size={18} color={colors.primary} />
                 </View>
                 <Text style={[styles.benefitTitle, { color: colors.foreground }]}>{b.title}</Text>
                 <Text style={[styles.benefitDesc, { color: colors.mutedForeground }]}>{b.desc}</Text>
@@ -155,75 +158,66 @@ export default function UsdropScreen() {
           </View>
         </View>
 
-        {/* Pricing */}
-        <View style={[styles.section, { paddingHorizontal: 20 }]}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Choose Your Package</Text>
-
-          {/* Just LLC */}
-          <View style={[styles.priceCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <View style={styles.priceHeader}>
-              <View>
-                <Text style={[styles.planName, { color: colors.foreground }]}>Just LLC</Text>
-                <Text style={[styles.planTagline, { color: colors.mutedForeground }]}>Everything to get started</Text>
-              </View>
+        {/* Pricing — side by side */}
+        <View style={styles.section}>
+          <SectionHeader title="Choose Your Package" />
+          <View style={[styles.pricingRow, { paddingHorizontal: 20 }]}>
+            {/* Just LLC */}
+            <View style={[styles.priceCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <Text style={[styles.planName, { color: colors.foreground }]}>Just LLC</Text>
               <View style={styles.priceBlock}>
                 <Text style={[styles.strikePrice, { color: colors.mutedForeground }]}>₹55,000</Text>
                 <Text style={[styles.price, { color: colors.primary }]}>₹39,000</Text>
               </View>
+              <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
+              {JUST_LLC_FEATURES.map((f) => (
+                <View key={f} style={styles.featureRow}>
+                  <Feather name="check-circle" size={12} color={colors.primary} />
+                  <Text style={[styles.featureText, { color: colors.foreground }]}>{f}</Text>
+                </View>
+              ))}
+              <TouchableOpacity
+                style={[styles.planCTA, { backgroundColor: colors.primary }]}
+                onPress={goGetStartedLLC}
+                testID="usdrop-just-llc-cta"
+              >
+                <Text style={[styles.planCTAText, { color: "#fff" }]}>Get Started</Text>
+              </TouchableOpacity>
             </View>
-            <View style={[styles.dividerLine, { backgroundColor: colors.border }]} />
-            {JUST_LLC_FEATURES.map((f) => (
-              <View key={f} style={styles.featureRow}>
-                <Feather name="check-circle" size={15} color={colors.primary} />
-                <Text style={[styles.featureText, { color: colors.foreground }]}>{f}</Text>
-              </View>
-            ))}
-            <TouchableOpacity
-              style={[styles.planCTA, { backgroundColor: colors.primary }]}
-              onPress={goGetStartedLLC}
-              testID="usdrop-just-llc-cta"
-            >
-              <Text style={[styles.planCTAText, { color: "#fff" }]}>Get Just LLC — ₹39,000</Text>
-            </TouchableOpacity>
-          </View>
 
-          {/* Elite */}
-          <View style={[styles.priceCard, { backgroundColor: colors.primary, borderColor: colors.primary }]}>
-            <View style={[styles.popularBadge, { backgroundColor: "#fff3" }]}>
-              <Text style={{ color: "#fff", fontSize: 11, fontFamily: "Inter_700Bold", letterSpacing: 0.5 }}>
-                MOST POPULAR
-              </Text>
-            </View>
-            <View style={styles.priceHeader}>
-              <View>
-                <Text style={[styles.planName, { color: "#fff" }]}>Elite LLC</Text>
-                <Text style={[styles.planTagline, { color: "#ffffff99" }]}>Complete business setup</Text>
+            {/* Elite */}
+            <View style={[styles.priceCard, { backgroundColor: colors.primary, borderColor: colors.primary }]}>
+              <View style={[styles.popularBadge, { backgroundColor: "#fff3" }]}>
+                <Text style={{ color: "#fff", fontSize: 9, fontFamily: "Inter_700Bold" }}>
+                  POPULAR
+                </Text>
               </View>
+              <Text style={[styles.planName, { color: "#fff" }]}>Elite LLC</Text>
               <View style={styles.priceBlock}>
                 <Text style={[styles.strikePrice, { color: "#ffffff66" }]}>₹99,000</Text>
                 <Text style={[styles.price, { color: "#fff" }]}>₹69,000</Text>
               </View>
+              <View style={[styles.dividerLine, { backgroundColor: "#ffffff33" }]} />
+              {ELITE_FEATURES.map((f) => (
+                <View key={f} style={styles.featureRow}>
+                  <Feather name="check-circle" size={12} color="#fff" />
+                  <Text style={[styles.featureText, { color: "#fff" }]}>{f}</Text>
+                </View>
+              ))}
+              <TouchableOpacity
+                style={[styles.planCTA, { backgroundColor: "#fff" }]}
+                onPress={goGetStartedLLC}
+                testID="usdrop-elite-cta"
+              >
+                <Text style={[styles.planCTAText, { color: colors.primary }]}>Get Started</Text>
+              </TouchableOpacity>
             </View>
-            <View style={[styles.dividerLine, { backgroundColor: "#ffffff33" }]} />
-            {ELITE_FEATURES.map((f) => (
-              <View key={f} style={styles.featureRow}>
-                <Feather name="check-circle" size={15} color="#fff" />
-                <Text style={[styles.featureText, { color: "#fff" }]}>{f}</Text>
-              </View>
-            ))}
-            <TouchableOpacity
-              style={[styles.planCTA, { backgroundColor: "#fff" }]}
-              onPress={goGetStartedLLC}
-              testID="usdrop-elite-cta"
-            >
-              <Text style={[styles.planCTAText, { color: colors.primary }]}>Get Elite LLC — ₹69,000</Text>
-            </TouchableOpacity>
           </View>
         </View>
 
         {/* How It Works */}
         <View style={[styles.section, { paddingHorizontal: 20 }]}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>How It Works</Text>
+          <SectionHeader title="How It Works" style={{ paddingHorizontal: 0 }} />
           {HOW_IT_WORKS.map((s) => (
             <View key={s.step} style={styles.howRow}>
               <View style={[styles.stepCircle, { backgroundColor: colors.primary }]}>
@@ -239,19 +233,11 @@ export default function UsdropScreen() {
 
         {/* Final CTA */}
         <View style={[styles.section, { paddingHorizontal: 20 }]}>
-          <TouchableOpacity
-            style={[styles.finalCTA, { backgroundColor: "#25D366" }]}
-            onPress={() =>
-              hapticPress(() =>
-                Linking.openURL(
-                  "https://wa.me/919306500349?text=Hi%2C%20I%27m%20a%20USDrop%20member%20and%20want%20to%20register%20my%20LLC"
-                )
-              )
-            }
-          >
-            <Feather name="message-circle" size={20} color="#fff" />
-            <Text style={[styles.planCTAText, { color: "#fff" }]}>Chat on WhatsApp</Text>
-          </TouchableOpacity>
+          <WhatsAppButton
+            message="Hi%2C%20I%27m%20a%20USDrop%20member%20and%20want%20to%20register%20my%20LLC"
+            label="Chat on WhatsApp — USDrop Deal"
+            testID="usdrop-whatsapp-cta"
+          />
         </View>
       </ScrollView>
     </View>
@@ -267,21 +253,24 @@ const styles = StyleSheet.create({
   coBrand: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: 8,
     marginTop: 12,
   },
-  brandPill: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 100,
-    borderWidth: 1,
+  usdropLogo: {
+    width: 28,
+    height: 28,
+    borderRadius: 6,
   },
-  brandPillText: {
-    fontSize: 13,
-    fontFamily: "Inter_600SemiBold",
+  coBrandText: {
+    fontSize: 15,
+    fontFamily: "Inter_700Bold",
   },
   coBrandX: {
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: "Inter_700Bold",
+  },
+  coBrandLegal: {
+    fontSize: 15,
     fontFamily: "Inter_700Bold",
   },
   discountBadge: {
@@ -314,11 +303,6 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 24,
   },
-  sectionTitle: {
-    fontSize: 20,
-    fontFamily: "Inter_700Bold",
-    marginBottom: 16,
-  },
   comparisonRow: {
     flexDirection: "row",
     gap: 10,
@@ -326,25 +310,25 @@ const styles = StyleSheet.create({
   compCard: {
     flex: 1,
     borderRadius: 16,
-    padding: 14,
+    padding: 12,
     borderWidth: 1,
     gap: 8,
   },
   compTitle: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: "Inter_700Bold",
     marginBottom: 4,
   },
   compRow: {
     flexDirection: "row",
     alignItems: "flex-start",
-    gap: 6,
+    gap: 5,
   },
   compItem: {
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: "Inter_400Regular",
     flex: 1,
-    lineHeight: 16,
+    lineHeight: 15,
   },
   benefitsGrid: {
     flexDirection: "row",
@@ -375,44 +359,38 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_400Regular",
     lineHeight: 15,
   },
+  pricingRow: {
+    flexDirection: "row",
+    gap: 10,
+  },
   priceCard: {
+    flex: 1,
     borderRadius: 20,
-    padding: 20,
+    padding: 14,
     borderWidth: 1.5,
-    gap: 12,
-    marginBottom: 14,
+    gap: 10,
   },
   popularBadge: {
     alignSelf: "flex-start",
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
     borderRadius: 100,
-    marginBottom: 4,
-  },
-  priceHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
+    marginBottom: 2,
   },
   planName: {
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: "Inter_700Bold",
   },
-  planTagline: {
-    fontSize: 13,
-    fontFamily: "Inter_400Regular",
-    marginTop: 2,
-  },
   priceBlock: {
-    alignItems: "flex-end",
+    gap: 2,
   },
   strikePrice: {
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: "Inter_400Regular",
     textDecorationLine: "line-through",
   },
   price: {
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: "Inter_700Bold",
   },
   dividerLine: {
@@ -420,28 +398,30 @@ const styles = StyleSheet.create({
   },
   featureRow: {
     flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
+    alignItems: "flex-start",
+    gap: 8,
   },
   featureText: {
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: "Inter_500Medium",
+    flex: 1,
+    lineHeight: 18,
   },
   planCTA: {
-    height: 54,
+    height: 44,
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 4,
   },
   planCTAText: {
-    fontSize: 15,
+    fontSize: 13,
     fontFamily: "Inter_700Bold",
   },
   howRow: {
     flexDirection: "row",
     gap: 14,
-    marginBottom: 24,
+    marginBottom: 20,
   },
   stepCircle: {
     width: 40,
@@ -451,20 +431,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   howTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontFamily: "Inter_700Bold",
   },
   howDesc: {
     fontSize: 13,
     fontFamily: "Inter_400Regular",
     lineHeight: 18,
-  },
-  finalCTA: {
-    height: 56,
-    borderRadius: 100,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 10,
   },
 });

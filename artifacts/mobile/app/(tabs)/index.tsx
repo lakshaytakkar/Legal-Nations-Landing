@@ -8,7 +8,6 @@ import {
   Linking,
   StyleSheet,
   Platform,
-  Dimensions,
   LayoutChangeEvent,
 } from "react-native";
 import * as Haptics from "expo-haptics";
@@ -16,25 +15,27 @@ import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { useColors } from "@/hooks/useColors";
-
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
+import { AnnouncementBanner } from "@/components/AnnouncementBanner";
+import { PrimaryButton } from "@/components/PrimaryButton";
+import { SectionHeader } from "@/components/SectionHeader";
+import { FlagImg } from "@/components/FlagImg";
 
 const COUNTRIES = [
-  { code: "us", name: "USA", currency: "USD", price: "$149", entity: "LLC" },
-  { code: "gb", name: "UK", currency: "GBP", price: "£89", entity: "Ltd" },
-  { code: "sg", name: "Singapore", currency: "SGD", price: "S$199", entity: "Pte Ltd" },
-  { code: "ae", name: "UAE", currency: "AED", price: "AED 1,199", entity: "Free Zone" },
-  { code: "in", name: "India", currency: "INR", price: "₹14,999", entity: "Pvt Ltd" },
-  { code: "ca", name: "Canada", currency: "CAD", price: "CAD 199", entity: "Inc" },
-  { code: "au", name: "Australia", currency: "AUD", price: "AUD 199", entity: "Pty Ltd" },
-  { code: "hk", name: "Hong Kong", currency: "HKD", price: "HKD 999", entity: "Ltd" },
+  { code: "us", name: "USA", price: "$149", entity: "LLC" },
+  { code: "gb", name: "UK", price: "£89", entity: "Ltd" },
+  { code: "sg", name: "Singapore", price: "S$199", entity: "Pte Ltd" },
+  { code: "ae", name: "UAE", price: "AED 1,199", entity: "Free Zone" },
+  { code: "in", name: "India", price: "₹14,999", entity: "Pvt Ltd" },
+  { code: "ca", name: "Canada", price: "CAD 199", entity: "Inc" },
+  { code: "au", name: "Australia", price: "AUD 199", entity: "Pty Ltd" },
+  { code: "hk", name: "Hong Kong", price: "HKD 999", entity: "Ltd" },
 ];
 
 const SERVICES = [
-  { icon: "briefcase" as const, title: "Company Formation", desc: "US LLC or global entity registered fast" },
-  { icon: "shield" as const, title: "Compliance & Filing", desc: "Annual reports, state filings, autopilot" },
-  { icon: "file-text" as const, title: "Tax & Bookkeeping", desc: "EIN, ITIN, tax prep, full accounting" },
-  { icon: "map-pin" as const, title: "Virtual Business Address", desc: "US and global mailing addresses" },
+  { icon: "briefcase" as const, title: "Company Formation", desc: "US LLC or global entity" },
+  { icon: "shield" as const, title: "Compliance", desc: "Annual reports & filings" },
+  { icon: "file-text" as const, title: "Tax & Books", desc: "EIN, ITIN, accounting" },
+  { icon: "map-pin" as const, title: "Virtual Address", desc: "US & global addresses" },
 ];
 
 const PLANS = [
@@ -42,11 +43,6 @@ const PLANS = [
   { name: "Professional", price: "$349", popular: true },
   { name: "Enterprise", price: "$799", popular: false },
 ];
-
-function hapticPress(fn: () => void) {
-  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-  fn();
-}
 
 export default function HomeScreen() {
   const colors = useColors();
@@ -58,9 +54,8 @@ export default function HomeScreen() {
   const pricingY = useRef(0);
 
   const openWhatsApp = () => {
-    hapticPress(() =>
-      Linking.openURL("https://wa.me/919306500349?text=Hi%2C%20I%27m%20interested%20in%20company%20registration")
-    );
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    Linking.openURL("https://wa.me/919306500349?text=Hi%2C%20I%27m%20interested%20in%20company%20registration");
   };
 
   const scrollToPricing = () => {
@@ -77,17 +72,17 @@ export default function HomeScreen() {
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingBottom: isWeb ? 34 + 84 : 100 }}
       >
-        {/* Web top pad */}
         {isWeb && <View style={{ height: topPad }} />}
 
         {/* Announcement Banner */}
-        <View style={[styles.announcementBanner, { backgroundColor: colors.primary }]}>
-          <Feather name="tag" size={12} color="#fff" />
-          <Text style={styles.announcementText}>
-            Exclusive for USDrop Members: 30% Off — Code{" "}
-            <Text style={{ fontFamily: "Inter_700Bold" }}>USDROP30</Text>
-          </Text>
-        </View>
+        <AnnouncementBanner
+          text={
+            <>
+              Exclusive for USDrop Members: 30% Off — Code{" "}
+              <Text style={{ fontFamily: "Inter_700Bold" }}>USDROP30</Text>
+            </>
+          }
+        />
 
         {/* Hero */}
         <View style={[styles.hero, { paddingTop: isWeb ? 24 : insets.top + 16 }]}>
@@ -95,12 +90,7 @@ export default function HomeScreen() {
           <View style={[styles.trustBadge, { backgroundColor: colors.secondary, borderColor: colors.border }]}>
             <View style={styles.flagRow}>
               {["in", "us", "gb", "ae"].map((code) => (
-                <Image
-                  key={code}
-                  source={{ uri: `https://flagcdn.com/20x15/${code}.png` }}
-                  style={styles.flagImg}
-                  resizeMode="cover"
-                />
+                <FlagImg key={code} code={code} width={20} height={14} style={{ marginRight: -4, borderWidth: 1, borderColor: "#fff" }} />
               ))}
             </View>
             <View style={[styles.divider, { backgroundColor: colors.border }]} />
@@ -120,17 +110,12 @@ export default function HomeScreen() {
           </Text>
 
           {/* CTAs */}
-          <TouchableOpacity
-            style={[styles.primaryCTA, { backgroundColor: colors.primary }]}
-            onPress={() => hapticPress(() => router.navigate("/(tabs)/get-started"))}
+          <PrimaryButton
+            label="Start Your Company"
+            onPress={() => router.navigate("/(tabs)/get-started")}
+            icon="arrow-right"
             testID="hero-cta"
-          >
-            <Text style={[styles.primaryCTAText, { color: colors.primaryForeground }]}>
-              Start Your Company
-            </Text>
-            <Feather name="arrow-right" size={18} color="#fff" />
-          </TouchableOpacity>
-
+          />
           <TouchableOpacity
             style={[styles.secondaryCTA, { borderColor: colors.border }]}
             onPress={scrollToPricing}
@@ -141,85 +126,74 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Countries */}
+        {/* Countries Grid */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-            Register in 8 Countries
-          </Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.countryScroll}
-          >
+          <SectionHeader title="Register in 8 Countries" />
+          <View style={[styles.countriesGrid, { paddingHorizontal: 20 }]}>
             {COUNTRIES.map((c) => (
               <TouchableOpacity
                 key={c.code}
                 style={[styles.countryCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                onPress={() => hapticPress(() => router.navigate("/(tabs)/get-started"))}
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  router.navigate("/(tabs)/get-started");
+                }}
               >
-                <Image
-                  source={{ uri: `https://flagcdn.com/40x30/${c.code}.png` }}
-                  style={styles.countryFlag}
-                  resizeMode="cover"
-                />
+                <FlagImg code={c.code} width={36} height={27} />
                 <Text style={[styles.countryName, { color: colors.foreground }]}>{c.name}</Text>
                 <Text style={[styles.countryEntity, { color: colors.mutedForeground }]}>{c.entity}</Text>
                 <Text style={[styles.countryPrice, { color: colors.primary }]}>From {c.price}</Text>
               </TouchableOpacity>
             ))}
-          </ScrollView>
+          </View>
         </View>
 
-        {/* Services */}
-        <View style={[styles.section, { paddingHorizontal: 20 }]}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>What We Handle</Text>
-          <View style={[styles.servicesBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            {SERVICES.map((s, i) => (
-              <React.Fragment key={s.title}>
-                <View style={styles.serviceRow}>
-                  <View style={[styles.serviceIconBox, { backgroundColor: colors.secondary }]}>
-                    <Feather name={s.icon} size={20} color={colors.primary} />
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={[styles.serviceTitle, { color: colors.foreground }]}>{s.title}</Text>
-                    <Text style={[styles.serviceDesc, { color: colors.mutedForeground }]}>{s.desc}</Text>
-                  </View>
-                  <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+        {/* Services – horizontal strip */}
+        <View style={styles.section}>
+          <SectionHeader title="What We Handle" />
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.servicesStrip}
+          >
+            {SERVICES.map((s) => (
+              <View
+                key={s.title}
+                style={[styles.serviceCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+              >
+                <View style={[styles.serviceIconBox, { backgroundColor: colors.secondary }]}>
+                  <Feather name={s.icon} size={22} color={colors.primary} />
                 </View>
-                {i < SERVICES.length - 1 && (
-                  <View style={[styles.sep, { backgroundColor: colors.border }]} />
-                )}
-              </React.Fragment>
+                <Text style={[styles.serviceTitle, { color: colors.foreground }]}>{s.title}</Text>
+                <Text style={[styles.serviceDesc, { color: colors.mutedForeground }]}>{s.desc}</Text>
+              </View>
             ))}
-          </View>
+          </ScrollView>
         </View>
 
         {/* USA Deep Dive */}
         <View style={[styles.section, { paddingHorizontal: 20 }]}>
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>
-            USA — Most Popular Jurisdiction
-          </Text>
+          <SectionHeader title="USA — Most Popular" style={{ paddingHorizontal: 0 }} />
           <View style={[styles.usaCard, { backgroundColor: colors.secondary, borderColor: colors.primary + "33" }]}>
             <View style={styles.usaRow}>
               <View style={[styles.usaCol, { borderRightWidth: 1, borderRightColor: colors.border }]}>
-                <Text style={[styles.usaState, { color: colors.foreground }]}>Delaware</Text>
-                <Text style={[styles.usaTag, { color: colors.mutedForeground }]}>Investor-preferred</Text>
-                <Text style={[styles.usaPrice, { color: colors.primary }]}>From $349</Text>
-              </View>
-              <View style={styles.usaCol}>
+                <FlagImg code="us" width={32} height={24} />
                 <Text style={[styles.usaState, { color: colors.foreground }]}>Wyoming</Text>
                 <Text style={[styles.usaTag, { color: colors.mutedForeground }]}>Tax-friendly LLC</Text>
                 <Text style={[styles.usaPrice, { color: colors.primary }]}>From $149</Text>
               </View>
+              <View style={styles.usaCol}>
+                <FlagImg code="us" width={32} height={24} />
+                <Text style={[styles.usaState, { color: colors.foreground }]}>Delaware</Text>
+                <Text style={[styles.usaTag, { color: colors.mutedForeground }]}>Investor-preferred</Text>
+                <Text style={[styles.usaPrice, { color: colors.primary }]}>From $349</Text>
+              </View>
             </View>
-            <TouchableOpacity
-              style={[styles.usaCTA, { backgroundColor: colors.primary }]}
-              onPress={() => hapticPress(() => router.navigate("/(tabs)/get-started"))}
-            >
-              <Text style={{ color: "#fff", fontFamily: "Inter_600SemiBold", fontSize: 15 }}>
-                Register US LLC Now
-              </Text>
-            </TouchableOpacity>
+            <PrimaryButton
+              label="Register US LLC Now"
+              onPress={() => router.navigate("/(tabs)/get-started")}
+              testID="usa-cta"
+            />
           </View>
         </View>
 
@@ -228,7 +202,7 @@ export default function HomeScreen() {
           style={[styles.section, { paddingHorizontal: 20 }]}
           onLayout={(e: LayoutChangeEvent) => { pricingY.current = e.nativeEvent.layout.y; }}
         >
-          <Text style={[styles.sectionTitle, { color: colors.foreground }]}>USA Pricing Plans</Text>
+          <SectionHeader title="USA Pricing Plans" style={{ paddingHorizontal: 0 }} />
           <View style={styles.plansRow}>
             {PLANS.map((p) => (
               <TouchableOpacity
@@ -240,7 +214,10 @@ export default function HomeScreen() {
                     borderColor: p.popular ? colors.primary : colors.border,
                   },
                 ]}
-                onPress={() => hapticPress(() => router.navigate("/(tabs)/get-started"))}
+                onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  router.navigate("/(tabs)/get-started");
+                }}
               >
                 {p.popular && (
                   <View style={[styles.popularBadge, { backgroundColor: "#fff3" }]}>
@@ -270,7 +247,10 @@ export default function HomeScreen() {
           </View>
           <TouchableOpacity
             style={[styles.viewAllBtn, { borderColor: colors.border }]}
-            onPress={() => hapticPress(() => router.navigate("/(tabs)/usdrop"))}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              router.navigate("/(tabs)/usdrop");
+            }}
           >
             <Text style={[styles.viewAllText, { color: colors.primary }]}>View All Countries & Plans</Text>
           </TouchableOpacity>
@@ -306,23 +286,10 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  announcementBanner: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 6,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-  },
-  announcementText: {
-    color: "#fff",
-    fontSize: 12,
-    fontFamily: "Inter_500Medium",
-    textAlign: "center",
-  },
   hero: {
     paddingHorizontal: 20,
     paddingBottom: 24,
+    gap: 14,
   },
   trustBadge: {
     flexDirection: "row",
@@ -333,20 +300,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 100,
     borderWidth: 1,
-    marginTop: 20,
-    marginBottom: 16,
+    marginTop: 8,
   },
   flagRow: {
     flexDirection: "row",
-    gap: -4,
-  },
-  flagImg: {
-    width: 20,
-    height: 14,
-    borderRadius: 2,
-    borderWidth: 1,
-    borderColor: "#fff",
-    marginRight: -4,
+    gap: 0,
   },
   divider: {
     width: 1,
@@ -365,31 +323,12 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontFamily: "Inter_700Bold",
     lineHeight: 40,
-    marginBottom: 12,
+    marginTop: 4,
   },
   subtitle: {
     fontSize: 16,
     fontFamily: "Inter_400Regular",
     lineHeight: 24,
-    marginBottom: 24,
-  },
-  primaryCTA: {
-    height: 56,
-    borderRadius: 100,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    marginBottom: 12,
-    shadowColor: "#3347D4",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  primaryCTAText: {
-    fontSize: 16,
-    fontFamily: "Inter_700Bold",
   },
   secondaryCTA: {
     height: 52,
@@ -404,36 +343,26 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_600SemiBold",
   },
   section: {
-    marginTop: 8,
+    marginBottom: 8,
     paddingTop: 8,
     paddingBottom: 16,
   },
-  sectionTitle: {
-    fontSize: 20,
-    fontFamily: "Inter_700Bold",
-    marginBottom: 16,
-    paddingHorizontal: 20,
-  },
-  countryScroll: {
-    paddingHorizontal: 20,
-    gap: 12,
+  countriesGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
   },
   countryCard: {
-    width: 140,
+    width: "47%",
     borderRadius: 16,
     padding: 14,
     borderWidth: 1,
-    alignItems: "center",
     gap: 6,
   },
-  countryFlag: {
-    width: 40,
-    height: 30,
-    borderRadius: 4,
-  },
   countryName: {
-    fontSize: 14,
-    fontFamily: "Inter_600SemiBold",
+    fontSize: 15,
+    fontFamily: "Inter_700Bold",
+    marginTop: 4,
   },
   countryEntity: {
     fontSize: 12,
@@ -442,17 +371,18 @@ const styles = StyleSheet.create({
   countryPrice: {
     fontSize: 13,
     fontFamily: "Inter_700Bold",
+    marginTop: 2,
   },
-  servicesBox: {
-    borderRadius: 20,
+  servicesStrip: {
+    paddingHorizontal: 20,
+    gap: 12,
+  },
+  serviceCard: {
+    width: 140,
+    borderRadius: 16,
+    padding: 14,
     borderWidth: 1,
-    overflow: "hidden",
-  },
-  serviceRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 14,
-    padding: 16,
+    gap: 8,
   },
   serviceIconBox: {
     width: 44,
@@ -462,23 +392,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   serviceTitle: {
-    fontSize: 15,
-    fontFamily: "Inter_600SemiBold",
-    marginBottom: 2,
+    fontSize: 14,
+    fontFamily: "Inter_700Bold",
+    lineHeight: 18,
   },
   serviceDesc: {
     fontSize: 12,
     fontFamily: "Inter_400Regular",
     lineHeight: 16,
   },
-  sep: {
-    height: StyleSheet.hairlineWidth,
-    marginHorizontal: 16,
-  },
   usaCard: {
     borderRadius: 20,
     borderWidth: 1,
     overflow: "hidden",
+    gap: 0,
+    paddingBottom: 16,
   },
   usaRow: {
     flexDirection: "row",
@@ -486,7 +414,7 @@ const styles = StyleSheet.create({
   usaCol: {
     flex: 1,
     padding: 20,
-    gap: 4,
+    gap: 6,
   },
   usaState: {
     fontSize: 18,
@@ -499,15 +427,7 @@ const styles = StyleSheet.create({
   usaPrice: {
     fontSize: 16,
     fontFamily: "Inter_700Bold",
-    marginTop: 4,
-  },
-  usaCTA: {
-    margin: 16,
-    marginTop: 0,
-    height: 52,
-    borderRadius: 100,
-    alignItems: "center",
-    justifyContent: "center",
+    marginTop: 2,
   },
   plansRow: {
     flexDirection: "row",
@@ -517,7 +437,7 @@ const styles = StyleSheet.create({
   planCard: {
     flex: 1,
     borderRadius: 16,
-    padding: 14,
+    padding: 12,
     borderWidth: 1.5,
     alignItems: "center",
     gap: 4,
