@@ -113,6 +113,7 @@ export default function GetStarted() {
   const [direction, setDirection] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [errors, setErrors]       = useState<Partial<Record<keyof FormData, string>>>({});
 
   const [formData, setFormData] = useState<FormData>({
@@ -145,17 +146,18 @@ export default function GetStarted() {
   const handleSubmit = async () => {
     if (!validateContact()) return;
     setSubmitting(true);
+    setSubmitError(null);
     try {
       const res = await fetch(
         `${import.meta.env.BASE_URL}api/leads`.replace(/\/+/g, "/").replace(":/", "://"),
         { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData) }
       );
-      if (!res.ok) throw new Error("API error");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setSubmitted(true);
     } catch {
-      console.log("Lead submitted (fallback):", formData);
+      setSubmitError("Something went wrong. Please try again or reach us on WhatsApp.");
     } finally {
       setSubmitting(false);
-      setSubmitted(true);
     }
   };
 
@@ -334,7 +336,13 @@ export default function GetStarted() {
             </AnimatePresence>
           </div>
 
-          <div className="mt-8 flex gap-3">
+          {submitError && step === TOTAL_STEPS - 1 && (
+            <div className="mt-6 bg-destructive/10 border border-destructive/30 rounded-xl px-4 py-3 text-sm text-destructive">
+              {submitError}
+            </div>
+          )}
+
+          <div className="mt-4 flex gap-3">
             {step > 0 && (
               <Button
                 variant="outline"

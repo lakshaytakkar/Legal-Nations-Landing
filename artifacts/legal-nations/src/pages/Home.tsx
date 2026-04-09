@@ -527,7 +527,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
                 <Button className="bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-14 px-8 rounded-full shadow-lg hover:shadow-xl transition-all w-full sm:w-auto" data-testid="hero-cta-start" asChild>
-                  <Link href="/get-started">Start Your Company — $149</Link>
+                  <Link href="/get-started">Book Free Consultation</Link>
                 </Button>
                 <Button variant="outline" className="border-primary text-primary hover:bg-secondary text-lg h-14 px-8 rounded-full w-full sm:w-auto" asChild data-testid="hero-cta-pricing">
                   <a href="#pricing">See Pricing</a>
@@ -745,7 +745,7 @@ export default function Home() {
                   <div className="text-sm flex justify-between text-muted-foreground"><span>Annual Report</span> <span>Not required for LLCs</span></div>
                 </div>
 
-                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12" asChild><Link href="/get-started">Get Delaware Package</Link></Button>
+                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12" asChild><Link href="/checkout?plan=Delaware+LLC&price=%24249&country=USA&entity=LLC">Get Delaware Package</Link></Button>
               </div>
 
               {/* Wyoming Card */}
@@ -798,7 +798,7 @@ export default function Home() {
                   <div className="text-sm flex justify-between text-success font-medium"><span>State Income Tax</span> <span>$0</span></div>
                 </div>
 
-                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12" asChild><Link href="/get-started">Get Wyoming Package</Link></Button>
+                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12" asChild><Link href="/checkout?plan=Wyoming+LLC&price=%24149&country=USA&entity=LLC">Get Wyoming Package</Link></Button>
               </div>
             </div>
 
@@ -875,8 +875,10 @@ export default function Home() {
             {/* Plan Cards */}
             <div className={`grid gap-8 max-w-6xl mx-auto items-end mb-16 ${COUNTRY_PRICING[selectedCountry].tiers.length === 2 ? "lg:grid-cols-2 max-w-3xl" : "lg:grid-cols-3"}`}>
               {COUNTRY_PRICING[selectedCountry].tiers.map((tier, tierIdx) => {
+                const cp = COUNTRY_PRICING[selectedCountry];
                 const isPopular = tier.popular;
-                const checkColor = isPopular ? "text-accent" : tierIdx === COUNTRY_PRICING[selectedCountry].tiers.length - 1 ? "text-primary" : "text-success";
+                const checkColor = isPopular ? "text-accent" : tierIdx === cp.tiers.length - 1 ? "text-primary" : "text-success";
+                const checkoutUrl = `/checkout?plan=${encodeURIComponent(tier.name)}&price=${encodeURIComponent(tier.price)}&country=${encodeURIComponent(cp.country)}&entity=${encodeURIComponent(cp.entityType)}`;
                 return (
                   <div
                     key={tier.name}
@@ -928,15 +930,15 @@ export default function Home() {
 
                     {isPopular ? (
                       <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground h-14 text-lg font-bold shadow-md" asChild>
-                        <Link href="/get-started">Start Now</Link>
+                        <Link href={checkoutUrl}>Start Now</Link>
                       </Button>
-                    ) : tierIdx === COUNTRY_PRICING[selectedCountry].tiers.length - 1 ? (
+                    ) : tierIdx === cp.tiers.length - 1 ? (
                       <Button variant="outline" className="w-full border-border hover:bg-muted h-12" asChild>
                         <Link href="/get-started">Contact Sales</Link>
                       </Button>
                     ) : (
                       <Button className="w-full bg-primary hover:bg-primary-light text-white h-12" asChild>
-                        <Link href="/get-started">Start Now</Link>
+                        <Link href={checkoutUrl}>Start Now</Link>
                       </Button>
                     )}
                   </div>
@@ -1458,7 +1460,7 @@ export default function Home() {
                 <li><a href="https://legalnations.in" target="_blank" rel="noopener noreferrer" className="hover:text-primary-light transition-colors">About Us</a></li>
                 <li><a href="#pricing" className="hover:text-primary-light transition-colors">Pricing</a></li>
                 <li><a href="https://legalnations.in/blog" target="_blank" rel="noopener noreferrer" className="hover:text-primary-light transition-colors">Blog</a></li>
-                <li><a href="https://wa.me/918218229118" target="_blank" rel="noopener noreferrer" className="hover:text-primary-light transition-colors">Contact</a></li>
+                <li><a href="https://wa.me/919306500349" target="_blank" rel="noopener noreferrer" className="hover:text-primary-light transition-colors">Contact</a></li>
                 <li><Link href="/privacy" className="hover:text-primary-light transition-colors">Privacy Policy</Link></li>
                 <li><Link href="/terms" className="hover:text-primary-light transition-colors">Terms of Service</Link></li>
               </ul>

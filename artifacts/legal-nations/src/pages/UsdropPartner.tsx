@@ -6,6 +6,7 @@ import {
   Landmark, CreditCard, ShieldCheck, Globe, FileText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/Logo";
 
 const JUST_LLC_FEATURES = [
   "LLC Formation (Wyoming or Delaware — your choice)",
@@ -111,13 +112,16 @@ const initialModal: ModalState = {
 
 export default function UsdropPartner() {
   const [modal, setModal] = useState<ModalState>(initialModal);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const openModal = (pkg: Package) => {
+    setSubmitError(null);
     setModal({ ...initialModal, open: true, selectedPackage: pkg });
   };
 
   const closeModal = () => {
     setModal((m) => ({ ...m, open: false }));
+    setSubmitError(null);
   };
 
   const handleBackdropClick = () => {
@@ -126,20 +130,28 @@ export default function UsdropPartner() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
     setModal((m) => ({ ...m, submitting: true }));
     try {
-      await fetch(`/api/leads`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...modal.form,
-          package: modal.selectedPackage,
-          source: "usdrop",
-          price: modal.selectedPackage === "elite" ? 69000 : 39000,
-        }),
-      });
-    } catch (_) { /* graceful fallback */ }
-    setModal((m) => ({ ...m, submitting: false, step: 3 }));
+      const res = await fetch(
+        `${import.meta.env.BASE_URL}api/leads`.replace(/\/+/g, "/").replace(":/", "://"),
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...modal.form,
+            package: modal.selectedPackage,
+            source: "usdrop",
+            price: modal.selectedPackage === "elite" ? 69000 : 39000,
+          }),
+        }
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setModal((m) => ({ ...m, submitting: false, step: 3 }));
+    } catch {
+      setModal((m) => ({ ...m, submitting: false }));
+      setSubmitError("Something went wrong. Please try again or reach us on WhatsApp.");
+    }
   };
 
   return (
@@ -149,10 +161,7 @@ export default function UsdropPartner() {
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 md:px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/mascot.png" alt="Legal Nations" className="w-7 h-7 object-contain" />
-            <span className="font-bold text-base text-primary" style={{ fontFamily: "'Dancing Script', cursive" }}>
-              Legal Nations
-            </span>
+            <Logo size="sm" />
           </Link>
           <a
             href="https://wa.me/919306500349?text=Hi%2C%20I%20came%20from%20USDrop%20AI%20and%20want%20to%20register%20my%20US%20LLC"
@@ -181,10 +190,7 @@ export default function UsdropPartner() {
               />
               <span className="text-3xl md:text-4xl font-thin text-muted-foreground/60 leading-none">×</span>
               <div className="flex items-center gap-2.5">
-                <img src="/mascot.png" alt="Legal Nations" className="h-10 w-10 md:h-14 md:w-14 object-contain" />
-                <span className="font-bold text-xl md:text-2xl text-primary" style={{ fontFamily: "'Dancing Script', cursive" }}>
-                  Legal Nations
-                </span>
+                <Logo size="md" />
               </div>
             </div>
 
@@ -421,9 +427,8 @@ export default function UsdropPartner() {
       {/* ── Minimal Footer ── */}
       <footer className="bg-background border-t border-border py-6">
         <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2 text-primary">
-            <img src="/mascot.png" alt="Legal Nations" className="w-6 h-6 object-contain" />
-            <span className="font-bold" style={{ fontFamily: "'Dancing Script', cursive" }}>Legal Nations</span>
+          <div className="flex items-center gap-2">
+            <Logo size="sm" />
           </div>
           <p>© 2026 Legal Nations. All rights reserved.</p>
           <div className="flex items-center gap-4">
@@ -600,10 +605,15 @@ export default function UsdropPartner() {
                     />
                   </div>
 
+                  {submitError && (
+                    <div className="bg-destructive/10 border border-destructive/30 rounded-xl px-4 py-3 text-sm text-destructive">
+                      {submitError}
+                    </div>
+                  )}
                   <div className="flex gap-3 pt-1">
                     <button
                       type="button"
-                      onClick={() => setModal((m) => ({ ...m, step: 1 }))}
+                      onClick={() => { setSubmitError(null); setModal((m) => ({ ...m, step: 1 })); }}
                       className="flex-none border border-border rounded-xl px-4 h-12 text-sm font-semibold text-muted-foreground hover:border-primary/40 transition-colors"
                     >
                       Back
