@@ -4,70 +4,61 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, Globe, ArrowLeft, ArrowRight } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/Logo";
 
 type FormData = {
   entityType: string;
   jurisdiction: string;
-  timeline: string;
-  revenue: string;
   name: string;
   email: string;
   phone: string;
   company: string;
 };
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 3;
 
 const entityOptions = [
-  { value: "llc", label: "LLC" },
-  { value: "c-corp", label: "C-Corporation" },
+  { value: "llc",           label: "LLC — Limited Liability Company" },
+  { value: "c-corp",        label: "C-Corporation" },
   { value: "pvt-ltd-india", label: "Private Limited (India)" },
-  { value: "free-zone-uae", label: "Free Zone (Dubai/UAE)" },
-  { value: "other", label: "Other / Not sure yet" },
+  { value: "free-zone-uae", label: "Free Zone (Dubai / UAE)" },
+  { value: "other",         label: "Not sure yet — help me choose" },
 ];
 
 const jurisdictionOptions = [
-  { value: "usa-wyoming", label: "🇺🇸 USA — Wyoming (Tax-Friendly LLC)" },
-  { value: "usa-delaware", label: "🇺🇸 USA — Delaware (Investor-Preferred)" },
-  { value: "uk", label: "🇬🇧 United Kingdom" },
-  { value: "singapore", label: "🇸🇬 Singapore" },
-  { value: "dubai-uae", label: "🇦🇪 Dubai / UAE Free Zone" },
-  { value: "india", label: "🇮🇳 India" },
-  { value: "other", label: "🌍 Other country" },
-];
-
-const timelineOptions = [
-  { value: "this-week", label: "Right away (this week)" },
-  { value: "next-month", label: "Within the next month" },
-  { value: "exploring", label: "I'm still exploring" },
-  { value: "compliance-only", label: "I already have a company — need compliance help" },
-];
-
-const revenueOptions = [
-  { value: "pre-revenue", label: "Pre-revenue / Idea stage" },
-  { value: "early", label: "Early revenue (under $50K/yr)" },
-  { value: "growing", label: "Growing ($50K – $500K/yr)" },
-  { value: "scaling", label: "Scaling ($500K+/yr)" },
+  { value: "usa-wyoming",  label: "🇺🇸  USA — Wyoming  (Tax-Friendly LLC)" },
+  { value: "usa-delaware", label: "🇺🇸  USA — Delaware  (Investor-Preferred)" },
+  { value: "uk",           label: "🇬🇧  United Kingdom" },
+  { value: "singapore",    label: "🇸🇬  Singapore" },
+  { value: "dubai-uae",    label: "🇦🇪  Dubai / UAE Free Zone" },
+  { value: "india",        label: "🇮🇳  India" },
+  { value: "other",        label: "🌍  Other country" },
 ];
 
 function StepIndicator({ current, total }: { current: number; total: number }) {
+  const labels = ["Company Type", "Jurisdiction", "Contact Info"];
   return (
-    <div className="flex items-center justify-center gap-2 mb-8">
+    <div className="flex items-center justify-center gap-0 mb-10">
       {Array.from({ length: total }).map((_, i) => (
         <div key={i} className="flex items-center">
-          <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-              i < current
-                ? "bg-accent text-white"
-                : i === current
-                ? "bg-primary text-white ring-2 ring-primary/30"
-                : "bg-muted text-muted-foreground"
-            }`}
-          >
-            {i < current ? <CheckCircle2 className="w-4 h-4" /> : i + 1}
+          <div className="flex flex-col items-center gap-1.5">
+            <div
+              className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                i < current
+                  ? "bg-primary text-white"
+                  : i === current
+                  ? "bg-primary text-white ring-4 ring-primary/20"
+                  : "bg-muted text-muted-foreground"
+              }`}
+            >
+              {i < current ? <CheckCircle2 className="w-5 h-5" /> : i + 1}
+            </div>
+            <span className={`text-xs font-medium hidden sm:block ${i === current ? "text-primary" : "text-muted-foreground"}`}>
+              {labels[i]}
+            </span>
           </div>
           {i < total - 1 && (
-            <div className={`w-8 h-0.5 transition-all duration-300 ${i < current ? "bg-accent" : "bg-muted"}`} />
+            <div className={`w-16 md:w-24 h-0.5 mx-1 mb-5 transition-all duration-300 ${i < current ? "bg-primary" : "bg-muted"}`} />
           )}
         </div>
       ))}
@@ -89,12 +80,21 @@ function RadioCardGroup({ options, selected, onSelect }: RadioCardGroupProps) {
           key={opt.value}
           type="button"
           onClick={() => onSelect(opt.value)}
-          className={`w-full text-left px-5 py-4 rounded-xl border-2 transition-all duration-200 font-medium text-base ${
+          className={`w-full text-left px-6 py-5 rounded-2xl border-2 transition-all duration-200 font-semibold text-lg flex items-center gap-4 ${
             selected === opt.value
-              ? "border-primary bg-secondary text-primary"
+              ? "border-primary bg-secondary text-primary shadow-sm"
               : "border-border bg-card text-foreground hover:border-primary/40 hover:bg-muted"
           }`}
         >
+          <span
+            className={`w-5 h-5 rounded-full border-2 shrink-0 flex items-center justify-center transition-all ${
+              selected === opt.value ? "border-primary" : "border-muted-foreground/40"
+            }`}
+          >
+            {selected === opt.value && (
+              <span className="w-2.5 h-2.5 rounded-full bg-primary block" />
+            )}
+          </span>
           {opt.label}
         </button>
       ))}
@@ -103,71 +103,53 @@ function RadioCardGroup({ options, selected, onSelect }: RadioCardGroupProps) {
 }
 
 const slideVariants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? 60 : -60,
-    opacity: 0,
-  }),
+  enter: (direction: number) => ({ x: direction > 0 ? 60 : -60, opacity: 0 }),
   center: { x: 0, opacity: 1 },
-  exit: (direction: number) => ({
-    x: direction > 0 ? -60 : 60,
-    opacity: 0,
-  }),
+  exit:  (direction: number) => ({ x: direction > 0 ? -60 : 60, opacity: 0 }),
 };
 
 export default function GetStarted() {
-  const [step, setStep] = useState(0);
+  const [step, setStep]           = useState(0);
   const [direction, setDirection] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+  const [errors, setErrors]       = useState<Partial<Record<keyof FormData, string>>>({});
 
   const [formData, setFormData] = useState<FormData>({
-    entityType: "",
+    entityType:   "",
     jurisdiction: "",
-    timeline: "",
-    revenue: "",
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
+    name:         "",
+    email:        "",
+    phone:        "",
+    company:      "",
   });
-
-  const defaultPhone = formData.jurisdiction === "india" || formData.jurisdiction === "" ? "+91" : "+1";
 
   const update = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
-  const goNext = () => {
-    setDirection(1);
-    setStep((s) => s + 1);
-  };
+  const goNext = () => { setDirection(1);  setStep((s) => s + 1); };
+  const goBack = () => { setDirection(-1); setStep((s) => s - 1); };
 
-  const goBack = () => {
-    setDirection(-1);
-    setStep((s) => s - 1);
-  };
-
-  const validateStep5 = () => {
-    const newErrors: Partial<Record<keyof FormData, string>> = {};
-    if (!formData.name.trim()) newErrors.name = "Full name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Enter a valid email";
-    if (!formData.phone.trim()) newErrors.phone = "Phone / WhatsApp is required";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const validateContact = () => {
+    const e: Partial<Record<keyof FormData, string>> = {};
+    if (!formData.name.trim())  e.name  = "Full name is required";
+    if (!formData.email.trim()) e.email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = "Enter a valid email";
+    if (!formData.phone.trim()) e.phone = "Phone / WhatsApp is required";
+    setErrors(e);
+    return Object.keys(e).length === 0;
   };
 
   const handleSubmit = async () => {
-    if (!validateStep5()) return;
+    if (!validateContact()) return;
     setSubmitting(true);
     try {
-      const res = await fetch(`${import.meta.env.BASE_URL}api/leads`.replace(/\/+/g, "/").replace(":/", "://"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${import.meta.env.BASE_URL}api/leads`.replace(/\/+/g, "/").replace(":/", "://"),
+        { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData) }
+      );
       if (!res.ok) throw new Error("API error");
     } catch {
       console.log("Lead submitted (fallback):", formData);
@@ -177,107 +159,47 @@ export default function GetStarted() {
     }
   };
 
-  const labelFor: Record<string, Record<string, string>> = {
-    entityType: Object.fromEntries(entityOptions.map((o) => [o.value, o.label])),
-    jurisdiction: Object.fromEntries(jurisdictionOptions.map((o) => [o.value, o.label])),
-    timeline: Object.fromEntries(timelineOptions.map((o) => [o.value, o.label])),
-    revenue: Object.fromEntries(revenueOptions.map((o) => [o.value, o.label])),
-  };
+  const entityLabel = entityOptions.find((o) => o.value === formData.entityType)?.label ?? "";
+  const jurisLabel  = jurisdictionOptions.find((o) => o.value === formData.jurisdiction)?.label ?? "";
 
   if (submitted) {
     return (
       <div className="min-h-screen flex flex-col font-sans bg-background">
         <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border">
           <div className="container mx-auto px-4 md:px-6 h-16 flex items-center">
-            <Link href="/" className="font-heading font-bold text-xl text-primary flex items-center gap-2">
-              <div className="w-8 h-8 rounded bg-primary text-white flex items-center justify-center">
-                <Globe className="w-5 h-5" />
-              </div>
-              Legal Nations
-            </Link>
+            <Link href="/"><Logo size="sm" /></Link>
           </div>
         </header>
 
         <main className="flex-grow flex items-center justify-center px-4 py-16">
           <motion.div
             className="max-w-xl w-full text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
           >
-            <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CheckCircle2 className="w-10 h-10 text-accent" />
+            <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="w-10 h-10 text-primary" />
             </div>
             <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-              You're all set! A Legal Nations expert will call you within 24 hours.
+              You're all set! We'll call you within 24 hours.
             </h1>
-            <p className="text-muted-foreground mb-8 text-lg">Here's a summary of what you shared with us:</p>
+            <p className="text-muted-foreground mb-8 text-lg">Here's what you shared:</p>
 
             <div className="bg-card rounded-xl border border-border p-6 text-left space-y-3 mb-10">
-              {formData.entityType && (
-                <div className="flex justify-between text-sm">
-                  <span className="font-medium text-muted-foreground">Entity Type</span>
-                  <span className="font-semibold text-foreground">{labelFor.entityType[formData.entityType]}</span>
-                </div>
-              )}
-              {formData.jurisdiction && (
-                <div className="flex justify-between text-sm">
-                  <span className="font-medium text-muted-foreground">Jurisdiction</span>
-                  <span className="font-semibold text-foreground">{labelFor.jurisdiction[formData.jurisdiction]}</span>
-                </div>
-              )}
-              {formData.timeline && (
-                <div className="flex justify-between text-sm">
-                  <span className="font-medium text-muted-foreground">Timeline</span>
-                  <span className="font-semibold text-foreground">{labelFor.timeline[formData.timeline]}</span>
-                </div>
-              )}
-              {formData.revenue && (
-                <div className="flex justify-between text-sm">
-                  <span className="font-medium text-muted-foreground">Revenue Stage</span>
-                  <span className="font-semibold text-foreground">{labelFor.revenue[formData.revenue]}</span>
-                </div>
-              )}
-              <div className="border-t border-border pt-3 flex justify-between text-sm">
-                <span className="font-medium text-muted-foreground">Name</span>
-                <span className="font-semibold text-foreground">{formData.name}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="font-medium text-muted-foreground">Email</span>
-                <span className="font-semibold text-foreground">{formData.email}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="font-medium text-muted-foreground">Phone</span>
-                <span className="font-semibold text-foreground">{formData.phone}</span>
-              </div>
+              {entityLabel   && <div className="flex justify-between text-sm"><span className="font-medium text-muted-foreground">Entity Type</span><span className="font-semibold">{entityLabel}</span></div>}
+              {jurisLabel    && <div className="flex justify-between text-sm"><span className="font-medium text-muted-foreground">Jurisdiction</span><span className="font-semibold">{jurisLabel}</span></div>}
+              <div className="border-t border-border pt-3 flex justify-between text-sm"><span className="font-medium text-muted-foreground">Name</span><span className="font-semibold">{formData.name}</span></div>
+              <div className="flex justify-between text-sm"><span className="font-medium text-muted-foreground">Email</span><span className="font-semibold">{formData.email}</span></div>
+              <div className="flex justify-between text-sm"><span className="font-medium text-muted-foreground">Phone</span><span className="font-semibold">{formData.phone}</span></div>
             </div>
 
             <div className="space-y-4">
-              <a
-                href="https://cal.com/legal-nations/consultation"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full"
-              >
-                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-14 rounded-full font-bold shadow-md">
-                  Book a Time With Us
-                </Button>
-              </a>
-              <a
-                href="https://wa.me/918218229118?text=Hi%2C%20I%27m%20interested%20in%20company%20registration.%20Can%20you%20help%3F"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full"
-              >
-                <Button variant="outline" className="w-full border-[#25D366] text-[#25D366] hover:bg-[#25D366]/5 text-lg h-12 rounded-full flex items-center justify-center gap-2">
-                  <SiWhatsapp className="w-5 h-5" />
-                  Chat on WhatsApp
+              <a href="https://wa.me/919306500349?text=Hi%2C%20I%20just%20submitted%20my%20Legal%20Nations%20form" target="_blank" rel="noopener noreferrer" className="block w-full">
+                <Button className="w-full bg-[#25D366] hover:bg-[#1ebe5a] text-white text-lg h-14 rounded-full font-bold flex items-center justify-center gap-2 shadow-md">
+                  <SiWhatsapp className="w-5 h-5" /> Chat on WhatsApp
                 </Button>
               </a>
               <Link href="/" className="block">
-                <Button variant="ghost" className="w-full text-muted-foreground">
-                  ← Back to Home
-                </Button>
+                <Button variant="ghost" className="w-full text-muted-foreground">← Back to Home</Button>
               </Link>
             </div>
           </motion.div>
@@ -286,57 +208,25 @@ export default function GetStarted() {
     );
   }
 
+  const defaultPhone = formData.jurisdiction === "india" || formData.jurisdiction === "" ? "+91" : "+1";
+
   const steps = [
     {
-      title: "What type of company do you want to register?",
-      content: (
-        <RadioCardGroup
-          options={entityOptions}
-          selected={formData.entityType}
-          onSelect={(v) => update("entityType", v)}
-        />
-      ),
+      title:   "What type of company do you want to register?",
+      content: <RadioCardGroup options={entityOptions} selected={formData.entityType} onSelect={(v) => update("entityType", v)} />,
       canNext: !!formData.entityType,
     },
     {
-      title: "Where do you want to register?",
-      content: (
-        <RadioCardGroup
-          options={jurisdictionOptions}
-          selected={formData.jurisdiction}
-          onSelect={(v) => update("jurisdiction", v)}
-        />
-      ),
+      title:   "Where do you want to register?",
+      content: <RadioCardGroup options={jurisdictionOptions} selected={formData.jurisdiction} onSelect={(v) => update("jurisdiction", v)} />,
       canNext: !!formData.jurisdiction,
-    },
-    {
-      title: "When do you need this done?",
-      content: (
-        <RadioCardGroup
-          options={timelineOptions}
-          selected={formData.timeline}
-          onSelect={(v) => update("timeline", v)}
-        />
-      ),
-      canNext: !!formData.timeline,
-    },
-    {
-      title: "What is your current revenue stage?",
-      content: (
-        <RadioCardGroup
-          options={revenueOptions}
-          selected={formData.revenue}
-          onSelect={(v) => update("revenue", v)}
-        />
-      ),
-      canNext: !!formData.revenue,
     },
     {
       title: "Almost done! How should we reach you?",
       content: (
-        <div className="space-y-4">
+        <div className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
+            <label className="block text-sm font-semibold text-foreground mb-2">
               Full Name <span className="text-destructive">*</span>
             </label>
             <input
@@ -344,14 +234,12 @@ export default function GetStarted() {
               value={formData.name}
               onChange={(e) => update("name", e.target.value)}
               placeholder="Your full name"
-              className={`w-full px-4 py-3 rounded-xl border-2 bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors ${
-                errors.name ? "border-destructive" : "border-border"
-              }`}
+              className={`w-full px-5 py-4 rounded-2xl border-2 bg-card text-foreground text-base placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors ${errors.name ? "border-destructive" : "border-border"}`}
             />
             {errors.name && <p className="text-destructive text-sm mt-1">{errors.name}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
+            <label className="block text-sm font-semibold text-foreground mb-2">
               Email <span className="text-destructive">*</span>
             </label>
             <input
@@ -359,19 +247,17 @@ export default function GetStarted() {
               value={formData.email}
               onChange={(e) => update("email", e.target.value)}
               placeholder="you@example.com"
-              className={`w-full px-4 py-3 rounded-xl border-2 bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors ${
-                errors.email ? "border-destructive" : "border-border"
-              }`}
+              className={`w-full px-5 py-4 rounded-2xl border-2 bg-card text-foreground text-base placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors ${errors.email ? "border-destructive" : "border-border"}`}
             />
             {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
+            <label className="block text-sm font-semibold text-foreground mb-2">
               WhatsApp / Phone <span className="text-destructive">*</span>
             </label>
             <div className="flex gap-2">
               <select
-                className="px-3 py-3 rounded-xl border-2 border-border bg-card text-foreground focus:outline-none focus:border-primary transition-colors text-sm"
+                className="px-3 py-4 rounded-2xl border-2 border-border bg-card text-foreground focus:outline-none focus:border-primary transition-colors text-sm"
                 defaultValue={defaultPhone}
                 onChange={(e) => {
                   const current = formData.phone.replace(/^\+\d+\s*/, "");
@@ -384,31 +270,28 @@ export default function GetStarted() {
                 <option value="+65">🇸🇬 +65</option>
                 <option value="+971">🇦🇪 +971</option>
                 <option value="+852">🇭🇰 +852</option>
-                <option value="+1-CA">🇨🇦 +1</option>
                 <option value="+61">🇦🇺 +61</option>
               </select>
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => update("phone", e.target.value)}
-                placeholder={defaultPhone + " 9999999999"}
-                className={`flex-1 px-4 py-3 rounded-xl border-2 bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors ${
-                  errors.phone ? "border-destructive" : "border-border"
-                }`}
+                placeholder={`${defaultPhone} 9999999999`}
+                className={`flex-1 px-5 py-4 rounded-2xl border-2 bg-card text-foreground text-base placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors ${errors.phone ? "border-destructive" : "border-border"}`}
               />
             </div>
             {errors.phone && <p className="text-destructive text-sm mt-1">{errors.phone}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium text-foreground mb-1">
-              Company Name <span className="text-muted-foreground text-xs">(optional)</span>
+            <label className="block text-sm font-semibold text-foreground mb-2">
+              Company Name <span className="text-muted-foreground text-xs font-normal">(optional)</span>
             </label>
             <input
               type="text"
               value={formData.company}
               onChange={(e) => update("company", e.target.value)}
               placeholder="Your desired company name"
-              className="w-full px-4 py-3 rounded-xl border-2 border-border bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+              className="w-full px-5 py-4 rounded-2xl border-2 border-border bg-card text-foreground text-base placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
             />
           </div>
         </div>
@@ -423,12 +306,7 @@ export default function GetStarted() {
     <div className="min-h-screen flex flex-col font-sans bg-background">
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="font-heading font-bold text-xl text-primary flex items-center gap-2">
-            <div className="w-8 h-8 rounded bg-primary text-white flex items-center justify-center">
-              <Globe className="w-5 h-5" />
-            </div>
-            Legal Nations
-          </Link>
+          <Link href="/"><Logo size="sm" /></Link>
           <span className="text-sm text-muted-foreground font-medium">Step {step + 1} of {TOTAL_STEPS}</span>
         </div>
       </header>
@@ -460,7 +338,7 @@ export default function GetStarted() {
             {step > 0 && (
               <Button
                 variant="outline"
-                className="border-border text-foreground rounded-full h-12 px-6"
+                className="border-border text-foreground rounded-full h-13 px-6"
                 onClick={goBack}
               >
                 <ArrowLeft className="w-4 h-4 mr-1" /> Back
@@ -468,19 +346,19 @@ export default function GetStarted() {
             )}
             {step < TOTAL_STEPS - 1 ? (
               <Button
-                className="flex-1 bg-accent hover:bg-accent-hover text-accent-foreground rounded-full h-12 font-bold disabled:opacity-50"
+                className="flex-1 bg-primary hover:bg-primary/90 text-white rounded-full h-13 font-bold text-base disabled:opacity-50 shadow-md"
                 onClick={goNext}
                 disabled={!currentStep.canNext}
               >
-                Next <ArrowRight className="w-4 h-4 ml-1" />
+                Continue <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             ) : (
               <Button
-                className="flex-1 bg-accent hover:bg-accent-hover text-accent-foreground rounded-full h-12 font-bold"
+                className="flex-1 bg-primary hover:bg-primary/90 text-white rounded-full h-13 font-bold text-base shadow-md"
                 onClick={handleSubmit}
                 disabled={submitting}
               >
-                {submitting ? "Submitting…" : "Submit & Get My Free Consultation"}
+                {submitting ? "Submitting…" : "Get My Free Consultation →"}
               </Button>
             )}
           </div>
@@ -488,9 +366,7 @@ export default function GetStarted() {
           {step === 0 && (
             <p className="text-center text-sm text-muted-foreground mt-6">
               Already have an account?{" "}
-              <a href="https://legalnations.in" className="underline hover:text-primary transition-colors">
-                Sign in
-              </a>
+              <a href="https://legalnations.in" className="underline hover:text-primary transition-colors">Sign in</a>
             </p>
           )}
         </div>
