@@ -7,14 +7,14 @@ export function Logo({ variant = "default", size = "md" }: LogoProps) {
   const isFooter = variant === "footer";
 
   const textSize =
-    size === "sm" ? "text-xl" :
-    size === "lg" ? "text-4xl" :
-                    "text-2xl";
+    size === "sm" ? "text-[28px]" :
+    size === "lg" ? "text-[50px]" :
+                    "text-[34px]";
 
   const iconSize =
-    size === "sm" ? 22 :
-    size === "lg" ? 44 :
-                    30;
+    size === "sm" ? 88 :
+    size === "lg" ? 176 :
+                    120;
 
   return (
     <span
