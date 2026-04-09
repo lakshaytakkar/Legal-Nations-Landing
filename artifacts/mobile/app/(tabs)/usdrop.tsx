@@ -270,8 +270,8 @@ const styles = StyleSheet.create({
     fontFamily: "Inter_700Bold",
   },
   coBrandLegal: {
-    fontSize: 15,
-    fontFamily: "Inter_700Bold",
+    fontSize: 18,
+    fontFamily: "PlayfairDisplay_800ExtraBold",
   },
   discountBadge: {
     flexDirection: "row",

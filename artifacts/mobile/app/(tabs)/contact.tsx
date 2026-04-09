@@ -199,8 +199,8 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   logoText: {
-    fontSize: 32,
-    fontFamily: "Inter_700Bold",
+    fontSize: 36,
+    fontFamily: "PlayfairDisplay_800ExtraBold",
   },
   tagline: {
     fontSize: 14,
