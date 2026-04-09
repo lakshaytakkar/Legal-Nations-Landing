@@ -596,67 +596,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3.5 Trusted by Founders Worldwide — Social Proof with Photos */}
-        <section className="bg-background py-24">
-          <div className="container mx-auto px-4 md:px-6">
-            <motion.div
-              className="text-center mb-16"
-              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
-            >
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">Trusted by Founders Worldwide</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Real founders, real results — from every corner of the globe.</p>
-            </motion.div>
-
-            <motion.div
-              className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto"
-              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={containerVariant}
-            >
-              {[
-                {
-                  photo: "/images/india-founder.png",
-                  quote: "Registered my Wyoming LLC in under 24 hours. Incredible service.",
-                  name: "Rahul M.",
-                  detail: "E-commerce · India 🇮🇳",
-                  company: "Wyoming LLC"
-                },
-                {
-                  photo: "/images/founders-team.png",
-                  quote: "Best price I found anywhere. Team was responsive on WhatsApp.",
-                  name: "Sarah L.",
-                  detail: "SaaS Startup · UK 🇬🇧",
-                  company: "Delaware C-Corp"
-                },
-                {
-                  photo: "/images/team-support.png",
-                  quote: "Dubai Free Zone setup was seamless. Saved me thousands vs competitors.",
-                  name: "Ahmed K.",
-                  detail: "Trading Co · UAE 🇦🇪",
-                  company: "Dubai Free Zone"
-                },
-              ].map((testimonial) => (
-                <motion.div
-                  key={testimonial.name}
-                  variants={cardVariant}
-                  className="bg-card rounded-xl shadow-md border border-border flex flex-col items-center text-center p-8 hover:shadow-lg transition-shadow duration-300"
-                >
-                  <div className="w-20 h-20 rounded-full overflow-hidden mb-5 border-2 border-primary/20 shadow-sm">
-                    <img src={testimonial.photo} alt={testimonial.name} className="w-full h-full object-cover object-top" />
-                  </div>
-                  <div className="flex text-accent mb-3">
-                    <Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" /><Star className="w-4 h-4 fill-current" />
-                  </div>
-                  <p className="text-foreground italic mb-5 text-sm leading-relaxed">"{testimonial.quote}"</p>
-                  <div className="mt-auto">
-                    <div className="font-bold text-sm">{testimonial.name}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{testimonial.detail}</div>
-                    <div className="inline-block mt-2 text-xs bg-secondary text-primary font-medium px-2 py-0.5 rounded-full">{testimonial.company}</div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
         {/* 4. How It Works */}
         <section id="how-it-works" className="bg-background py-24 scroll-mt-20">
           <div className="container mx-auto px-4 md:px-6">
