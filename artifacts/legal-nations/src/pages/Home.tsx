@@ -702,7 +702,7 @@ export default function Home() {
                     <p className="text-primary font-medium">"The Gold Standard"</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-bold">$249</div>
+                    <div className="text-3xl font-bold">$399</div>
                     <div className="text-xs text-muted-foreground uppercase tracking-wide">One-Time</div>
                   </div>
                 </div>
@@ -743,7 +743,7 @@ export default function Home() {
                   <div className="text-sm flex justify-between text-muted-foreground"><span>Annual Report</span> <span>Not required for LLCs</span></div>
                 </div>
 
-                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12" asChild><Link href="/checkout?plan=Delaware+LLC&price=%24249&country=USA&entity=LLC">Get Delaware Package</Link></Button>
+                <Button className="w-full bg-primary hover:bg-primary/90 text-white text-lg h-14 rounded-xl font-bold shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 transition-all duration-200" asChild><Link href="/checkout?plan=Delaware+LLC&price=%24399&country=USA&entity=LLC">Get Delaware Package →</Link></Button>
               </div>
 
               {/* Wyoming Card */}
@@ -755,7 +755,7 @@ export default function Home() {
                     <p className="text-accent-hover font-medium">"The Entrepreneur's Favorite"</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-bold">$149</div>
+                    <div className="text-3xl font-bold">$349</div>
                     <div className="text-xs text-muted-foreground uppercase tracking-wide">One-Time</div>
                   </div>
                 </div>
@@ -796,44 +796,14 @@ export default function Home() {
                   <div className="text-sm flex justify-between text-success font-medium"><span>State Income Tax</span> <span>$0</span></div>
                 </div>
 
-                <Button className="w-full bg-accent hover:bg-accent-hover text-accent-foreground text-lg h-12" asChild><Link href="/checkout?plan=Wyoming+LLC&price=%24149&country=USA&entity=LLC">Get Wyoming Package</Link></Button>
+                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg h-14 rounded-xl font-bold shadow-lg shadow-accent/30 hover:shadow-accent/50 hover:-translate-y-0.5 transition-all duration-200" asChild><Link href="/checkout?plan=Wyoming+LLC&price=%24349&country=USA&entity=LLC">Get Wyoming Package →</Link></Button>
               </div>
             </div>
 
-            <div className="max-w-4xl mx-auto">
-              <div className="overflow-x-auto rounded-xl border border-border">
-                <table className="w-full text-left text-sm border-collapse bg-card">
-                  <thead className="bg-surface border-b border-border">
-                    <tr>
-                      <th className="p-4 font-bold">Feature</th>
-                      <th className="p-4 font-bold text-primary">Delaware</th>
-                      <th className="p-4 font-bold text-accent-hover">Wyoming</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border">
-                    {[
-                      { f: "State Filing Fee", d: "$110", w: "$100" },
-                      { f: "State Income Tax", d: "0% (out-of-state)", w: "0%" },
-                      { f: "Annual Report Required", d: "No (LLC)", w: "Yes ($60 min)" },
-                      { f: "Franchise Tax", d: "$300/yr", w: "$0" },
-                      { f: "Privacy Level", d: "Medium", w: "High (Anonymous LLC)" },
-                      { f: "VC / Investor Preference", d: "★★★★★", w: "★★★" },
-                      { f: "Best For", d: "Startups, VC, C-Corps", w: "Solopreneurs, E-com, Holdings" },
-                    ].map((row, i) => (
-                      <tr key={i} className="hover:bg-muted/50">
-                        <td className="p-4 font-medium">{row.f}</td>
-                        <td className="p-4">{row.d}</td>
-                        <td className="p-4">{row.w}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="mt-8 text-center">
-                <Button variant="outline" className="border-primary text-primary h-12 px-8 rounded-full" asChild>
-                  <Link href="/get-started">Still unsure? Talk to an Expert — Free</Link>
-                </Button>
-              </div>
+            <div className="mt-10 text-center">
+              <Button variant="outline" className="border-primary text-primary h-12 px-8 rounded-full hover:bg-primary hover:text-white transition-all duration-200" asChild>
+                <Link href="/get-started">Still unsure? Talk to an Expert — Free</Link>
+              </Button>
             </div>
           </div>
         </section>
