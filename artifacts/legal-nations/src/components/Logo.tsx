@@ -18,7 +18,7 @@ export function Logo({ variant = "default", size = "md" }: LogoProps) {
 
   return (
     <span
-      className="flex items-center gap-2 leading-none select-none"
+      className="flex items-center gap-1 leading-none select-none"
       style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" }}
     >
       <img
