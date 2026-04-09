@@ -199,9 +199,20 @@ export default function Home() {
               className="flex-1 max-w-2xl text-center lg:text-left relative z-10"
               initial="hidden" animate="visible" variants={fadeUpVariant}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary text-primary font-medium text-sm mb-6 border border-primary-light/20">
-                <span className="flex h-2 w-2 rounded-full bg-primary"></span>
-                Trusted by 2,500+ Founders Worldwide
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-secondary text-primary font-medium text-sm mb-6 border border-primary/20 shadow-sm">
+                <div className="flex -space-x-1.5">
+                  {["in", "us", "gb", "ae"].map((code) => (
+                    <img
+                      key={code}
+                      src={`https://flagcdn.com/20x15/${code}.png`}
+                      alt={code}
+                      className="w-5 h-3.5 rounded-sm border border-white object-cover"
+                    />
+                  ))}
+                </div>
+                <span className="w-px h-3.5 bg-primary/25 shrink-0" />
+                <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse shrink-0" />
+                <span><span className="font-bold text-primary">2,500+</span> Founders Worldwide</span>
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-foreground leading-[1.1] mb-6">
                 Register Your Company Anywhere.{" "}
