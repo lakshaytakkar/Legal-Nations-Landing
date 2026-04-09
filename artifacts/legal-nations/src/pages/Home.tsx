@@ -371,8 +371,6 @@ export default function Home() {
     { src: "https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg", alt: "Stripe" },
     { src: "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg", alt: "PayPal" },
     { src: "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg", alt: "TikTok" },
-    { src: "https://upload.wikimedia.org/wikipedia/commons/5/56/Wise_logo.svg", alt: "Wise" },
-    { src: "https://upload.wikimedia.org/wikipedia/commons/1/14/Walmart_Spark.svg", alt: "Walmart" },
   ];
 
   const navCountries = [
