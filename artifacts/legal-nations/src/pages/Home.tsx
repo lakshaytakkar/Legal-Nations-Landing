@@ -1006,7 +1006,7 @@ export default function Home() {
               <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                 <div className="flex-1 w-full">
                   <div className="rounded-2xl overflow-hidden shadow-xl border border-border/50 bg-surface p-2">
-                    <img src="/images/compliance-dashboard.png" alt="Compliance calendar dashboard" className="w-full h-auto rounded-xl border border-border" />
+                    <img src="/images/compliance-human.jpg" alt="Person relaxing while checking their compliance schedule on a phone" className="w-full h-auto rounded-xl border border-border" />
                   </div>
                 </div>
                 <div className="flex-1">
@@ -1027,7 +1027,7 @@ export default function Home() {
                 </div>
                 <div className="flex-1 order-1 lg:order-2 w-full">
                   <div className="rounded-2xl overflow-hidden shadow-xl border border-border/50 bg-surface p-2">
-                    <img src="/images/hero-dashboard.png" alt="Bookkeeping dashboard" className="w-full h-auto rounded-xl border border-border" />
+                    <img src="/images/bookkeeping-human.jpg" alt="Professional focused at desk with laptop and papers doing tax and bookkeeping work" className="w-full h-auto rounded-xl border border-border" />
                   </div>
                 </div>
               </div>
@@ -1036,7 +1036,7 @@ export default function Home() {
               <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                 <div className="flex-1 w-full">
                   <div className="rounded-2xl overflow-hidden shadow-xl border border-border/50 bg-surface p-2">
-                    <img src="/images/us-llc-document.png" alt="Virtual mailbox interface" className="w-full h-auto rounded-xl border border-border" />
+                    <img src="/images/mailroom-human.jpg" alt="Person reviewing and sorting mail parcels at a desk for virtual mailroom service" className="w-full h-auto rounded-xl border border-border" />
                   </div>
                 </div>
                 <div className="flex-1">

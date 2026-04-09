@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "1qBX2nY92uE1d-1odTuGH"
@@ -84,3 +83,21 @@ id = "c3AMzP69inkBVtL7YctQw"
 uri = "file://artifacts/mobile/assets/images/usdrop-logo.png"
 type = "image"
 title = "usdrop-logo"
+
+[[outputs]]
+id = "N1xUoyQrWgBtJ0i7HJKkt"
+uri = "file://attached_assets/stock_images/compliance-human.jpg"
+type = "image"
+title = "person casually checking phone calendar relaxed natural lighting compliance schedule organized"
+
+[[outputs]]
+id = "mO-1QdGKUm5z1AqThyySJ"
+uri = "file://attached_assets/stock_images/bookkeeping-human.jpg"
+type = "image"
+title = "professional woman at desk with laptop papers tax documents focused bookkeeping accounting work"
+
+[[outputs]]
+id = "fw0TwviBGO24F57unsVAm"
+uri = "file://attached_assets/stock_images/mailroom-human.jpg"
+type = "image"
+title = "person receiving sorting mail parcels packages at desk mailroom business address delivery"
