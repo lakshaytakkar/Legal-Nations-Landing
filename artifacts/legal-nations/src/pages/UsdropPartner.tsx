@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import {
   CheckCircle2, XCircle, Shield, Star, Building2, BadgeCheck,
-  ShoppingCart, Phone, Rocket, ArrowDown, MessageCircle
+  ShoppingCart, Phone, Rocket, ArrowDown, MessageCircle, X, User, Mail, PhoneCall
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -58,40 +58,56 @@ const STEPS = [
   { icon: <Rocket className="w-6 h-6" />,        step: "3", title: "Start Selling", desc: "LLC filed, EIN received, bank account ready. You're live on Amazon." },
 ];
 
-export default function UsdropPartner() {
-  const [selectedPackage, setSelectedPackage] = useState<"just-llc" | "elite">("just-llc");
-  const [form, setForm] = useState({ name: "", email: "", phone: "" });
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const checkoutRef = useRef<HTMLDivElement>(null);
-  const pricingRef = useRef<HTMLDivElement>(null);
+type Package = "just-llc" | "elite";
+type ModalStep = 1 | 2 | 3;
 
-  const scrollToCheckout = (pkg: "just-llc" | "elite") => {
-    setSelectedPackage(pkg);
-    checkoutRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+interface ModalState {
+  open: boolean;
+  step: ModalStep;
+  selectedPackage: Package;
+  form: { name: string; email: string; phone: string };
+  submitting: boolean;
+}
+
+const initialModal: ModalState = {
+  open: false,
+  step: 1,
+  selectedPackage: "just-llc",
+  form: { name: "", email: "", phone: "" },
+  submitting: false,
+};
+
+export default function UsdropPartner() {
+  const [modal, setModal] = useState<ModalState>(initialModal);
+
+  const openModal = (pkg: Package) => {
+    setModal({ ...initialModal, open: true, selectedPackage: pkg });
   };
 
-  const scrollToPricing = () => {
-    pricingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const closeModal = () => {
+    setModal((m) => ({ ...m, open: false }));
+  };
+
+  const handleBackdropClick = () => {
+    if (modal.step === 1 || modal.step === 2) closeModal();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
+    setModal((m) => ({ ...m, submitting: true }));
     try {
       await fetch(`/api/leads`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...form,
-          package: selectedPackage,
+          ...modal.form,
+          package: modal.selectedPackage,
           source: "usdrop",
-          price: selectedPackage === "elite" ? 69000 : 39000,
+          price: modal.selectedPackage === "elite" ? 69000 : 39000,
         }),
       });
     } catch (_) { /* graceful fallback */ }
-    setSubmitting(false);
-    setSubmitted(true);
+    setModal((m) => ({ ...m, submitting: false, step: 3 }));
   };
 
   return (
@@ -125,33 +141,32 @@ export default function UsdropPartner() {
           <div className="container mx-auto px-4 md:px-6 max-w-4xl text-center">
 
             {/* Large co-brand logos */}
-            <div className="flex items-center justify-center gap-8 mb-7 flex-wrap">
+            <div className="flex items-center justify-center gap-6 md:gap-10 mb-8 flex-wrap">
               <img
                 src="/usdrop-logo.png"
                 alt="USDrop AI"
-                className="h-14 object-contain"
+                className="h-10 md:h-14 w-auto object-contain"
               />
-              <span className="text-4xl font-thin text-muted-foreground/60">×</span>
-              <div className="flex items-center gap-3">
-                <img src="/mascot.png" alt="Legal Nations" className="h-14 w-14 object-contain" />
-                <span className="font-bold text-2xl text-primary" style={{ fontFamily: "'Dancing Script', cursive" }}>
+              <span className="text-3xl md:text-4xl font-thin text-muted-foreground/60 leading-none">×</span>
+              <div className="flex items-center gap-2.5">
+                <img src="/mascot.png" alt="Legal Nations" className="h-10 w-10 md:h-14 md:w-14 object-contain" />
+                <span className="font-bold text-xl md:text-2xl text-primary" style={{ fontFamily: "'Dancing Script', cursive" }}>
                   Legal Nations
                 </span>
               </div>
             </div>
 
             {/* Partner badge */}
-            <div className="inline-block mb-8">
+            <div className="inline-block mb-7">
               <span className="bg-amber-50 text-amber-700 border border-amber-200 text-sm font-semibold px-4 py-1.5 rounded-full">
                 Exclusive Partner Pricing · 30% Off for USDrop AI Members
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] mb-5">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-5">
               Your US Business.{" "}
-              <span className="text-primary relative inline-block">
-                Approved by Amazon, Stripe & Shopify.
-                <span className="absolute bottom-0 left-0 w-full h-[3px] bg-primary/25 rounded-full" />
+              <span className="text-primary">
+                Approved by Amazon, Stripe &amp; Shopify.
               </span>
             </h1>
 
@@ -161,10 +176,10 @@ export default function UsdropPartner() {
             </p>
 
             <Button
-              onClick={scrollToPricing}
+              onClick={() => openModal("just-llc")}
               className="bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-full px-10 h-14 shadow-lg hover:shadow-xl transition-all"
             >
-              See Packages & Pricing <ArrowDown className="w-4 h-4 ml-2" />
+              See Packages &amp; Pricing <ArrowDown className="w-4 h-4 ml-2" />
             </Button>
 
             {/* Before / After card */}
@@ -220,7 +235,7 @@ export default function UsdropPartner() {
         </section>
 
         {/* ── 3. Side-by-Side Pricing ── */}
-        <section id="pricing" className="py-20 bg-surface border-b border-border scroll-mt-16" ref={pricingRef}>
+        <section id="pricing" className="py-20 bg-surface border-b border-border scroll-mt-16">
           <div className="container mx-auto px-4 md:px-6 max-w-5xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
@@ -242,7 +257,7 @@ export default function UsdropPartner() {
                 </div>
                 <p className="text-sm text-muted-foreground mb-6">30% USDrop discount · USDROP30 applied</p>
                 <Button
-                  onClick={() => scrollToCheckout("just-llc")}
+                  onClick={() => openModal("just-llc")}
                   className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 mb-8 rounded-xl"
                 >
                   Get Just LLC — ₹39,000
@@ -276,7 +291,7 @@ export default function UsdropPartner() {
                 </div>
                 <p className="text-sm text-muted-foreground mb-6">30% USDrop discount · USDROP30 applied</p>
                 <Button
-                  onClick={() => scrollToCheckout("elite")}
+                  onClick={() => openModal("elite")}
                   className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 mb-8 rounded-xl shadow-md"
                 >
                   Get Elite Package — ₹69,000
@@ -345,129 +360,6 @@ export default function UsdropPartner() {
           </div>
         </section>
 
-        {/* ── 6. Unified Checkout Form ── */}
-        <section id="checkout" className="py-16 bg-background" ref={checkoutRef}>
-          <div className="container mx-auto px-4 md:px-6 max-w-lg">
-            <div className="bg-card rounded-2xl shadow-lg border border-border p-8">
-              {submitted ? (
-                <div className="text-center py-6">
-                  <CheckCircle2 className="w-14 h-14 text-green-500 mx-auto mb-5" />
-                  <h3 className="text-2xl font-bold mb-3 text-foreground">You're all set!</h3>
-                  <p className="text-muted-foreground mb-7 max-w-sm mx-auto">
-                    We've received your request. A Legal Nations expert will call you within 24 hours
-                    to walk you through the process and confirm your payment.
-                  </p>
-                  <a
-                    href="https://wa.me/919306500349?text=Hi%2C%20I%20just%20submitted%20my%20USDrop%20LLC%20request"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full px-6 py-3 transition-colors"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    Chat with us on WhatsApp
-                  </a>
-                </div>
-              ) : (
-                <>
-                  <h2 className="text-xl font-bold mb-1 text-foreground">Claim Your 30% Discount</h2>
-                  <p className="text-sm text-muted-foreground mb-6">
-                    USDROP30 applied · Your team will call within 24 hours
-                  </p>
-
-                  {/* Package toggle */}
-                  <div className="flex gap-3 mb-6">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedPackage("just-llc")}
-                      className={`flex-1 border rounded-xl p-3 text-sm font-semibold transition-all ${
-                        selectedPackage === "just-llc"
-                          ? "border-primary bg-secondary text-primary"
-                          : "border-border text-muted-foreground hover:border-primary/40"
-                      }`}
-                    >
-                      Just LLC
-                      <div className="text-xs font-normal mt-0.5">₹39,000</div>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedPackage("elite")}
-                      className={`flex-1 border rounded-xl p-3 text-sm font-semibold transition-all relative ${
-                        selectedPackage === "elite"
-                          ? "border-primary bg-secondary text-primary"
-                          : "border-border text-muted-foreground hover:border-primary/40"
-                      }`}
-                    >
-                      <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200">
-                        Popular
-                      </span>
-                      Elite LLC
-                      <div className="text-xs font-normal mt-0.5">₹69,000</div>
-                    </button>
-                  </div>
-
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">
-                        Full Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className="w-full border border-border rounded-lg px-3 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/30"
-                        placeholder="Your full name"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">
-                        Email Address <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full border border-border rounded-lg px-3 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/30"
-                        placeholder="you@email.com"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">
-                        WhatsApp / Phone <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        value={form.phone}
-                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                        className="w-full border border-border rounded-lg px-3 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/30"
-                        placeholder="+91 XXXXX XXXXX"
-                      />
-                    </div>
-
-                    <Button
-                      type="submit"
-                      disabled={submitting}
-                      className="w-full bg-primary hover:bg-primary/90 text-white font-bold rounded-xl py-6 text-base shadow-md mt-2"
-                    >
-                      {submitting
-                        ? "Submitting..."
-                        : selectedPackage === "elite"
-                          ? "Get Elite Package — ₹69,000"
-                          : "Get My LLC — ₹39,000"}
-                    </Button>
-
-                    <p className="text-xs text-center text-muted-foreground pt-1">
-                      No payment now. Our team will call you to confirm details and process payment securely.
-                    </p>
-                  </form>
-                </>
-              )}
-            </div>
-          </div>
-        </section>
-
       </main>
 
       {/* ── Minimal Footer ── */}
@@ -484,13 +376,237 @@ export default function UsdropPartner() {
               href="https://wa.me/919306500349"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-green-600 transition-colors flex items-center gap-1"
+              className="hover:text-primary transition-colors"
             >
-              <MessageCircle className="w-4 h-4" /> WhatsApp
+              WhatsApp
             </a>
           </div>
         </div>
       </footer>
+
+      {/* ── Multi-Step Modal ── */}
+      {modal.open && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          aria-modal="true"
+          role="dialog"
+        >
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={handleBackdropClick}
+          />
+
+          {/* Modal panel */}
+          <div className="relative z-10 w-full max-w-md bg-card rounded-2xl shadow-2xl border border-border overflow-hidden">
+
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-border">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-0.5">
+                  {modal.step === 1 && "Step 1 of 2 — Choose Package"}
+                  {modal.step === 2 && "Step 2 of 2 — Your Details"}
+                  {modal.step === 3 && "All done!"}
+                </p>
+                <h2 className="text-lg font-bold text-foreground">
+                  {modal.step === 1 && "Pick Your Package"}
+                  {modal.step === 2 && "Contact Details"}
+                  {modal.step === 3 && "Request Received"}
+                </h2>
+              </div>
+              {(modal.step === 1 || modal.step === 2) && (
+                <button
+                  onClick={closeModal}
+                  className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-lg hover:bg-secondary"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+
+            {/* Step indicator */}
+            {modal.step !== 3 && (
+              <div className="flex gap-1.5 px-6 pt-4">
+                {[1, 2].map((s) => (
+                  <div
+                    key={s}
+                    className={`h-1 flex-1 rounded-full transition-colors ${
+                      s <= modal.step ? "bg-primary" : "bg-border"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* Body */}
+            <div className="px-6 py-5">
+
+              {/* Step 1: Package picker */}
+              {modal.step === 1 && (
+                <div className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Both packages include the 30% USDrop discount — code <span className="font-semibold text-primary">USDROP30</span> applied.
+                  </p>
+
+                  <div className="flex gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setModal((m) => ({ ...m, selectedPackage: "just-llc" }))}
+                      className={`flex-1 border rounded-xl p-4 text-sm font-semibold transition-all text-left ${
+                        modal.selectedPackage === "just-llc"
+                          ? "border-primary bg-secondary text-primary ring-1 ring-primary"
+                          : "border-border text-muted-foreground hover:border-primary/40"
+                      }`}
+                    >
+                      <div className="font-bold mb-0.5">Just LLC</div>
+                      <div className="text-xs font-normal text-muted-foreground">₹39,000</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setModal((m) => ({ ...m, selectedPackage: "elite" }))}
+                      className={`flex-1 border rounded-xl p-4 text-sm font-semibold transition-all text-left relative ${
+                        modal.selectedPackage === "elite"
+                          ? "border-primary bg-secondary text-primary ring-1 ring-primary"
+                          : "border-border text-muted-foreground hover:border-primary/40"
+                      }`}
+                    >
+                      <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-200 whitespace-nowrap">
+                        Most Popular
+                      </span>
+                      <div className="font-bold mb-0.5">Elite LLC</div>
+                      <div className="text-xs font-normal text-muted-foreground">₹69,000</div>
+                    </button>
+                  </div>
+
+                  <Button
+                    onClick={() => setModal((m) => ({ ...m, step: 2 }))}
+                    className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 rounded-xl mt-2"
+                  >
+                    Continue
+                  </Button>
+                  <p className="text-xs text-center text-muted-foreground">
+                    No payment now. Our team calls you within 24 hours.
+                  </p>
+                </div>
+              )}
+
+              {/* Step 2: Contact details */}
+              {modal.step === 2 && (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">
+                      <span className="flex items-center gap-1.5">
+                        <User className="w-3.5 h-3.5 text-muted-foreground" />
+                        Full Name <span className="text-red-500">*</span>
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      autoFocus
+                      value={modal.form.name}
+                      onChange={(e) => setModal((m) => ({ ...m, form: { ...m.form, name: e.target.value } }))}
+                      className="w-full border border-border rounded-lg px-3 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/30"
+                      placeholder="Your full name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">
+                      <span className="flex items-center gap-1.5">
+                        <Mail className="w-3.5 h-3.5 text-muted-foreground" />
+                        Email Address <span className="text-red-500">*</span>
+                      </span>
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={modal.form.email}
+                      onChange={(e) => setModal((m) => ({ ...m, form: { ...m.form, email: e.target.value } }))}
+                      className="w-full border border-border rounded-lg px-3 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/30"
+                      placeholder="you@email.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1.5">
+                      <span className="flex items-center gap-1.5">
+                        <PhoneCall className="w-3.5 h-3.5 text-muted-foreground" />
+                        WhatsApp / Phone <span className="text-red-500">*</span>
+                      </span>
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={modal.form.phone}
+                      onChange={(e) => setModal((m) => ({ ...m, form: { ...m.form, phone: e.target.value } }))}
+                      className="w-full border border-border rounded-lg px-3 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/30"
+                      placeholder="+91 XXXXX XXXXX"
+                    />
+                  </div>
+
+                  <div className="flex gap-3 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => setModal((m) => ({ ...m, step: 1 }))}
+                      className="flex-none border border-border rounded-xl px-4 h-12 text-sm font-semibold text-muted-foreground hover:border-primary/40 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <Button
+                      type="submit"
+                      disabled={modal.submitting}
+                      className="flex-1 bg-primary hover:bg-primary/90 text-white font-bold h-12 rounded-xl shadow-md"
+                    >
+                      {modal.submitting
+                        ? "Submitting..."
+                        : modal.selectedPackage === "elite"
+                          ? "Get Elite Package — ₹69,000"
+                          : "Get My LLC — ₹39,000"}
+                    </Button>
+                  </div>
+                  <p className="text-xs text-center text-muted-foreground">
+                    No payment now. Our team will call to confirm and process payment securely.
+                  </p>
+                </form>
+              )}
+
+              {/* Step 3: Thank you */}
+              {modal.step === 3 && (
+                <div className="text-center py-4">
+                  <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5">
+                    <CheckCircle2 className="w-9 h-9 text-green-500" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 text-foreground">You're all set!</h3>
+                  <p className="text-sm text-muted-foreground mb-7 max-w-sm mx-auto">
+                    We've received your request. A Legal Nations expert will call you within 24 hours
+                    to walk you through the process and confirm your payment.
+                  </p>
+                  <a
+                    href="https://wa.me/919306500349?text=Hi%2C%20I%20just%20submitted%20my%20USDrop%20LLC%20request"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full px-6 py-3 transition-colors mb-4"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    Chat with us on WhatsApp
+                  </a>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={closeModal}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
+                    >
+                      Done
+                    </button>
+                  </div>
+                </div>
+              )}
+
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
