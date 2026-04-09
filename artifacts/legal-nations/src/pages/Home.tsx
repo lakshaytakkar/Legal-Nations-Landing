@@ -1114,45 +1114,99 @@ export default function Home() {
         {/* 9. Competitor Comparison */}
         <section id="why-us" className="bg-surface py-24 scroll-mt-20 border-y border-border overflow-hidden">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground">Why Founders Choose Legal Nations Over Everyone Else</h2>
-            </div>
+            <motion.div
+              className="text-center mb-16"
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
+            >
+              <span className="inline-block mb-4 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-widest border border-primary/20">Unbiased Comparison</span>
+              <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">Why Founders Choose Legal Nations Over Everyone Else</h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">We stack up our features and pricing against the most popular alternatives so you can decide with confidence.</p>
+            </motion.div>
 
-            <div className="max-w-6xl mx-auto overflow-x-auto pb-4">
-              <table className="w-full text-left border-collapse min-w-[800px]">
-                <thead>
-                  <tr>
-                    <th className="p-4 font-bold text-muted-foreground border-b-2 border-border text-lg">Feature</th>
-                    <th className="p-4 font-bold text-primary border-b-2 border-primary text-xl bg-secondary/50 rounded-t-xl border-x border-t border-border">Legal Nations</th>
-                    <th className="p-4 font-medium text-muted-foreground border-b-2 border-border">firstbase.io</th>
-                    <th className="p-4 font-medium text-muted-foreground border-b-2 border-border">LegalZoom</th>
-                    <th className="p-4 font-medium text-muted-foreground border-b-2 border-border">Stripe Atlas</th>
-                    <th className="p-4 font-medium text-muted-foreground border-b-2 border-border">BookMyLLC</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-card">
-                  {[
-                    { f: "LLC Formation", ln: "$149", c1: "$399", c2: "$299+", c3: "$500", c4: "~$200" },
-                    { f: "EIN Included", ln: <CheckCircle2 className="w-4 h-4 text-success" />, c1: <CheckCircle2 className="w-4 h-4 text-success" />, c2: "Add-on", c3: <CheckCircle2 className="w-4 h-4 text-success" />, c4: <CheckCircle2 className="w-4 h-4 text-success" /> },
-                    { f: "Registered Agent (1yr)", ln: "Free", c1: "$149/yr", c2: "$299/yr", c3: "Included", c4: "Varies" },
-                    { f: "Virtual Address", ln: "$29/mo", c1: "$35/mo", c2: "N/A", c3: "N/A", c4: "N/A" },
-                    { f: "Multi-Country", ln: "10+ Countries", c1: "USA only", c2: "USA only", c3: "USA only", c4: "10+" },
-                    { f: "Compliance Dashboard", ln: <CheckCircle2 className="w-4 h-4 text-success" />, c1: <CheckCircle2 className="w-4 h-4 text-success" />, c2: <XCircle className="w-4 h-4 text-destructive" />, c3: <XCircle className="w-4 h-4 text-destructive" />, c4: <XCircle className="w-4 h-4 text-destructive" /> },
-                    { f: "Tax Filing", ln: "From $299", c1: "$1,799+", c2: "Separate", c3: "N/A", c4: "Separate" },
-                    { f: "Dedicated Manager", ln: <CheckCircle2 className="w-4 h-4 text-success" />, c1: <XCircle className="w-4 h-4 text-destructive" />, c2: <XCircle className="w-4 h-4 text-destructive" />, c3: <XCircle className="w-4 h-4 text-destructive" />, c4: <CheckCircle2 className="w-4 h-4 text-success" /> },
-                  ].map((row, i) => (
-                    <tr key={i} className="border-b border-border hover:bg-muted/30">
-                      <td className="p-4 font-medium text-foreground">{row.f}</td>
-                      <td className="p-4 font-bold text-foreground bg-secondary/30 border-x border-border shadow-[inset_4px_0_0_0_#1E40AF]">{row.ln}</td>
-                      <td className="p-4 text-muted-foreground">{row.c1}</td>
-                      <td className="p-4 text-muted-foreground">{row.c2}</td>
-                      <td className="p-4 text-muted-foreground">{row.c3}</td>
-                      <td className="p-4 text-muted-foreground">{row.c4}</td>
+            <motion.div
+              className="max-w-6xl mx-auto"
+              initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
+            >
+              <div className="overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0">
+                <table className="w-full text-left border-collapse min-w-[800px]">
+                  <thead>
+                    <tr>
+                      <th className="p-4 md:p-5 font-semibold text-muted-foreground text-sm uppercase tracking-wide w-[200px] sticky left-0 bg-surface z-10">Feature</th>
+                      {/* Legal Nations — highlighted column header */}
+                      <th className="p-0 align-bottom">
+                        <div className="relative mx-1 rounded-t-2xl bg-gradient-to-b from-primary to-primary/80 px-4 pt-5 pb-4 shadow-[0_-4px_24px_0_rgba(30,64,175,0.35)] text-center">
+                          <span className="inline-block mb-2 px-3 py-0.5 rounded-full bg-amber-400 text-amber-900 text-[10px] font-bold uppercase tracking-widest shadow-sm">Best Value</span>
+                          <div className="text-white font-heading font-bold text-xl leading-tight">Legal Nations</div>
+                        </div>
+                      </th>
+                      <th className="p-4 font-medium text-muted-foreground/70 text-sm text-center">firstbase.io</th>
+                      <th className="p-4 font-medium text-muted-foreground/70 text-sm text-center">LegalZoom</th>
+                      <th className="p-4 font-medium text-muted-foreground/70 text-sm text-center">Stripe Atlas</th>
+                      <th className="p-4 font-medium text-muted-foreground/70 text-sm text-center">BookMyLLC</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {[
+                      { f: "LLC Formation", ln: "$149", c1: { v: "$399", lose: true }, c2: { v: "$299+", lose: true }, c3: { v: "$500", lose: true }, c4: { v: "~$200", lose: true } },
+                      { f: "EIN Included", ln: true, c1: { v: true, lose: false }, c2: { v: "Add-on", lose: true }, c3: { v: true, lose: false }, c4: { v: true, lose: false } },
+                      { f: "Registered Agent (1yr)", ln: "Free", c1: { v: "$149/yr", lose: true }, c2: { v: "$299/yr", lose: true }, c3: { v: "Included", lose: false }, c4: { v: "Varies", lose: true } },
+                      { f: "Virtual Address", ln: "$29/mo", c1: { v: "$35/mo", lose: true }, c2: { v: "N/A", lose: true }, c3: { v: "N/A", lose: true }, c4: { v: "N/A", lose: true } },
+                      { f: "Multi-Country", ln: "10+ Countries", c1: { v: "USA only", lose: true }, c2: { v: "USA only", lose: true }, c3: { v: "USA only", lose: true }, c4: { v: "10+", lose: false } },
+                      { f: "Compliance Dashboard", ln: true, c1: { v: true, lose: false }, c2: { v: false, lose: true }, c3: { v: false, lose: true }, c4: { v: false, lose: true } },
+                      { f: "Tax Filing", ln: "From $299", c1: { v: "$1,799+", lose: true }, c2: { v: "Separate", lose: true }, c3: { v: "N/A", lose: true }, c4: { v: "Separate", lose: true } },
+                      { f: "Dedicated Manager", ln: true, c1: { v: false, lose: true }, c2: { v: false, lose: true }, c3: { v: false, lose: true }, c4: { v: true, lose: false } },
+                    ].map((row, i) => {
+                      const renderLNCell = (val: string | boolean) => {
+                        if (typeof val === "boolean") {
+                          return val
+                            ? <span className="inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-full bg-white/20 text-white text-xs font-semibold"><CheckCircle2 className="w-4 h-4" /><span className="hidden sm:inline">Yes</span></span>
+                            : <span className="inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-full bg-red-500/30 text-red-200 text-xs font-semibold"><XCircle className="w-4 h-4" /><span className="hidden sm:inline">No</span></span>;
+                        }
+                        return <span className="font-bold text-white text-base">{val}</span>;
+                      };
+                      const renderCompCell = (cell: { v: string | boolean; lose: boolean }) => {
+                        if (typeof cell.v === "boolean") {
+                          return cell.v
+                            ? <span className="inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-600 text-xs font-semibold"><CheckCircle2 className="w-4 h-4" /><span className="hidden sm:inline">Yes</span></span>
+                            : <span className="inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-full bg-red-500/10 text-red-500 text-xs font-semibold"><XCircle className="w-4 h-4" /><span className="hidden sm:inline">No</span></span>;
+                        }
+                        return <span className={`text-sm ${cell.lose ? "line-through text-muted-foreground/50" : "text-muted-foreground"}`}>{cell.v}</span>;
+                      };
+
+                      return (
+                        <tr
+                          key={i}
+                          className={`border-b border-border/60 transition-colors duration-150 hover:bg-muted/20 ${i % 2 === 0 ? "bg-card" : "bg-surface"}`}
+                        >
+                          <td className="p-4 md:p-5 font-medium text-foreground text-sm sticky left-0 z-10 bg-inherit">{row.f}</td>
+                          {/* Legal Nations column — gradient highlight */}
+                          <td className="p-0 align-middle">
+                            <div className={`mx-1 px-4 py-4 text-center bg-gradient-to-b from-primary/90 to-primary/75 shadow-[0_0_24px_0_rgba(30,64,175,0.18)] flex items-center justify-center ${i === 7 ? "rounded-b-2xl" : ""}`}>
+                              {renderLNCell(row.ln)}
+                            </div>
+                          </td>
+                          <td className="p-4 md:p-5 text-center">{renderCompCell(row.c1)}</td>
+                          <td className="p-4 md:p-5 text-center">{renderCompCell(row.c2)}</td>
+                          <td className="p-4 md:p-5 text-center">{renderCompCell(row.c3)}</td>
+                          <td className="p-4 md:p-5 text-center">{renderCompCell(row.c4)}</td>
+                        </tr>
+                      );
+                    })}
+                    {/* Summary badge row */}
+                    <tr>
+                      <td colSpan={6} className="pt-5 pb-0">
+                        <div className="flex justify-center">
+                          <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-semibold text-sm">
+                            <CheckCircle2 className="w-4 h-4 text-primary" />
+                            Legal Nations wins on 7 out of 8 features
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </motion.div>
           </div>
         </section>
 
