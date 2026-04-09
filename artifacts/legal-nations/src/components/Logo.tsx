@@ -5,21 +5,38 @@ interface LogoProps {
 
 export function Logo({ variant = "default", size = "md" }: LogoProps) {
   const isFooter = variant === "footer";
+
   const textSize =
-    size === "sm" ? "text-3xl md:text-4xl" :
-    size === "lg" ? "text-5xl md:text-6xl" :
-                    "text-4xl md:text-5xl";
+    size === "sm" ? "text-xl" :
+    size === "lg" ? "text-4xl" :
+                    "text-2xl";
+
+  const iconSize =
+    size === "sm" ? 22 :
+    size === "lg" ? 44 :
+                    30;
 
   return (
     <span
-      className="flex items-center leading-none select-none"
-      style={{ fontFamily: "'Playfair Display', serif", fontWeight: 800 }}
+      className="flex items-center gap-2 leading-none select-none"
+      style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" }}
     >
-      <span className={`${textSize} ${isFooter ? "text-white/90" : "text-[#1A1E3C]"}`}>
-        Legal
-      </span>
-      <span className={`${textSize} text-primary`}>
-        Nations
+      <img
+        src="/images/logo-icon.png"
+        alt=""
+        width={iconSize}
+        height={iconSize}
+        style={{
+          width: iconSize,
+          height: iconSize,
+          objectFit: "contain",
+          filter: isFooter ? "brightness(0) invert(1)" : "none",
+        }}
+        aria-hidden="true"
+      />
+      <span className={`${textSize}`}>
+        <span style={{ color: isFooter ? "#ffffff" : "#333333" }}>Legal</span>
+        <span style={{ color: "#0056d2" }}>Nations</span>
       </span>
     </span>
   );
