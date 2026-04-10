@@ -2,6 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "pnpm install --frozen-lockfile=false",
   "buildCommand": "pnpm --filter @workspace/legal-nations run build",
-  "outputDirectory": "artifacts/legal-nations/dist",
+  "outputDirectory": "artifacts/legal-nations/dist/public",
   "framework": null
 }
